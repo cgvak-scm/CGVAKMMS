@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="53359b0739164a0e9882d850085e322b" Name="Diagram1" ZoomLevel="19">
+        <EntityTypeShape EntityType="ReviewTaskDBModel.Employee_Master" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReviewTaskDBModel.MMS_Employee_Master" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReviewTaskDBModel.MMS_Meeting_Category" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReviewTaskDBModel.MMS_Meeting_Details" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReviewTaskDBModel.MMS_Meeting_Participant" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReviewTaskDBModel.MMS_Meeting_Status" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReviewTaskDBModel.MMS_Meeting_Status_Update" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReviewTaskDBModel.MMS_Review_Frequency" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReviewTaskDBModel.MMS_Track_ReviewTasks" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReviewTaskDBModel.Task_Status" Width="1.5" PointX="2.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReviewTaskDBModel.MMS_Priority" Width="1.5" PointX="5.375" PointY="9.75" />
+        <EntityTypeShape EntityType="ReviewTaskDBModel.MMS_Meeting_Master" Width="1.5" PointX="0.75" PointY="2.875" />
+        <EntityTypeShape EntityType="ReviewTaskDBModel.MMS_Meeting_Template" Width="1.5" PointX="9.625" PointY="9.75" />
+        <EntityTypeShape EntityType="ReviewTaskDBModel.MMS_Notifications" Width="1.5" PointX="3" PointY="16" />
+        <AssociationConnector Association="ReviewTaskDBModel.Fkey_id" />
+        <AssociationConnector Association="ReviewTaskDBModel.FK__MMS_Meeti__Meeti__0B91BA14" />
+        <AssociationConnector Association="ReviewTaskDBModel.fk_meet_id" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

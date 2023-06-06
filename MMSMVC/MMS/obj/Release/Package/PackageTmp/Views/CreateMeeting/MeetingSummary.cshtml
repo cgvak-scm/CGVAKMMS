@@ -1,0 +1,1661 @@
+﻿@{
+    ViewBag.Title = "Meeting Summarys";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    string startDateStr = ViewBag.StartDate;
+    string endDateStr = Convert.ToDateTime(ViewBag.EndDate).ToString("dd/MMM/yyyy");
+}
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<style>
+    #bindTaskComments {
+        display: none;
+    }
+</style>
+<link href="~/Scripts/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />
+@if (@Session["LoggedUserId"] == null)
+{
+    @Url.Action("Login", "Account")
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Meeting Summary
+    </div>
+    <div class="panel-body">
+        <form name="meetingSearchFrm" id="meetingSearchFrm">
+            <fieldset>
+                <div class="alert alert-warning">
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="input-group-addon input-sm">Start Date</div>
+                            @Html.TextBox("assign_start_date", startDateStr, new { @class = "datepick required form-control input-sm fromDate", @style = "background-color:white;", @readonly = "true" })
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group-addon input-sm">End Date</div>
+                            @Html.TextBox("assign_end_date", endDateStr, new { @class = " required  form-control input-sm endDate", @style = "background-color:white;", @readonly = "true" })
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group-addon input-sm">Meeting Template</div>
+
+                            @Html.DropDownList("Template", new SelectList(ViewBag.Template, "tid", "meeting_name"), "All", new { @class = "form-control input-sm TemplateSelect" })
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group-addon input-sm">Participants</div>
+                            <div class="">
+                                @Html.DropDownList("Participants", new SelectList(ViewBag.Participants, "Participant", "Name"), "All", new { @class = "form-control input-sm Participants", @id = "Participants" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="input-group-addon input-sm ">Task Status</div>
+                            <div class="">
+                                @Html.DropDownList("statuss", new SelectList(ViewBag.Status, "ID", "Name"), "All", new { @class = "form-control input-sm statuss", @id = "statuss" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group-addon input-sm">Priority</div>
+                            @Html.DropDownList("Priority", new List<SelectListItem>{
+                                                       new SelectListItem { Text="High",Value="2" },
+                                                       new SelectListItem { Text="Medium",Value="1" },
+                                                       new SelectListItem { Text="Low",Value="0" }
+                                                       }, "All", new { @class = "form-control input-sm Priority", @id = "Priority" })
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="input-group-addon input-sm">Task Assigned</div>
+                            <div class="input-group radioSelections">
+                                @Html.RadioButton("taskdate", "Period", true, htmlAttributes: new { @class = "required", @id = "period" }) Periods from to
+                                @Html.RadioButton("taskdate", "Tilldate") Till Date
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-md-6 col-sm-6 pull-left">
+                            <div class="input-group pull-right">
+                                <button type="button" id="meetingSearch" class="btn btn-primary btn-sm">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="row" id="alert-messages">
+
+            </div>
+            <div class="row">
+                <div class="responsive-table" style="padding-left:20px; padding-right:20px">
+                    <div id="task-show-result">
+                        @{
+                            if (ViewBag.MeetingParticipants != null)
+                            {
+                                <h4 class='task-title'>Participants</h4>
+                                <table id="cn_Task_res" class="assigned table table-bordered  col-md-12 col-sm-12 tblTaskPaging ">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:220px;"><center>Participant Name</center> </th>
+                                            <th><center>Total tasks</center></th>
+                                            <th><center> Assigned</center></th>
+                                            <th><center>In Progress</center></th>
+                                            <th><center>Completed</center></th>
+                                            <th><center>Closed</center></th>
+                                            <th><center>ReOpened</center></th>
+                                            <th><center>High</center></th>
+                                            <th><center>Medium</center></th>
+                                            <th><center>Low</center></th>
+                                        </tr>
+                                    </thead>
+                                    @{
+                                        foreach (var items in ViewBag.MeetingParticipants)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a onclick='getNotifytasks("@items.Participant","All")' id='Taskparticipant'> @items.Participant </a>
+                                                </td>
+                                                <td>
+                                                    @items.TotalTasks
+                                                </td>
+                                                <td>
+                                                    @items.Assigned
+                                                </td>
+                                                <td>
+                                                    @items.InProgress
+                                                </td>
+                                                <td>
+                                                    @items.Completed
+                                                </td>
+                                                <td>
+                                                    @items.Closed
+                                                </td>
+                                                <td>
+                                                    @items.ReOpened
+                                                </td>
+                                                <td>
+                                                    @items.High
+                                                </td>
+                                                <td>
+                                                    @items.Medium
+                                                </td>
+                                                <td>
+                                                    @items.Low
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="space" style="margin:25px 0px;"></div>
+                <div class="responsive-table" style="padding-left:20px; padding-right:20px">
+                    <div id="grid-show-result">
+                        @if (ViewBag.MeetingDetails != null)
+                        {
+                            <h4 class='task-title'>Task</h4>
+                            <table id="cn_Meeting_Res" class="table table-bordered col-md-12 col-sm-12 tblPaging">
+                                <tr>
+                                    <th>Participant</th>
+                                    <th>Task </th>
+                                    <th>Status</th>
+                                    <th>Date Assigned</th>
+                                    <th>Target Date</th>
+                                    <th>Review Frequency</th>
+                                    <th>Review Date</th>
+                                    <th>Meeting Name</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                    <th>Close</th>
+                                    <th>Comments</th>
+                                    <th>Review Status</th>
+                                </tr>
+                                @{
+                                    var meeting_id = TempData["meeting_id"];
+                                    foreach (var item in ViewBag.MeetingDetails)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a onclick='CallGetComments("@meeting_id","@item.Task","@item.Participant","@item.Employee_Id","@item.Status")'>@item.Participant</a>
+                                            </td>
+
+                                            <td>
+                                                <a onclick='CallGetComments("@meeting_id","@item.Task","@item.Participant","@item.Employee_Id","@item.Status")'>@item.Task</a>
+                                                <p>( + @item.NoOfComments + Comments)</p>
+                                            </td>
+                                            <td class="cStatus">@item.Status</td>
+                                            @{
+                                                foreach (var meetingItem in ViewBag.MeetingMaster)
+                                                {
+                                                    <td>@meetingItem.Meeting_Date.ToShortDateString()</td>
+                                                }
+                                            }
+                                            <td>@item.Completion_Date.ToShortDateString() </td>
+                                            <td>@item.reviewFreq</td>
+                                            <td>@item.reviewdate</td>
+                                            <td>
+                                                <a href='@Url.Action("EditMeetingDetails", "MeetingDetails")?meetingId=@meeting_id' class='modal-link btn btn-default btn-sm notifyEdit active' data-placement='top' data-toggle='tooltip' data-original-title='Edit'>Edit </a>
+                                            </td>
+                                            <td>
+                                                <a onclick='Delete("@meeting_id")'>Delete</a>
+                                            </td>
+                                            <td>
+                                                <a onclick='Close("@meeting_id","taskId")' class="CloseCmnts_dyn">Close</a>
+                                            </td>
+                                            <td>
+                                                <a onclick='CallGetComments(@TempData["Meeting_id"],"@item.Task","@item.Participant",@item.Employee_Id,"@item.Status")'>Show Comments</a><span></span>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        }
+                    </div>
+                </div>
+                <div class="space" style="margin:10% 0px;"></div>
+
+                <div id="bindTaskComments" class="modalcomments modalcontent fragment" style="padding:40px 50px;">
+                    <div class="modal-guts">
+                    </div>
+                </div>
+
+                <div id="divAddComment" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                <h4 class="modal-title">Add Comment</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="txtcmnts">
+                                    <textarea id="txtComments" rows="6"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="btncmdSave">
+                                    <input type="button" class="btn btn-default" name="btnSaveComment" value="Save" onclick="fnSaveComments()" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="EmailSend" class="dialog">
+                    <table>
+                        <tr>
+                            <td>To:</td>
+                            <td>
+                                <input type="text" id="txtToEmailAddress" readonly="readonly" style="width: 250px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CC:</td>
+                            <td>
+                                <input type="text" id="txtCC" readonly="readonly" style="width: 250px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Subject:</td>
+                            <td>
+                                <input type="text" id="txtEmailsubject" style="width: 250px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="justify">Content</td>
+                            <td>
+                                <textarea id="txtEmailBody" style="height: 200px; width: 250px;" cols="10" rows="6"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp</td>
+                            <td><input type="button" class="btn btn-default" value="send" onclick="EmailComments()" style="float:left" /></td>
+                        </tr>
+                    </table>
+                    <div style="float: right; width: 60%; margin-top: 10px;">
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div id="delete-alert" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h5 class="modal-title" id="mySmallModalLabel">Are you sure want to delete this?</h5>
+            </div>
+            <div class="modal-body text-center">
+                <a href="#" class="btn btn-primary" id="myyes">Yes</a>
+                <a href="#" class="btn btn-danger" data-dismiss="modal">No</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div id="delete-success" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h5 class="modal-title" id="mySmallModalLabel">Selected task has been deleted successfully. </h5>
+                </div>
+
+            </div>
+        </div>
+    </div>*@
+
+<div id="close-alert" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h5 class="modal-title" id="mySmallModalLabel">Are you sure want to close this?</h5>
+            </div>
+            <div class="modal-body text-center">
+                <a href="#" class="btn btn-primary" id="myyes1">Yes</a>
+                <a href="#" class="btn btn-danger" data-dismiss="modal">No</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div id="close-success" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h5 class="modal-title" id="mySmallModalLabel">Selected task has been closed successfully. </h5>
+                </div>
+
+            </div>
+        </div>
+    </div>*@
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/multiselect")
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <link href="~/Scripts/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.9.1/jquery.tablesorter.min.js"></script>
+}
+
+<style>
+    .modalcomments {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        overflow: auto;
+        z-index: 1010;
+        display: flex;
+        width: 600px;
+        max-width: 100%;
+        height: 400px;
+        max-height: 100%;
+    }
+
+    .modal-guts {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 20px 50px 20px 20px;
+        overflow: auto;
+    }
+
+    #close {
+        float: right;
+        display: inline-block;
+        padding: 2px 5px;
+        background: #ccc;
+        background-color: chocolate;
+    }
+
+    .fragment {
+        display: none;
+        background-color: #d9edf7;
+        display: inline-block;
+        width: 600px;
+        border: ridge;
+        flood-color: gainsboro;
+        padding: 2px 5px;
+        float: right;
+    }
+</style>
+
+
+<script type="text/javascript">
+
+    $("#alert-messages").hide();
+    $(document).ready(function () {
+        $(document).on("click", "#command-close", function () {
+            $("#bindTaskComments").hide();
+        });
+    });
+    //assign_end_date
+    if ($('#assign_end-date').val() != null)
+        window.onload = function () {
+            var selItem = sessionStorage.getItem("SelItem");
+            $('#assign_end_date').val(selItem);
+        }
+
+    $('#assign_end_date').change(function () {
+        var selVal = $(this).val();
+        sessionStorage.setItem("SelItem", selVal);
+    });
+
+    $(document).mouseup(function (e) {
+        var container = $("#bindTaskComments"); // YOUR CONTAINER SELECTOR
+        if (!container.is(e.target) // if the target of the click isn't the container...
+            && container.has(e.target).length === 0) // ... nor a descendant of the container
+        {
+            container.hide();
+        }
+    });
+
+    function Delete(Mtg_ID, taskId)
+    {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("DeleteMeetingDetails", "MeetingDetails")',
+            data: {
+                meetingId: Mtg_ID,
+                taskId: taskId
+            },
+            success: function () {
+                $('#delete-alert').modal('hide');
+                //$('#delete-success').modal('show');
+            },
+            error: function () {
+                alert("Please try again");
+            }
+        });
+    }
+
+    var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    var start = new Date();
+    start.setFullYear(start.getFullYear() - 70);
+    var end = new Date();
+    end.setFullYear(end.getFullYear() + 1);
+
+    function getCustomDay(dayStr) {
+        var day = parseInt(dayStr);
+        if (day < 10)
+            return '0' + dayStr;
+        else
+            return dayStr;
+    }
+
+    $(function () {
+        $('#status').multiselect({
+            includeSelectAllOption: true
+        });
+
+        $(".fromDate").datepicker({
+            changeMonth: false,
+            changeYear: true,
+            minDate: new Date('3/1/2017'),
+            yearRange: 2017 + ':' + end.getFullYear(),
+            autoclose: true, disabled: true,
+            dateFormat: 'dd/M/yy',
+            beforeShowDay: function (date) {
+                var day = date.getDay();
+                return [(day != 0), ''];
+            },
+            onSelect: function (selected) {
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate() + 1);
+                $(".toDate").datepicker("option", "minDate", dt);
+            }
+        });
+
+        $(".endDate").datepicker(
+            {
+                changeMonth: true,
+                changeYear: true,
+                yearRange: 2017 + ':' + end.getFullYear(),
+                autoclose: true,
+                dateFormat: 'dd-M-yy'
+
+
+            });
+
+        $(".dt").datepicker({
+            dateFormat: "dd/M/yy", minDate: 0,
+            changeMonth: true, changeYear: true,
+            yearRange: 2017 + ':' + end.getFullYear(),
+            autoclose: true,
+            beforeShowDay: function (date) {
+                var day = date.getDay();
+                return [(day != 0), ''];
+            },
+            onSelect: function (selected) {
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate() + 1);
+                $(".toDate").datepicker("setDate", selected)
+                $(".toDate").datepicker("option", "minDate", dt);
+            }
+        });
+
+    });
+
+    function InitializePaging() {
+
+        $(document).ready(function () {
+            $('#meetingSearch', this).prop('disabled', false);
+        });
+
+        var jslink = $("<script src='@Url.Content("~/Scripts/jquery.simplePagination.js")' type='text/javascript'/>");
+        $('head').append(jslink);
+        $(".tblPaging").simplePagination();
+    }
+
+    function IntializeTaskPaging() {
+        $(".tblTaskPaging").simplePagination();
+    }
+
+    function LoadInitialEvents() {
+
+        var d = new Date();
+        var curr_date = getCustomDay(d.getDate());
+        var curr_month = month[d.getMonth()];
+        var curr_year = d.getFullYear();
+
+        $(document).ready(function () {
+            $('#meetingSearch', this).prop('disabled', false);
+        });
+
+        $(document).ready(function () {
+            $('.fragment', this).prop('disabled', true);
+        });
+
+        $(".toDate").datepicker({
+            autoclose: true, changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/M/yy',
+            minDate: '@startDateStr',
+            yearRange: 1990 + ':' + end.getFullYear(),
+            beforeShowDay: function (date) {
+                var day = date.getDay();
+                return [(day != 0), ''];
+            },
+            onSelect: function (selected) {
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate() + 1);
+                $(".toDate").datepicker("option", "minDate", dt);
+                var selectD = $('.toDate').val();
+                $.get('@Url.Action("TaskSummary", "CreateTask")', { selectD: selectD });
+            }
+        });
+        InitializeTasksMeeting();
+    }
+
+    function CloseCmnts(Mtg_ID, taskId) {      
+        $.ajax({
+            url: "@Url.Action("CloseComments", "MeetingDetails")",
+            type: "post",
+            data: {
+                meetingId: Mtg_ID,
+                taskId: taskId
+            },
+            success: function () {                
+                swal({
+                    title: "Closed!",
+                    text: "Your task has been closed.",
+                    type: "success",
+                    timer: 800,
+                    height:20
+                });
+                $('#close-alert').modal('hide');                
+            },
+            error: function () {
+                alert("Please try again");
+            }
+        });
+    }
+
+    //Category
+    $(".TemplateSelect").on('change', function () {
+        window.sessionStorage.setItem("Template", this.value);
+    });
+
+    $(document).ready(function () {
+        $(".TemplateSelect").val(window.sessionStorage.getItem("Template"));
+        $("#cn_Meeting_Res").load("your-current-page.html #cn_Meeting_Res");
+        // window.sessionStorage.clear();
+    });
+
+    //Participants
+    $("#Participants").on('change', function () {
+        window.sessionStorage.setItem("Participants", this.value);
+        window.sessionStorage.clear();
+    });
+
+    $(document).ready(function () {
+        $("#Participants").val(window.sessionStorage.getItem("Participants"));
+        window.sessionStorage.clear();
+        $("#cn_Meeting_Res").load("your-current-page.html #cn_Meeting_Res");
+
+    });
+
+    //Priority
+    $("#Priority").on('change', function () {
+        window.sessionStorage.setItem("Priority", this.value);
+    });
+
+    $(document).ready(function () {
+        $("#Priority").val(window.sessionStorage.getItem("Priority"));
+        window.sessionStorage.clear();
+        $("#cn_Meeting_Res").load("your-current-page.html #cn_Meeting_Res");
+    });
+
+    //statusmultiselect
+    $("#statuss").on('change', function () {
+        window.sessionStorage.setItem("statuss", this.value);
+    });
+
+    $(document).ready(function () {
+        $("#statuss").val(window.sessionStorage.getItem("statuss"));
+        window.sessionStorage.clear();
+        $("#cn_Meeting_Res").load("your-current-page.html #cn_Meeting_Res");
+
+    });
+
+    function Delete(Mtg_ID, taskId) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("DeleteMeetingDetails", "MeetingDetails")',
+            data: {
+                meetingId: Mtg_ID,
+                taskId: taskId
+            },
+            success: function () {
+                swal({
+                    title: "Deleted!",
+                    text: "Your task has been Deleted.",
+                    type: "success",
+                    timer: 800,
+                    height: 20
+                });
+                $('#delete-alert').modal('hide');                                
+            },
+            error: function () {
+                alert("Please try again");
+            }
+        });
+    }
+
+    function fncOpen() {
+        $("#divAddComment").modal({ 'backdrop': 'static', 'keyboard': false });
+    }
+
+    function InitializeTasksMeeting() {
+        $(".task-title,.participant-title").remove();
+        //added This for Date Format Issue
+        var TEMP_start_date = $("#assign_start_date").val();
+        var splitStart = TEMP_start_date.split('/');
+        var _start_date = splitStart[1] + "/" + splitStart[0] + "/" + splitStart[2];
+        var TEMP_end_date = $("#assign_end_date").val();
+        var splitEnd = TEMP_end_date.split('/');
+        var _end_date = splitEnd[1] + "/" + splitEnd[0] + "/" + splitEnd[2];
+
+        if (_start_date == null || _start_date == "" && _end_date == null || _end_date == "") {
+            alert("Please fill the dates to proceed");
+        }
+        else {
+
+            $("#cn_Task_res").remove();
+            $("#cn_Meeting_Res").remove();
+
+            $(".Paginate").remove();
+
+            var TaskPeriod = $("[name='taskdate']:radio:checked").val();
+
+            if (TaskPeriod == "Tilldate") {
+
+                var date = new Date();
+                var dd = getCustomDay(date.getDate());
+                var mm = month[date.getMonth()];
+                var yy = date.getFullYear();
+
+                var start_date = "01/Mar/2017";
+                var end_date = dd + "/" + mm + "/" + yy;
+
+                $("#assign_start_date").val(start_date).toString("dd/MMM/YYYY");
+                $("#assign_start_date").prop("disabled", true);
+
+                $("#assign_start_date").disableSelection();
+
+                $("#assign_end_date").val(end_date);
+                $("#assign_end_date").prop("disabled", false);
+
+            }
+
+            //Original BACK TO original
+            var _start_date = $("#assign_start_date").val();
+            var _end_date = $("#assign_end_date").val();
+
+            var template = $("#Template option:selected").val();
+            var status = $("#statuss option:selected").val();
+
+            var participants = $("#Participants option:selected").val();
+
+            if (template == "") {
+                template = 0;
+            }
+
+            if (participants == "") {
+                participants = 0;
+
+            }
+
+            if (status == "") {
+                status = 0;
+            }
+
+            var priority = $("#Priority option:selected").text();
+
+            GetMeetingDetails(TaskPeriod, _start_date, _end_date, template, participants, status, priority);
+        }
+    }
+
+    $(document).ready(function () {
+
+        LoadInitialEvents();
+        $("body").on("click", ".ui-dialog-titlebar-close", function () {
+            $("#wrapper").removeClass("overlay");
+
+        });
+
+        $("#cn_Meeting_Res tr td").each(function () {
+            if ($(this).hasClass("cStatus")) {
+                var txtStatus = $(this).val();
+                switch (txtStatus) {
+                    case 1: $("#cn_Meeting_Res tr").css("background-color", "rgb(255, 165, 132)");
+                        break;
+                    case 3: $("#cn_Meeting_Res tr").css("background-color", "rgb(255, 255, 218)");
+                        break;
+                    case 5: $("#cn_Meeting_Res tr").css("background-color", "plum");
+                        break;
+                    case 2: $("#cn_Meeting_Res tr").css("background-color", "darkseagreen");
+                        break;
+                    default: $("#cn_Meeting_Res tr").css("background-color", "#fff");
+                        break;
+                }
+            }
+        });
+
+        $("#period").change(function () {
+            $("#assign_start_date").css("background-color", "white")
+        });
+
+        $("[name='taskdate']").change(function () {
+            if ($(this).val() == "Tilldate") {
+                date = new Date();
+                dd = date.getDate();
+                mm = date.getMonth();
+                yy = date.getFullYear();
+                var start_date = "01/Mar/2017";
+                $("#assign_start_date").css("background-color", "#EEEEEE")
+                $("#assign_start_date").val(start_date);
+                $("#assign_start_date").prop("disabled", true);
+                $("#assign_end_date").val('@endDateStr');
+            }
+            else {
+                $("#assign_start_date").prop("disabled", false);
+                $("#assign_end_date").prop("disabled", false);
+            }
+        });
+
+        $("#meetingSearch").click(function (e) {
+            //added now
+            $("#bindTaskComments").hide();
+            this.disabled = 'disabled';
+            InitializeTasksMeeting();
+        });
+
+        $('#EmailSend').dialog({
+            title: 'Send Email', autoOpen: false, height: 400, width: 450, modal: true, open: function () {
+                $("#wrapper").not($(this)).addClass("overlay");
+            }
+        })
+
+        $(".CloseCmnts_dyn").click(function () {
+            var ConfirmationMsg = "Are you sure want to close the task";
+            if (ConfirmationMsg == true) {
+                var ValArr = $(this).attr('id').split(',');
+                (Mtg_ID, taskId)
+                $.ajax({
+                    url: "@Url.Action("CloseComments", "MeetingDetails")",
+                    type: "post",
+                    data: JSON.stringify({ "meetingId": Mtg_ID, "taskId": taskId }),
+                    dataType: "Json",
+                    contentType: "Application/json;charset=utf-8",
+                    success: function () {
+                        alert("Selected task is closed successfully.");
+                        window.location.reload();
+                        $("#bindTaskComments").hide();
+                    }
+                });
+            }
+        });
+    });
+
+    function InitializeEmailComments() {
+        $(".emailcomment").click(function () {
+            $('#EmailSend').dialog().dialog('open');
+            var To_Mail = $(this).data('to_email');
+            var to_CC = $(this).data('cc_mail');
+            $(this).parents('.tablecomments').find('.comment').text();
+            var Subject_Task = document.getElementById('Mtg_Task').value;  // $(this).data('subject_task');
+            var Body_Content = $(this).parents('.tablecomments').find('.comment').text();
+            $(this).parents('.tablecomments').find('.comment').text();
+            $('#txtToEmailAddress').val(To_Mail);
+            $("#txtCC").val(to_CC);
+            $('#txtEmailsubject').val(Subject_Task);
+            $('#txtEmailBody').val(Body_Content);
+        });
+    }
+
+    function CallGetComments(Mtg_ID, RespPerson, Emp_ID, Mtg_Status, taskId) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetCommentsList", "MeetingDetails")",
+            data: { meetingId: Mtg_ID, respPerson: RespPerson, empId: Emp_ID, meetingStatus: Mtg_Status, taskId: taskId },
+            dataType: "text",
+            beforeSend: function () {
+                $("#bindTaskComments").html("<img id='wait'  style='max-width:100%;padding:5% 40%;'  src='../Content/Images/wait.gif'/>");
+            },
+
+            success: function (resData) {
+                if (resData.indexOf("Mtg_Status_EmpID") == -1) {
+                    window.location.href = "@Url.Action("Login", "Account")";
+                }
+                $("#wait").remove();
+                $("#bindTaskComments").show();
+                $("#bindTaskComments").html("<button type='button' id='command-close' class='close' data-dismiss='modal'>&times;</button>");
+                $("#bindTaskComments").append(resData);
+                InitializeEmailComments();
+                var scrollPos = $("#bindTaskComments").offset().top;
+                $(window).scroll(scrollPos);
+            },
+            failure: function (response) {
+                alert(response.d);
+            }
+        });
+    }
+
+    function fnSaveComments() {
+        Mtg_Status_EmpID = document.getElementById('Mtg_Status_EmpID').value;
+        Mtg_Task = document.getElementById('Mtg_Task').value;
+        Mtg_Comments = document.getElementById('txtComments').value;
+
+        RespPerson = document.getElementById('RespPerson').value;
+        Mtg_ID = document.getElementById('Mtg_ID').value;
+        Mtg_Status = document.getElementById('Mtg_Status').value;
+        Commented_By = "@Session["LoggedUserId"]";
+        Commented_By_ID = "@Session["LoggedUserId"]";
+        Email = "@Session["LoggedEmail"]";
+        var taskId = document.getElementById('Mtg_TaskId').value;
+
+        if (Mtg_Comments.length > 0) {
+            $('#divAddComment').modal('hide');
+            $("#wrapper").removeClass("overlay");
+
+            CallAddComments(Mtg_Status_EmpID, Mtg_Task, Mtg_Comments, RespPerson, Mtg_ID, Mtg_Status, Commented_By, Commented_By_ID, Email, taskId);
+        }
+
+        else {
+            alert("Please enter the comments.");
+        }
+    }
+
+    function CallAddComments(Mtg_Status_EmpID, Mtg_Task, Mtg_Comments, RespPerson, Mtg_ID, Mtg_Status, Commented_By, Commented_By_ID, CurrentEmail, taskId) {
+        var meetingStatusEmpID, meetingTask, meetingComments, respPerson, meetingId, meetingStatus, commentedBy, commentedByID, currentMail, taskId;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("AddComments", "MeetingDetails")",
+            data: JSON.stringify({ meetingStatusEmpID: Mtg_Status_EmpID, meetingTask: Mtg_Task, meetingComments: Mtg_Comments, respPerson: RespPerson, meetingId: Mtg_ID, meetingStatus: Mtg_Status, commentedBy: Commented_By, commentedByID: Commented_By_ID, currentMail: CurrentEmail, taskId: taskId }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function OnSuccessAddComment(result) {
+                $('#divAddComment').modal('hide');
+                IsAddCommentsSuccess = true;
+                InitializeTasksMeeting();
+            },
+            failure: function (response) {
+                alert(response.d);
+            }
+        });
+    }
+
+    function EmailComments() {
+        emailaddr = $('#txtToEmailAddress').val();
+        ccaddr = $("#txtCC").val();
+        subject = $('#txtEmailsubject').val();
+        content = $('#txtEmailBody').val();
+        var Commented_By = "@Session["LoggedEmployeeName"]";
+        var respPerson = document.getElementById('RespPerson').value;
+        var Mtg_Status = document.getElementById('Mtg_Status').value;
+        var Email = "@Session["LoggedEmail"]";
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("EmailComments", "MeetingDetails")",
+            data: JSON.stringify({ emailAddress: emailaddr, cc: ccaddr, subject: subject, bodyContent: content, respPerson: respPerson, taskStatus: Mtg_Status, commentedBy: Commented_By, currentMail: Email }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function OnSuccessAddComment(result) {
+                $('#EmailSend').dialog('close');
+                alert('Email sent successfully');
+                $("#wrapper").removeClass("overlay");
+                $("#bindTaskComments").hide();
+            },
+            failure: function (response) {
+                alert(response.d);
+            }
+        });
+    }
+
+    @*function GetCount(Meeting_Id, Employee_Id, Participant, Task, task_id, notifyCnt) {
+        var count = 0;
+        $.ajax({
+            async: false,
+            type: 'post',
+            url: "@Url.Action("GetCounts", "MeetingDetails")",
+            data: JSON.stringify({ "meetingId": Meeting_Id, "employeeId": Employee_Id, "participant": Participant, "task": Task, "task_id": task_id }),
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            success: function (selectCount) {
+                count = selectCount;
+            }
+
+        });
+
+        if (typeof notifyCnt == "undefined" || notifyCnt == null) {
+            return "(" + count + "&nbsp;Comments )";
+        }
+        else {
+            $(".notifyCnt").html(count + "&nbsp;Comments");
+        }
+
+    }*@
+    //Added to enable link toggle of tasks for status--Task Assigned
+
+    function GetIndividual(SelectedParticipant, Tasks, Status) {
+        if (parseInt(Tasks) > 0) {
+            $("#cn_Task_res,#cn_Meeting_Res,.Paginate").remove();
+            $(".task-title,.participant-title").remove();
+            $(".btn-back").remove();
+            $("#bindTaskComments").hide();
+            var cn_TaskPeriod = "Period";
+            var cn_start_date = $("#assign_start_date").val();
+            var cn_end_date = $("#assign_end_date").val();
+            var cn_status = Status;
+            var cn_template = $("#Template option:selected").val();
+            var cn_priority = $("#Priority option:selected").text();
+            var backBtn = "backBtnActive";
+
+            if (cn_template == "") {
+                cn_template = 0;
+            }
+
+            if (cn_status == "") {
+                cn_status = 0;
+            }
+
+            switch (parseInt(cn_status)) {
+                case 0:
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 0, cn_priority, backBtn);
+                    break;
+                case 5:
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 5, cn_priority, backBtn);
+                    break;
+                case 3:
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 3, cn_priority, backBtn);
+                    break;
+                case 2:
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 2, cn_priority, backBtn);
+                    break;
+                case 1:
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 1, cn_priority, backBtn);
+                    break;
+                case 4:
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 4, cn_priority, backBtn);
+                    break;
+                case "High":
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 0, "High", backBtn);
+                    break;
+                case "Medium":
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 0, "Medium", backBtn);
+                    break;
+                case "Low":
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 0, "Low", backBtn);
+                    break;
+            }
+
+        }
+    }
+
+    function GetPriority(SelectedParticipant, Tasks, priority) {
+        if (parseInt(Tasks) > 0) {
+            $("#cn_Task_res,#cn_Meeting_Res,.Paginate").remove();
+            $(".task-title,.participant-title").remove();
+            $(".btn-back").remove();
+            $("#bindTaskComments").hide();
+            var cn_TaskPeriod = "Period";
+
+            var cn_start_date = $("#assign_start_date").val();
+            var cn_end_date = $("#assign_end_date").val();
+            var cn_template = $("#template").val();
+            var cn_status = $("#statuss option:selected").val();
+
+            var cn_priority = priority;
+            var backBtn = "backBtnActive";
+
+            if (cn_status == "") {
+                cn_status = 0;
+            }
+            if (cn_template == "") {
+                cn_template = 0;
+            }
+
+            switch (cn_status) {
+                case 0:
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 0, cn_priority, backBtn);
+                    break;
+                case 5:
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 5, cn_priority, backBtn);
+                    break;
+                case 3:
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 3, cn_priority, backBtn);
+                    break;
+                case 2:
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 2, cn_priority, backBtn);
+                    break;
+                case 1:
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 1, cn_priority, backBtn);
+                    break;
+                case 4:
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 4, cn_priority, backBtn);
+                    break;
+                case "High":
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 0, "High", backBtn);
+                    break;
+                case "Medium":
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 0, "Medium", backBtn);
+                    break;
+                case "Low":
+                    GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 0, "Low", backBtn);
+                    break;
+            }
+        }
+    }
+
+    function GetTotaltasks(SelectedParticipant, Tasks) {
+        if (parseInt(Tasks) > 0) {
+            $("#cn_Task_res,#cn_Meeting_Res,.Paginate").remove();
+            $(".task-title,.participant-title").remove();
+            $(".btn-back").remove();
+            $("#bindTaskComments").hide();
+
+            var cn_TaskPeriod = "Period";
+            var cn_start_date = $("#assign_start_date").val();
+            var cn_end_date = $("#assign_end_date").val();
+
+            var cn_template = $("#Template option:selected").val();
+            var cn_status = $("#statuss option:selected").val();
+
+            if (cn_template == "") {
+                cn_template = 0;
+            }
+
+            if (cn_status == "") {
+                cn_status = 0;
+            }
+
+            var cn_priority = $("#Priority option:selected").text();
+            var backBtn = "backBtnActive";
+            switch (cn_status) {
+
+                case 0:
+                    GetMeetingDetails(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 0, cn_priority, backBtn);
+                    break;
+                case 5:
+                    GetMeetingDetails(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 5, cn_priority, backBtn);
+                    break;
+                case 3:
+                    GetMeetingDetails(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 3, cn_priority, backBtn);
+                    break;
+                case 2:
+                    GetMeetingDetails(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 2, cn_priority, backBtn);
+                    break;
+                case 1:
+                    GetMeetingDetails(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 1, cn_priority, backBtn);
+                    break;
+                case 4:
+                    GetMeetingDetails(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 4, cn_priority, backBtn);
+                    break;
+                case "High":
+                    GetMeetingDetails(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 0, "High", backBtn);
+                    break;
+                case "Medium":
+                    GetMeetingDetails(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 0, "Medium", backBtn);
+                    break;
+                case "Low":
+                    GetMeetingDetails(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, 0, "Low", backBtn);
+                    break;
+            }
+        }
+    }
+
+    function RedAlert(status, completion_date) {
+
+        if (status != 1) // && status=="In Progress" || status=="Re-opened"
+        {
+            var newdate = new Date();
+            var day = newdate.getDate();
+            var month = newdate.getMonth() + 1;
+            var year = newdate.getFullYear();
+
+            var TodayDate = month + "/" + day + "/" + year;
+            if (new Date(TodayDate) < new Date(completion_date)) {
+                return "<img src='../Content/Images/blink_square.gif'/>";
+            }
+        }
+        return "";
+
+    }
+
+    $("body").on("click", ".btn-back", function () {
+        $("#meetingSearch").click();
+        $(this).hide();
+        $("#bindTaskComments").hide();
+        $(".task-title,.participant-title").remove();
+    });
+
+    function GetMeetingDetails(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, cn_status, cn_priority, Back) {
+        console.log(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, cn_status, cn_priority);
+        //Modified to correct the exception of resource not found for 'MeetingFetchRes' ActionMethod
+        $.ajax({
+            url: "@Url.Action("MeetingSummaryRes", "MeetingDetails")",
+            type: 'GET',
+            data: "taskPeriod=" + cn_TaskPeriod + "&startDate=" + cn_start_date + "&endDate=" + cn_end_date + "&template=" + cn_template + "&participants=" + SelectedParticipant + "&status=" + cn_status + "&priority=" + cn_priority,
+            dataType: 'JSON',
+            contentType: 'Application/JSON;charset=utf-8',
+            beforeSend: function () {
+                $("#task-show-result").append("<img id='wait' style='max-width:100%;padding:5% 40%;'  src='../Content/Images/wait.gif'/>");
+
+            },
+            success: function (resultData) {
+                console.log(resultData);
+                $("#wait").remove();
+                var cn_TaskItems = "<h4 class='task-title'>Participants</h4>";
+                cn_TaskItems += '<table id="cn_Task_res" class="assigned table table-bordered  col-md-12 col-sm-12 tblTaskPaging">' +
+                                '<thead><tr>' +
+                                '<th style="width:220px;"><center>Participant Name</center> </th>' +
+                                '<th><center>Total tasks</center></th>' +
+                                '<th><center> Assigned</center></th>' +
+                                '<th><center>In Progress</center></th>' +
+                                '<th><center>Completed</center></th>' +
+                                '<th><center>Closed</center></th>' +
+                                '<th><center>ReOpened</center></th>' +
+                                '<th><center>High</center></th>' +
+                                '<th><center>Medium</center></th>' +
+                                '<th><center>Low</center></th>' +
+                                '</th></tr></thead>';
+                var cn_Meetingitems = "<h4 class='participant-title'>Task</h4>";
+
+                cn_Meetingitems += '<table id="cn_Meeting_Res" class="table table-bordered col-md-12 col-sm-12 tblPaging">' +
+                                    '<thead><tr>' +
+                                    '<th><center>Participant</center> </th>' +
+                                    '<th><center>Task </th>' +
+                                    '<th><center>Status</center></th>' +
+                                    '<th><center>Date Assigned</center></th>' +
+                                    '<th><center>Target Date</center></th>' +
+                                    '<th><center>Review Frequency</center></th>' +
+                                    '<th><center>Review Date</center></th>' +
+                                    '<th><center>Meeting Name</center></th>' +
+                                    '<th style="width:8%">Action</th>' +
+                                    '<th><center>Review Status</center></th>' +
+
+                                    '</th></tr></thead>';
+
+                $.each(resultData, function (key, val) {
+                    if (key == "FetchTaskResult") {
+                        var TaskCnt = 0;
+                        if (val.length > 0) {
+                            TaskCnt += 1;
+                            $.each(val, function (obj, objval) {
+                                var Participant = "&quot;" + objval.Employee_Id + "&quot;";
+                                var total = "&quot;" + objval.total + "&quot;";
+                                var assigned = "&quot;" + objval.Assigned + "&quot;";
+                                var progress = "&quot;" + objval.InProgress + "&quot;";
+                                var completed = "&quot;" + objval.Completed + "&quot;";
+                                var closed = "&quot;" + objval.Closed + "&quot;";
+                                var ReOpened = "&quot;" + objval.ReOpened + "&quot;";
+                                var high = "&quot;" + objval.High + "&quot;";
+                                var medium = "&quot;" + objval.Medium + "&quot;";
+                                var low = "&quot;" + objval.Low + "&quot;";
+                                ////////////july 18 -EDIT here
+
+                                var emp_arr = [];
+                                var searchFOrRecord = objval.Employee_Id;
+                                var ele = document.getElementById(searchFOrRecord);
+                                if (ele) {
+                                    console.log("jSCRIPT!@@searchFOrRecord ELEMENT ---Not found");
+                                    cn_TaskItems += "<tr id=nc'tr_" + objval.Employee_Id + "'>" +
+                                        //Not this
+                                    "<td><align-left><a id='participantName' onlick='GetTotaltasks(" + Participant + "," + total + ")'>" + objval.ParticipantName + "</a></align-left></td>" +
+                                    "<td><center><a id='participantTasks' onclick='GetTotaltasks(" + Participant + "," + Total + ")'>" + objval.Total.count() + "</a></center></td>" +
+                                        "<td><center><a id='Tasks_assigned' onclick='GetTotaltasks(" + Participant + "," + assigned + ")'>" + objval.Assigned.count() + "</a></center></td>" +
+
+                                    "<td><center><a id='Task_InProgress' onclick='GetTotaltasks(" + Participant + "," + progress + ")'>" + objval.InProgress.count() + "</a></center></td>" +
+                                    "<td><center><a id='Task_Completed' onclick='GetTotaltasks(" + Participant + "," + completed + ")'>" + objval.Completed.count() + "</a></center></td>" +
+                                    "<td><center><a id='Task_Closed' onclick='GetTotaltasks(" + Participant + "," + closed + ")'>" + objval.Closed.count() + "</a></center></td>" +
+                                    "<td><center><a id='Task_ReOpened' onclick='GetTotaltasks(" + Participant + "," + ReOpened + ")'>" + objval.ReOpened.count() + "</a></center></td>" +
+                                    "<td><center><a id='Imp_High' onclick='GetTotaltasks(" + Participant + "," + high + ")'>" + objval.High.count() + "</a></center></td>" +
+                                    "<td><center><a id='Imp_Medium' onclick='GetTotaltasks(" + Participant + "," + medium + ")'>" + objval.Medium.count() + "</a></center></td>" +
+                                    "<td><center><a id='Imp_Low' onclick='GetTotaltasks(" + Participant + "," + low + ")'>" + objval.Low.count() + "</a></center></td>" +
+                                    "</tr>";
+                                }
+                                else {
+                                    console.log("jSCRIPT!@@!searchFOrRecord ELEMENT ---FOUND!!!!!");
+                                    var arr = [];
+
+                                    cn_TaskItems += "<tr id='tr_" + objval.Employee_Id + "'>" +
+                                    //Not this 2
+                                    "<td><align-left><a id='participantName' onclick='GetTotaltasks(" + Participant + "," + total + ")'>" + objval.ParticipantName + "</a></align-left></td>" +
+                                    "<td><center><a id='participantTasks' onclick='GetTotaltasks(" + Participant + "," + total + ")'>" + objval.total + "</a></center></td>" +
+
+                                    "<td><center><a id='Tasks_assigned' onclick='GetIndividual(" + Participant + "," + assigned + "," + '"5"' + ")'>" + objval.Assigned + "</a></center></td>" +
+
+                                    "<td><center><a id='Task_InProgress' onclick='GetIndividual(" + Participant + "," + progress + "," + '"3"' + ")'>" + objval.InProgress + "</a></center></td>" +
+
+                                    "<td><center><a id='Task_Completeds' onclick='GetIndividual(" + Participant + "," + completed + "," + '"2"' + ")'>" + objval.Completed + "</a></center></td>" +
+
+                                    "<td><center><a id='Task_Closedss' onclick='GetIndividual(" + Participant + "," + closed + "," + '"1"' + ")'>" + objval.Closed + "</a></center></td>" +
+
+                                    "<td><center><a id='Task_ReOpened' onclick='GetIndividual(" + Participant + "," + ReOpened + "," + '"4"' + ")'>" + objval.ReOpened + "</a></center></td>" +
+
+                                    "<td><center><a id='Imp_High' onclick='GetPriority(" + Participant + "," + high + "," + '"High"' + ")'>" + objval.High + "</a></center></td>" +
+                                    "<td><center><a id='Imp_Medium' onclick='GetPriority(" + Participant + "," + medium + "," + '"Medium"' + ")'>" + objval.Medium + "</a></center></td>" +
+                                    "<td><center><a id='Imp_Low' onclick='GetPriority(" + Participant + "," + low + "," + '"Low"' + ")'>" + objval.Low + "</a></td>" +
+                                    "</tr>";
+                                }
+                            });
+                        }
+                        else {
+                            cn_TaskItems += "<tr><td colspan='14'>No records found</td></tr>";
+                        }
+                        cn_TaskItems += "</table>";
+
+                        if (Back == null) {
+                            $("#task-show-result").append(cn_TaskItems);
+                        }
+                        else {
+                            $("#task-show-result").append("<input type='button' class='btn btn-primary btn-sm btn-back pull-right' value='Back'  />" + cn_TaskItems);
+                        }
+                        IntializeTaskPaging();
+                    }
+
+                    if (key == "FetchMeetingResult") {
+                        var cnCount = 0;
+                        if (val.length > 0) {
+                            $.each(val, function (Object, Objectval) {
+                                cnCount += 1;
+                                var taskId = Objectval.Task_Id;   //Added.
+                                var MeetingId = Objectval.Meeting_Id;
+                                var Task = "&quot;" + Objectval.Task + "&quot;";
+                                var Participant = "&quot;" + Objectval.Participant + "&quot;";
+                                var EmpId = Objectval.Employee_Id;
+                                var Status = "&quot;" + Objectval.Status + "&quot;";
+                                var count = Objectval.NoOfComments;
+                                if (Objectval.Category == null) {Objectval.Category = "";}
+                                if (Objectval.Status.toLowerCase() == "in progress") {
+                                    cn_Meetingitems += "<tr class='alert-warning'>" +
+                                    '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Participantname + '</a></td>' +
+                                    '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Task + "</a><span class='pull-right'  id='totalCount'>(" + count + " Comments)</span></td>" +
+                                    "<td>" + Objectval.Status + "</td>" +
+                                        "<td class='startDate'><center>" + Objectval.Meeting_DateStr + "</center></td>" +
+                                        "<td><center>" + Objectval.Completion_DateStr + "</center></td>" +
+                                    "<td>" + Objectval.reviewFreq1 + "</td>" +
+                                        "<td class='dt'><center>" + (Objectval.Review_DateStr == "01-Jan-0001" ? " " : Objectval.Review_DateStr) + "</center></td>" +
+                                    "<td>" + Objectval.Category + "</td>" +
+                                    "<td>" +
+                                    "<a href='@Url.Action("EditMeetingDetails", "MeetingDetails")?taskId=" + taskId + "&meetingId=" + MeetingId + "' class='modal-link' data-placement='top' data-toggle='tooltip' data-original-title='Edit'>Edit </a><br/>" +
+                                    '<b><a data-toggle="modal" data-target="#delete-alert" class="DeleteClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Delete</a></b><br/>' +
+                                    '<b><a data-toggle="modal" data-target="#close-alert" class="CloseClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Close</a></b></td>' +
+                                        '<td><h5><center>' + (Objectval.review_status == true ? "Yes" : "No") + '</center></h5></td>' +
+                                    "</tr>";
+                                }
+                                else if (Objectval.Status.toLowerCase() == "task assigned") {
+
+                                    cn_Meetingitems += "<tr class='alert-info'>" +
+                                    '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Participantname + '</a></td>' +
+                                    '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Task + "</a><span class='pull-right'  id='totalCount'>(" + count + " Comments)</span></td>" +
+                                    "<td>" + Objectval.Status + "</td>" +
+                                        "<td  class='startDate'><center>" + Objectval.Meeting_DateStr + "</center></td>" +
+                                        "<td><center>" + Objectval.Completion_DateStr + "</center></td>" +
+                                    "<td>" + Objectval.reviewFreq1 + "</td>" +
+                                        "<td class='dt'><center>" + (Objectval.Review_DateStr == "01-Jan-0001" ? " " : Objectval.Review_DateStr) + "</center></td>" +
+                                    "<td>" + Objectval.Category + "</td>" +
+                                    "<td>" +
+                                    "<a href='@Url.Action("EditMeetingDetails", "MeetingDetails")?taskId=" + taskId + "&meetingId=" + MeetingId + "' class='modal-link' data-placement='top' data-toggle='tooltip' data-original-title='Edit'>Edit </a><br/>" +
+                                    '<a data-toggle="modal" data-target="#delete-alert" class="DeleteClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Delete</a><br/>' +
+                                    '<b><a data-toggle="modal" data-target="#close-alert" class="CloseClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Close</a></b></td>' +
+                                        '<td><h5><center>' + (Objectval.review_status == true ? "Yes" : "No") + '</center></h5></td>' +
+                                    "</tr>";
+                                }
+
+                                else if (Objectval.Status.toLowerCase == "closed") {
+                                    cn_Meetingitems += "<tr class='alert-danger'>" +
+                                    '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Participantname + '</a></td>' +
+                                    '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Task + "</a><span class='pull-right'  id='totalCount'>(" + count + " Comments)</span></td>" +
+                                    "<td>" + Objectval.Status + "</td>" +
+                                        "<td  class='startDate'><center>" + Objectval.Meeting_DateStr + "</center></td>" +
+                                        "<td><center>" + Objectval.Completion_DateStr + "</center></td>" +
+                                    "<td>" + Objectval.reviewFreq1 + "</td>" +
+                                        "<td class='dt'><center>" + (Objectval.Review_DateStr == "01-Jan-0001" ? " " : Objectval.Review_DateStr) + "</center></td>" +
+                                    "<td>" + Objectval.Category + "</td>" +
+                                    "<td>" +
+                                    "<a href='@Url.Action("EditMeetingDetails","MeetingDetails")?taskId=" + taskId + "&meetingId=" + MeetingId + "' class='modal-link ' data-placement='top' data-toggle='tooltip' data-original-title='Edit'>Edit </a><br/>" +
+                                    '<b><a data-toggle="modal" data-target="#delete-alert" class="DeleteClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Delete</a></b><br/>' +
+                                    '<b><a data-toggle="modal" data-target="#close-alert" class="CloseClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Close</a></b></td>' +
+                                        '<td><center>' + (Objectval.review_status == true ? "Yes" : "No") + '</center></td>' +
+                                    "</tr>";
+                                }
+                                else {
+                                    cn_Meetingitems += "<tr class='alert-success'>" +
+                                    '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Participantname + '</a></td>' +
+                                    '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Task + "</a><span class='pull-right'  id='totalCount'>(" + count + " Comments)</span></td>" +
+                                    "<td>" + Objectval.Status + "</td>" +
+                                        "<td  class='startDate'><center> " + Objectval.Meeting_DateStr + "</center></td>" +
+                                        "<td><center>" + Objectval.Completion_DateStr + "</center></td>" +
+                                    "<td>" + Objectval.reviewFreq1 + "</td>" +
+                                        "<td class='dt'><center>" + (Objectval.Review_DateStr == "01-Jan-0001" ? " " : Objectval.Review_DateStr) +  "</center></td>" +
+                                    "<td>" + Objectval.Category + "</td>" +
+                                    "<td>" +
+                                    "<a href='@Url.Action("EditMeetingDetails","MeetingDetails")?taskId=" + taskId + "&meetingId=" + MeetingId + "' class='modal-link ' data-placement='top' data-toggle='tooltip' data-original-title='Edit'>Edit </a><br/>" +
+                                    '<b><a data-toggle="modal" data-target="#delete-alert" class="DeleteClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Delete</a></b><br/>' +
+                                    '<b><a data-toggle="modal" data-target="#close-alert" class="CloseClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Close</a></b></td>' +
+                                        '<td><center>' + (Objectval.review_status == true ? "Yes" : "No") + '</center></td>' +
+                                    "</tr>";
+                                }
+                            });
+                        }
+
+                        else {
+                            cn_Meetingitems += "<tr><td colspan='14'>No records found</td></tr>";
+                        }
+                        cn_Meetingitems += "</table>";
+                        $("#grid-show-result").append(cn_Meetingitems);
+                        InitializePaging();
+                        InitializeEmailComments();
+                    }
+                });
+            },
+            error: function (xhr, errorType, exception) {
+                var responseText = jQuery.parseJSON(xhr.responseText);
+                console.log(responseText.ExceptionType);
+                console.log(responseText.StackTrace);
+                console.log(responseText.Message);
+            }
+        });
+    }
+    function GetMeetingDetailsIndividual(cn_TaskPeriod, cn_start_date, cn_end_date, cn_template, SelectedParticipant, cn_status, cn_priority, Back) {
+        $.ajax({
+            url: "@Url.Action("MeetingSummaryIndividualRes", "MeetingDetails")",
+            type: 'GET',
+            data: "taskPeriod=" + cn_TaskPeriod + "&startDate=" + cn_start_date + "&endDate=" + cn_end_date + "&template=" + cn_template + "&participants=" + SelectedParticipant + "&status=" + cn_status + "&priority=" + cn_priority,
+            dataType: 'JSON',
+            contentType: 'Application/JSON;charset=utf-8',
+            beforeSend: function () {
+                $("#task-show-result").append("<img id='wait' style='max-width:100%;padding:5% 40%;'  src='../Content/Images/wait.gif'/>");
+            },
+            success: function (resultData) {
+                console.log(resultData);
+                $("#wait").remove();
+                var cn_TaskItems = "<h4 class='task-title'>Participants</h4>";
+                cn_TaskItems += '<table id="cn_Task_res" style="width:980px;" class="assigned table table-bordered  col-md-12 col-sm-12 tblTaskPaging">' + '<thead><tr>' +
+                    '<th style="width:220px;"><center>Participant Name</center> </th>' +
+                    ' <th><center>Total tasks</center></th>' +
+                    '<th><center> Assigned</center></th>' +
+                    '<th><center>In Progress</center></th>' +
+                    '<th><center>Completed</center></th>' +
+                    '<th><center>Closed</center></th>' +
+                    '<th><center>ReOpened</center></th>' +
+                    '<th><center>High</center></th>' +
+                    '<th><center>Medium</center></th>' +
+                    '<th><center>Low</center></th>' + '</th></tr></thead>';
+
+                    var cn_Meetingitems = "<h4 class='participant-title'>Task</h4>";
+
+                    cn_Meetingitems += '<table id="cn_Meeting_Res" class="table table-bordered col-md-12 col-sm-12 tblPaging"><thead><tr><th>Participant</th>' +
+                    '<th><center>Task</center> </th>' +
+                    ' <th><center>Status</center></th>' +
+                    '<th><center>Date Assigned</center></th>' +
+                    '<th><center>Target Date</center></th>' +
+                    '<th><center>Priority</center></th>' +
+                    '<th><center>Review Frequency</center></th>' +
+                    '<th><center>Review Date</center></th>' +
+                    '<th><center>Meeting Name</center></th>' +
+                    '<th><center>Edit</center></th>' +
+                    '<th><center>Delete</center></th>' +
+                    '<th><center>Close</center></th>' +
+                    '<th><center>Comments</center></th>'+
+                    '<th><center>Review Status</center></th>' +
+                    '</th></tr></thead>';
+
+                $.each(resultData, function (key, val) {
+                    if (key == "FetchTaskResult") {
+                        var TaskCnt = 0;
+                        if (val.length > 0) {
+                            TaskCnt += 1;
+                            $.each(val, function (obj, objval) {
+                                var Participant = "&quot;" + objval.Employee_Id + "&quot;";
+                                var total = "&quot;" + objval.total + "&quot;";
+                                var assigned = "&quot;" + objval.Assigned + "&quot;";
+                                var progress = "&quot;" + objval.InProgress + "&quot;";
+                                var completed = "&quot;" + objval.Completed + "&quot;";
+                                var closed = "&quot;" + objval.Closed + "&quot;";
+                                var ReOpened = "&quot;" + objval.ReOpened + "&quot;";
+                                var high = "&quot;" + objval.High + "&quot;";
+                                var medium = "&quot;" + objval.Medium + "&quot;";
+                                var low = "&quot;" + objval.Low + "&quot;";
+
+                                ////////////july 18 -EDIT here
+                                var emp_arr = [];
+                                var searchFOrRecord = objval.Employee_Id;
+                                var ele = document.getElementById(searchFOrRecord);
+                                if (ele) {
+                                    console.log("jSCRIPT!@@searchFOrRecord ELEMENT ---Not found");
+                                    cn_TaskItems += "<tr id='tr_" + objval.Employee_Id + "'>" +
+                                        //Not this 3...
+                                        "<td><center><a id='participantName' onclick='GetTotaltasks(" + Participant + "," + total + ")'>" + objval.Participant.count() + "</a></center></td>" +
+                                        "<td><center><a id='participantTasks' onclick='GetTotaltasks(" + Participant + "," + Total + ")'>" + objval.Total.count() + "</a></center></td>" +
+                                        "<td><center><a id='Tasks_assigned' onclick='GetTotaltasks(" + Participant + "," + assigned + ")'>" + objval.Assigned.count() + "</a></center></td>" +
+
+                                        "<td><center><a id='Task_InProgress' onclick='GetTotaltasks(" + Participant + "," + progress + ")'>" + objval.InProgress.count() + "</a></center></td>" +
+                                        "<td><center><a id='Task_Completed' onclick='GetTotaltasks(" + Participant + "," + completed + ")'>" + objval.Completed.count() + "</a></center></td>" +
+                                        "<td><center><a id='Task_Closed' onclick='GetTotaltasks(" + Participant + "," + closed + ")'>" + objval.Closed.count() + "</a></center></td>" +
+                                        "<td><center><a id='Task_ReOpened' onclick='GetTotaltasks(" + Participant + "," + ReOpened + ")'>" + objval.ReOpened.count() + "</a></center></td>" +
+                                        "<td><center><a id='Imp_High' onclick='GetTotaltasks(" + Participant + "," + high + ")'>" + objval.High.count() + "</a></center></td>" +
+                                        "<td><center><a id='Imp_Medium' onclick='GetTotaltasks(" + Participant + "," + medium + ")'>" + objval.Medium.count() + "</a></center></td>" +
+                                        "<td><center><a id='Imp_Low' onclick='GetTotaltasks(" + Participant + "," + low + ")'>" + objval.Low.count() + "</a></center></td>" +
+                                      "</tr>";
+                                }
+                                else {
+                                    console.log("jSCRIPT!@@!searchFOrRecord ELEMENT ---FOUND!!!!!");
+                                    var arr = [];
+                                    cn_TaskItems += "<tr id='tr_" + objval.Employee_Id + "'>" +
+
+                                    "<td><center><a id='participantName' onclick='GetTotaltasks(" + Participant + "," + total + ")'>" + objval.Participant + "</a></center></td>" +
+                                    "<td><center><a id='participantTasks' onclick='GetTotaltasks(" + Participant + "," + total + ")'>" + objval.total + "</a></center></td>" +
+                                    "<td><center><a id='Tasks_assigned' onclick='GetIndividual(" + Participant + "," + assigned + "," + '"5"' + ")'>" + objval.Assigned + "</a></center></td>" +
+
+                                    "<td><center><a id='Task_InProgress' onclick='GetIndividual(" + Participant + "," + progress + "," + '"3"' + ")'>" + objval.InProgress + "</a></center></td>" +
+
+                                    "<td><center><a id='Task_Completed' onclick='GetIndividual(" + Participant + "," + completed + "," + '"2"' + ")'>" + objval.Completed + "</a></center></td>" +
+
+                                    "<td><center><a id='Task_Closeds' onclick='GetIndividual(" + Participant + "," + closed + "," + '"1"' + ")'>" + objval.Closed + "</a></center></td>" +
+
+                                    "<td><center><a id='Task_ReOpened' onclick='GetIndividual(" + Participant + "," + ReOpened + "," + '"4"' + ")'>" + objval.ReOpened + "</a></center></td>" +
+
+                                    "<td><center><a id='Imp_High' onclick='GetPriority(" + Participant + "," + high + "," + '"High"' + ")'>" + objval.High + "</a></center></td>" +
+                                    "<td><center><a id='Imp_Medium' onclick='GetPriority(" + Participant + "," + medium + "," + '"Medium"' + ")'>" + objval.Medium + "</a></center></td>" +
+                                    "<td><center><a id='Imp_Low' onclick='GetPriority(" + Participant + "," + low + "," + '"Low"' + ")'>" + objval.Low + "</a></center></td>" +
+                                    "</tr>";
+                                }
+
+                            });
+                        }
+                        else {
+                            cn_TaskItems += "<tr><td colspan='14'>No records found</td></tr>";
+                        }
+
+                        cn_TaskItems += "</table>";
+
+                        if (Back == null) {
+                            $("#task-show-result").append(cn_TaskItems);
+                        }
+                        else {
+                            $("#task-show-result").append("<input type='button' class='btn btn-primary btn-sm btn-back pull-right' value='Back'  />" + cn_TaskItems);
+                        }
+
+                        IntializeTaskPaging();
+                    }
+
+                    if (key == "FetchMeetingResult") {
+
+                        var cnCount = 0;
+                        if (val.length > 0) {
+                            $.each(val, function (Object, Objectval) {
+                                cnCount += 1;
+                                var taskId = Objectval.Task_Id;   //Added.
+                                var MeetingId = Objectval.Meeting_Id;
+                                var Task = "&quot;" + Objectval.Task + "&quot;";
+                                var Participant = "&quot;" + Objectval.Participant + "&quot;";
+                                var EmpId = Objectval.Employee_Id;
+                                var Status = "&quot;" + Objectval.Status + "&quot;";
+
+                                var count = Objectval.NoOfComments
+                                    //GetCount(Objectval.Meeting_Id, Objectval.Employee_Id, Objectval.Participant, Objectval.Task, Objectval.Task_Id);
+                                if (Objectval.Status.toLowerCase() == "in progress") {
+                                cn_Meetingitems += "<tr class='alert-warning'>" +
+                                '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ')">' + Objectval.Participantname + '</a></td>' +
+                                '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ')">' + Objectval.Task + "</a><span class='pull-right'  id='totalCount'>(" + count + " Comments)</span></td>" +
+                                "<td>" + Objectval.Status + "</td>" +
+                                "<td class='startDate'>" + Objectval.Meeting_DateStr + "</td>" +
+                                "<td>" + Objectval.Completion_DateStr + "</td>" +
+                                "<td>" + Objectval.reviewFreq1 + "</td>" +
+                                "<td>" + (Objectval.Review_DateStr == "01-Jan-0001" ? " " : Objectval.Review_DateStr) + "</td>" +
+                                "<td>" +
+                                Objectval.Category + "</td>" +
+                                "<td>" +
+                                "<a href='@Url.Action("EditMeetingDetails","MeetingDetails")?taskId=" + taskId + "&meetingId=" + MeetingId + "' class='modal-link btn btn-default btn-sm' data-placement='top' data-toggle='tooltip' data-original-title='Edit'>Edit </a></td>" +
+                                '<td><a data-toggle="modal" data-target="#delete-alert" class="DeleteClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Delete</a></td>' +
+                                '<td><a data-toggle="modal" data-target="#close-alert" class="CloseClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Close</a></td>' +
+                                '<td><a onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')" >Show Comments</a><span>' + RedAlert(Objectval.Status, Objectval.Completion_DateStr) + '</span></td>' +
+                                '<td>' + (Objectval.review_status == true ? "Yes" : "No") + '</td>' +
+                                "</tr>";
+                                }
+                                else if (Objectval.Status.toLowerCase() == "task assigned") {
+                                cn_Meetingitems += "<tr class='alert-info'>" +
+                                '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Participantname + '</a></td>' +
+                                '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Task + "</a><span class='pull-right'  id='totalCount'>(" + count + " Comments)</span></td>" +
+                                "<td>" + Objectval.Status + "</td>" +
+                                "<td  class='startDate'>" + Objectval.Meeting_DateStr + "</td>" +
+                                "<td>" + Objectval.Completion_DateStr + "</td>" +
+                                "<td>" + Objectval.reviewFreq1 + "</td>" +
+                                "<td>" + (Objectval.Review_DateStr == "01-Jan-0001" ? " " : Objectval.Review_DateStr) + "</td>" +
+                                "<td>" + Objectval.Category + "</td>" +
+                                "<td>" +
+                                "<a href='@Url.Action("EditMeetingDetails","MeetingDetails")?taskId=" + taskId + "&meetingId=" + MeetingId + "' class='modal-link btn btn-default btn-sm' data-placement='top' data-toggle='tooltip' data-original-title='Edit'>Edit </a></td>" +
+                                '<td><a data-toggle="modal" data-target="#delete-alert" class="DeleteClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Delete</a></td>' +
+                                '<td><a data-toggle="modal" data-target="#close-alert" class="CloseClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Close</a></td>' +
+                                '<td><a onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')" >Show Comments</a><span>' + RedAlert(Objectval.Status, Objectval.Completion_DateStr) + '</span></td>' +
+                                '<td>' + (Objectval.review_status == true ? "Yes" : "No") + '</td>' +
+                                "</tr>";
+                                }
+
+                                else if (Objectval.Status.toLowerCase == "closed") {
+                                cn_Meetingitems += "<tr class='alert-danger'>" +
+                                '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Participantname + '</a></td>' +
+                                '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Task + "</a><span class='pull-right'  id='totalCount'>(" + count + " Comments)</span></td>" +
+                                "<td>" + Objectval.Status + "</td>" +
+                                "<td  class='startDate'>" + Objectval.Meeting_DateStr + "</td>" +
+                                "<td>" + Objectval.Completion_DateStr + "</td>" +
+                                "<td>" + Objectval.reviewFreq1 + "</td>" +
+                                "<td>" + (Objectval.Review_DateStr == "01-Jan-0001" ? " " : Objectval.Review_DateStr) + "</td>" +
+                                "<td>" + Objectval.Category + "</td>" +
+                                "<td>" +
+                                "<a href='@Url.Action("EditMeetingDetails","MeetingDetails")?taskId=" + taskId + "&meetingId=" + MeetingId + "' class='modal-link btn btn-default btn-sm' data-placement='top' data-toggle='tooltip' data-original-title='Edit'>Edit </a></td>" +
+                                '<td><a data-toggle="modal" data-target="#delete-alert" class="DeleteClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Delete</a></td>' +
+                                '<td><a data-toggle="modal" data-target="#close-alert" class="CloseClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Close</a></td>' +
+                                '<td><a onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')" >Show Comments</a><span>' + RedAlert(Objectval.Status, Objectval.Completion_DateStr) + '</span></td>' +
+                                '<td>' + (Objectval.review_status == true ? "Yes" : "No") + '</td>' +
+                                "</tr>";
+                                }
+                                else if (Objectval.Status.toLowerCase == "re-opened") {
+                                cn_Meetingitems += "<tr class='re-opened'>" + '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Participantname + '</a></td>' +
+                                '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Task + "</a><span class='pull-right'  id='totalCount'>(" + count + " Comments)</span></td>" +
+                                "<td>" + Objectval.Status + "</td>" +
+                                "<td  class='startDate'>" + Objectval.Meeting_DateStr + "</td>" +
+                                "<td>" + Objectval.Completion_DateStr + "</td>" +
+                                "<td>" + Objectval.reviewFreq1 + "</td>" +
+                                "<td>" + (Objectval.Review_DateStr == "01-Jan-0001" ? " " : Objectval.Review_DateStr) + "</td>" +
+                                "<td>" + Objectval.Category + "</td>" +
+                                "<td>" +
+                                "<a href='@Url.Action("EditMeetingDetails","MeetingDetails")?taskId=" + taskId + "&meetingId=" + MeetingId + "' class='modal-link btn btn-default btn-sm' data-placement='top' data-toggle='tooltip' data-original-title='Edit'>Edit </a></td>" +
+                                '<td><a data-toggle="modal" data-target="#delete-alert" class="DeleteClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Delete</a></td>' +
+                                '<td><a data-toggle="modal" data-target="#close-alert" class="CloseClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Close</a></td>' +
+                                '<td><a onclick="CallGetComments(' + MeetingId + ',' + taskId + ')" >Show Comments</a><span>' + RedAlert(Objectval.Status, Objectval.Completion_DateStr) + '</span></td>' +
+                                '<td>' + (Objectval.review_status == true ? "Yes" : "No") + '</td>' +
+                                "</tr>";
+                                }
+                                else {
+                                cn_Meetingitems += "<tr class='alert-success'>" +
+                                '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Participantname + '</a></td>' +
+                                '<td><a class="BindComments" onclick="CallGetComments(' + MeetingId + ',' + Participant + ',' + EmpId + ',' + Status + ',' + taskId + ')">' + Objectval.Task + "</a><lspan class='pull-right'  id='totalCount'>(" + count + " Comments)</span></td>" +
+                                "<td>" + Objectval.Status + "</td>" +
+                                "<td  class='startDate'> " + Objectval.Meeting_DateStr + "</td>" +
+                                "<td>" + Objectval.Completion_DateStr + "</td>" +
+                                "<td>" + Objectval.reviewFreq1 + "</td>" +
+                                "<td>" +(Objectval.Review_DateStr == "01-Jan-0001" ? " " : Objectval.Review_DateStr) + "</td>" +
+                                "<td>" + Objectval.Category + "</td>" +
+                                "<td>" +
+                                "<a href='@Url.Action("EditMeetingDetails","MeetingDetails")?taskId=" + taskId + "&meetingId=" + MeetingId + "' class='modal-link btn btn-default btn-sm' data-placement='top' data-toggle='tooltip' data-original-title='Edit'>Edit </a>|" +
+                                '<a data-toggle="modal" data-target="#delete-alert" class="DeleteClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Delete</a>|' +
+                                '<a data-toggle="modal" data-target="#close-alert" class="CloseClick" meetingid="' + MeetingId + '" taskid="' + taskId + '">Close</a></td>' +
+                                '<td><h5>' + (Objectval.review_status == true ? "Yes" : "No") + '</h5></td>' +
+                                "</tr>";
+                                }
+                            });
+                        }
+                        else {
+                            cn_Meetingitems += "<tr><td colspan='14'>No records found</td></tr>";
+                        }
+                        cn_Meetingitems += "</table>";
+                        $("#grid-show-result").append(cn_Meetingitems);
+                        InitializePaging();
+                        InitializeEmailComments();
+                    }
+                });
+            },
+            error: function (xhr, errorType, exception) {
+                var responseText = jQuery.parseJSON(xhr.responseText);
+                console.log(responseText.ExceptionType);
+                console.log(responseText.StackTrace);
+                console.log(responseText.Message);
+            }
+        });
+    }
+
+
+    $(document).on("click", ".DeleteClick", function () {
+        var meetingid = $(this).attr("meetingid");
+        var taskid = $(this).attr("taskid");
+        $("#myyes").attr("meetingid", meetingid);
+        $("#myyes").attr("taskid", taskid);
+    });
+
+    $(document).on("click", "#myyes", function () {
+        var meetingid = $(this).attr("meetingid");
+        var taskid = $(this).attr("taskid");
+        Delete(meetingid, taskid);
+        InitializeTasksMeeting();
+    });
+
+    $(document).on("click", ".CloseClick", function () {
+        var meetingid = $(this).attr("meetingid");
+        var taskid = $(this).attr("taskid");
+        $("#myyes1").attr("meetingid", meetingid);
+        $("#myyes1").attr("taskid", taskid);
+    });
+
+    $(document).on("click", "#myyes1", function () {
+        var meetingid = $(this).attr("meetingid");
+        var taskid = $(this).attr("taskid");
+        CloseCmnts(meetingid, taskid);
+        InitializeTasksMeeting();
+    });
+</script>

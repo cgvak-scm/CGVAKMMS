@@ -1,0 +1,745 @@
+﻿@model MMS.Models.MeetingViewModel
+
+@{
+    ViewBag.Title = "Create Task";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+}
+<link href="~/Content/Loading.css" rel="stylesheet" />
+<style type="text/css">
+    .employeeModal {
+        width: 450px !important;
+    }
+
+    label.error {
+        color: red;
+    }
+</style>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Create Task
+    </div>
+    <div class="panel-body">
+
+
+        @using (Html.BeginForm("TaskAdd", "CreateTask", FormMethod.Post, htmlAttributes: new { @class = "frmAddTask task-form" }))
+        {
+            @Html.ValidationSummary(true, "fill the errors", new { @class = "text-danger" })
+            <input type="hidden" class="files" name="files" />
+
+            <div class="form-horizontal">
+                <div class="col-md-12 col-sm-12">
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-4 required" })
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(model => model.mmsMeetingMaster.Meeting_Department, new SelectList(ViewBag.Departments, "DepartmentName", "DepartmentName"), "--SELECT---", htmlAttributes: new { @class = "form-control Meeting_Department required" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label("If others please specify", htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.Editor("Meeting_other_dept", new { htmlattributes = new { @class = "form-control" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-10 col-md-offset-2">
+                        <div class="form-group">
+                            <div class="col-md-5">
+
+                                @Html.ListBox("Participants", new SelectList(""), htmlAttributes: new { @class = "form-control" })
+
+                            </div>
+
+                            <div class="col-md-2" style="padding-left:0px;padding-right:0px;">
+
+                                <div class="compare_box">
+                                    <div class="row">
+                                        <div class="col-md-1 col-xs-1">
+
+                                            <span class="glyphicon glyphicon-plus" area-hidden="true" title="Add New" style="cursor:pointer;" data-toggle="modal" onclick="OpenAddEmployeeModal()" id="designationclick_plus"></span>
+                                        </div>
+                                        <div class="col-md-8 col-xs-6">
+                                            <input type="button" class="form-control btn-default" value=">>" name="move_next" id="move_nxt" />
+                                        </div>
+                                    </div>
+
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-1 col-xs-1">
+                                            <span class="glyphicon glyphicon-refresh" area-hidden="true" title="Sync" style="cursor:pointer;" onclick="StartEmployeeSync()"></span>
+
+                                        </div>
+                                        <div class="col-md-8 col-xs-6">
+                                            <input type="button" class="form-control btn-default" value="<<" name="move_prev" id="move_prv" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                @Html.ListBox("Added_Participants", new SelectList(""), htmlAttributes: new { @class = "form-control" })
+                                @Html.Editor("hidden_participants", new { htmlattributes = new { @class = "hidden" } })
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group" id="FileUploaded">
+                            @Html.Label("Attachments if any", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-4">
+
+                                <a href="@Url.Action("Index", "Upload")" class="modal-link btn btn-default btn-sm" data-placement="top" data-toggle="tooltip" data-original-title="Upload File">
+                                    Upload file
+                                </a>
+                                <input type="hidden" id="hid_txt" />
+                            </div>
+                        </div>
+                        <div id='dynContent' class="hide"><h5><b>The files are:</b></h5> </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <div class="form-horizontal">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-inline alert alert-warning" style="padding: 8px;">
+                        <label>
+                            Tasks/Actions for the Meeting
+                        </label>
+                    </div>
+                    <div class="responsive-table">
+                        <table class="table table-hover table-condensed" id="createTable">
+                            <tr class="tbl_header">
+                                <th>Sno</th>
+                                <th>Tasks/Projects Discussed</th>
+                                <th>Responsible Person</th>
+                                <th>Priority</th>
+                                <th>Completion Date</th>
+                                <th>Comments</th>
+                                <th>Category</th>
+                                <th>Review Frequency</th>
+                                <th>Review Date</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <input type="button" value="Add" class="btn" name="add1_meeting" id="add_meeting" />
+                    <input type="button" value="Delete" class="btn" name="delete_meeting" id="delete_meeting" />
+                    <input type="submit" value="Save" class="btn pull-right" name="save_meeting" id="save_meeting" />
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>
+
+
+<!--Add new employee modal-->
+<div class="modal fade" tabindex="-1" role="dialog" id="newEmployeeModal">
+    <div class="modal-dialog employeeModal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ResetEmployeeControls()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">New Employee</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="col-md-12">
+
+                        <div class="form-group">
+                            <label for="txtDept" class="col-sm-3 control-label">Department</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control empControl" id="txtDept" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="DropDownDesignation" class="col-sm-3 control-label">Designation</label>
+                            <div class="col-sm-9">
+                                @{
+                                    <select id="ddlDesignation" name="ddlDesignation" class="form-control template"></select>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtFirstName" class="col-sm-3 control-label">First Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control control-label empControl" id="txtFirstName" placeholder="First Name">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtLastName" class="col-sm-3 control-label">Last Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control control-label empControl" id="txtLastName" placeholder="Last Name">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtUserName" class="col-sm-3 control-label">User Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control control-label empControl" id="txtUserName" placeholder="User Name">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtPassword" class="col-sm-3 control-label">Password</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control control-label empControl" id="txtPassword" placeholder="Password">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtEmail" class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control empControl" id="txtEmail" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="alert alert-danger newEmployeeErrorContainer" role="alert" style="display:none;">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span>
+                            <span class="errorBody"></span>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="ResetEmployeeControls()">Close</button>
+                <button type="button" class="btn btn-primary btnSaveEmployee" onclick="CheckValidEmail()" disabled>Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<div id="loading" class="loading">
+    <img id="loading-image" src="../Content/Images/wait.gif" alt="Loading..." />
+</div>
+
+@section Scripts
+                               {
+    @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/bundles/customVal")*@
+    @Scripts.Render("~/bundles/customValScript")
+
+}
+
+
+
+
+<script>
+    var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    var start = new Date();
+    start.setFullYear(start.getFullYear() - 70);
+    var end = new Date();
+    end.setFullYear(end.getFullYear() + 1);
+
+
+    function getCustomDay(dayStr) {
+        var day = parseInt(dayStr);
+        if (day < 10)
+            return '0' + dayStr;
+        else
+            return dayStr;
+    }
+
+    var currentIndex = 0;
+
+    $(document).ready(function () {
+
+        var isValidEmail = false;
+        $('.date').datepicker({ dateFormat: 'dd/M/yy' });
+
+        $(document).on('change', '.clsFreq', function (event) {
+
+            event.preventDefault();
+            var e = $(this);
+            var id = "#" + e.attr("id");
+            var rowNum = id.split("_");
+            var value = $(id + ' option:selected').val();
+            var dt = new Date();
+
+            var thisDate = AddDaysToDate(dt, value, "/");
+            $("#mms_meeting_details_Review_Date" + rowNum[1]).val(thisDate);
+        });
+
+        function AddDaysToDate(sDate, iAddDays, sSeperator) {
+            //Purpose: Add the specified number of dates to a given date.
+            var date = new Date(sDate);
+            date.setDate(date.getDate() + parseInt(iAddDays));
+            var monthVal = LPad(date.getMonth() + 1, 2) - 1;
+
+            var sEndDate = LPad(date.getDate(), 2) + sSeperator + month[monthVal] + sSeperator + date.getFullYear();
+            return sEndDate;
+        }
+        function LPad(sValue, iPadBy) {
+            sValue = sValue.toString();
+
+
+            return sValue.length < iPadBy ? LPad("0" + sValue, iPadBy) : sValue;
+        }
+
+        $('.empControl').change(function () {
+            if (isValidEmail) {
+                $(".newEmployeeErrorContainer").hide();
+            }
+        });
+
+
+        var Table = document.getElementById("createTable");
+
+        if (Table.rows.length < 2) {
+            $("#save_meeting").attr('disabled', true);
+
+        }
+
+        $("#add_meeting").click(function () {
+
+            currentIndex++;
+            var startIndex = 1;
+            var tablerow = document.getElementById("createTable");  //dynamic table creation
+
+            var count = tablerow.rows.length;
+
+
+            //for (var i = 1; i <= startIndex ; i++) {
+            ////Commented. Always StartIndex is 1. Now binded currentIndex with name and id for validation. In form submission these names are replaced without index, because in controller the value is getting with name. Renaming the control name is handled in form submit handler.
+            //// Refer $('.frmAddTask').submit(function (e) for renaming the control name before submit.
+
+            var tableString = '<tr id="newGen"><td id="newId">' + count + '</td>';
+            tableString += '<td><textarea class="form-control task text-box single-line" required id="mms_meeting_details_Task' + currentIndex + '" name="task' + currentIndex + '">' + "" + '</textarea></td>';
+
+            var selectedOptions = GetSelectedOptions();
+
+            tableString += '<td><select class="form-control resp" required id="mms_meeting_details_Participant' + currentIndex + '" name="Participant' + currentIndex + '"><option value="">---SELECT---</option>' + selectedOptions + '</select></td>';
+
+            tableString += '<td><select class="form-control priority" required id="Priority' + currentIndex + '" name="Priority' + currentIndex + '"><option value="">--SELECT--</option>';
+            tableString += '<option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select>';
+            tableString += '<td><input class="dyn_datepicker form-control"  id="mms_meeting_details_Completion_Date' + currentIndex + '" name="Completion_Date' + currentIndex + '" type="datetime" value=""  required></td>';
+            tableString += '<td><textarea class=" form-control comments text-box single-line"  id="mms_meeting_details_Comments' + currentIndex + '" name="Comments' + currentIndex + '" type="text" value=""/></td>';
+
+            var listItems = [];
+            listItems.push("<select  class='form-control' id='category" + currentIndex + "' required name='Category' ><option val=''>---Select---</option>");
+
+            var category =  @Html.Raw(Json.Encode(ViewBag.Categories))
+
+             $.each(category, function (key, val) {
+
+                 //listItems.push('<option value="' + val.CategoryName + '">' + val.CategoryName + '</option>');
+                 listItems.push('<option value="' + val.ID + '">' + val.CategoryName + '</option>');
+
+             });
+
+            listItems.push("</select>");
+
+            tableString += "<td>" + listItems + "</td>";
+
+            //
+            var listFreq = [];
+
+            listFreq.push("<select class='form-control clsFreq required' id='frequency_" + currentIndex + "' required name='frequency' ><option val=''></option> required");
+
+            var Frequencies =  @Html.Raw(Json.Encode(ViewBag.Frequencies))
+
+            $.each(Frequencies, function (key, val) {
+
+                //listFreq.push('<option value="' + val.Freq_In_Days + '">' + val.Freq_Name + '</option>');
+                listFreq.push('<option value="' + val.Freq_In_Days + '">' + val.Freq_Name + '</option>');
+                //  listFreq.push('<option value="' + val.Freq_Id + '">' + val.Freq_Name + '</option>');
+                //listFreq.push(val.Freq_In_Days);
+            });
+
+            listFreq.push("</select> ");
+
+            tableString += "<td>" + listFreq + "</td>";
+
+            tableString += '<td><input class="dyn_datepicker form-control revDt"  id="mms_meeting_details_Review_Date' + currentIndex + '" required name="ReviewDate" type="datetime" value=""></td>';
+            tableString += "</tr>";
+            $("#createTable").append(tableString);
+            //}
+            InitializeDate(); //initialize date after datepicker class were added to textbox
+
+            $("#save_meeting").attr('disabled', false);
+
+
+            $("#mms_meeting_details_Review_Date").on('change', 'select', function () { alert('helo'); });
+
+        });
+
+
+
+
+        $("#delete_meeting").click(function () {
+
+            $("#createTable tr:last").not('.tbl_header').remove();
+            if (Table.rows.length < 2) {
+                $("#save_meeting").attr('disabled', true);
+
+            }
+
+        });
+
+
+
+        $('.frmAddTask').submit(function (e) {
+            if (!$('.frmAddTask').valid()) {
+                e.preventDefault();
+            }
+            else {
+                //Changing the name, because in controller the value is getting with the name. For validation purpose the name is assigned with running index. If the name is same for all controls then required filed not worked properly.
+                $('.task').attr('name', 'task');
+                $('.resp').attr('name', 'Participant');
+                $('.priority').attr('name', 'Priority');
+                $('.dyn_datepicker').attr('name', 'Completion_Date');
+                $('.comments').attr('name', 'Comments');
+                $('.revDt').attr('name', 'ReviewDate');
+            }
+        });
+        //$("#save_meeting").click(function (e) {
+        //    alert();
+        //    e.preventdefault();
+        //});
+
+    });
+
+
+    function InitializeDate() {
+        var getDate = new Date();
+        getDate.setDate(getDate.getDate());
+
+
+
+        //$(".dyn_datepicker").each(function () {
+        //    $(this).datepicker({ format: "dd/mm/yyyy", minDate: 0, startDate: getDate, autoclose: true });
+        //});
+        $(".dyn_datepicker").datepicker({
+            dateFormat: "dd/M/yy", minDate: 0, startDate: getDate, autoclose: true,
+            changeMonth: true,
+            changeYear: true,
+
+            //minDate: '1/1/1990',
+            //maxDate: end,
+            yearRange: 1990 + ':' + end.getFullYear(),
+        });
+
+
+        ///Adding key down method to avoid user input by entering value, because Readonly field is not validating.
+        $('.dyn_datepicker').keydown(function () {
+            return false;
+        });
+    }
+
+
+    function InitializeParticipants() {
+        var items = [];
+
+        $("#Added_Participants option").each(function () {
+
+            items.push("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
+
+            $(".resp option").each(function () {
+                $(this).siblings("[value=" + $("#Added_Participants option").val() + "]").remove();
+
+            });
+        });
+        $(".resp").append(items);
+
+    }
+
+    function GetSelectedOptions() {
+        var items;
+
+        $("#Added_Participants option").each(function () {
+
+            items += ("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
+        });
+        return items;
+    }
+
+
+    //Priority
+    $("#MMS_Meeting_Master_Meeting_Department").on('change', function () {
+        window.sessionStorage.setItem("MMS_Meeting_Master_Meeting_Department", this.value);
+    });
+
+    //$(document).ready(function () {
+    //    $("#MMS_Meeting_Master_Meeting_Department").val(window.sessionStorage.getItem("MMS_Meeting_Master_Meeting_Department"));
+    //});
+
+    //Participants
+    $("#Participants").on('change', function () {
+        window.sessionStorage.setItem("Participants", this.value);
+    });
+
+    $(document).ready(function () {
+        $("#Participants").val(window.sessionStorage.getItem("Participants"));
+    });
+
+
+
+
+    function OpenAddEmployeeModal() {
+        //alert(IsDepartmentSelected());
+
+        if (IsDepartmentSelected()) {
+            //Department Selected
+            var selectedDepartment = $("#MMS_Meeting_Master_Meeting_Department :selected").text();
+            $("#txtDept").removeAttr("disabled");
+            $("#txtDept").val(selectedDepartment);
+            $("#txtDept").attr("disabled", "disabled");
+
+
+            //$.ajax({
+
+            @*url: "@Url.Action("Index", "CreateTask")",
+                type: 'Get',
+                data: {
+                    selectedDepartment: selectedDepartment
+                },*@
+
+            //success: function (response) {
+
+            //start
+
+
+            //    $("#ddlState").change(function () {
+            //var countryid = $('#CountryId').val();
+            //var stateid = $('#ddlState').val();
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("Designation", "CreateTask")',
+                data: { "selectedDepartment": selectedDepartment },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc
+            });
+
+            function successFunc(data, Designation) {
+                var items = '<option>--Select a Designation--</option>';
+                $.each(data, function (i, Designation) {
+                    items += "<option value='" + Designation.Value + "'>" + Designation.Text + "</option>";
+                });
+                $('#ddlDesignation').html(items);
+
+            }
+
+            //if (response.Result == 'Success') {
+            //    CustomAlert("Employee saved successfully");
+            //    //    //  var html = '<option value="' + response.Designation + '">' + response.DesignationICode + '</option>';
+            //    //    $("#ddlDesignation").append(ViewBag.Dist);
+
+            //    ResetEmployeeControls();
+            //}
+
+
+            //end
+
+            //if (response.Result == 'Success') {
+            //    CustomAlert("Employee saved successfully");
+            //    //  var html = '<option value="' + response.Designation + '">' + response.DesignationICode + '</option>';
+            //    $("#ddlDesignation").append(ViewBag.Dist);
+
+            //    ResetEmployeeControls();
+            //}
+            //else {
+            //$(".errorBody").html('Please try again.');
+            //   $(".newEmployeeErrorContainer").show();
+            //}
+
+            $("#newEmployeeModal").modal({ keyboard: false, backdrop: "static" });
+        }
+        else
+            CustomAlert("Please select the department..");
+    }
+
+    function IsDepartmentSelected() {
+
+        var selectedDepartment = $("#MMS_Meeting_Master_Meeting_Department").val();
+        return (selectedDepartment != '' && selectedDepartment != 0);
+    }
+
+    function SaveEmployee() {
+        var selectedDepartment = $("#MMS_Meeting_Master_Meeting_Department").val();
+        var userName = $("#txtUserName").val();
+        var email = $("#txtEmail").val();
+        var FirstName = $("#txtFirstName").val();
+        var LastName = $("#txtLastName").val();
+        var Password = $("#txtPassword").val();
+        var DesignationICode = $("#ddlDesignation").val();
+        //CheckValidEmail();
+            if (userName != '' && userName != '' && email != '' && isValidEmail && FirstName != null && LastName != '' && Password != '') {
+                $.ajax({
+
+                    url: "@Url.Action("AddUser", "CreateTask")",
+
+                    type: 'POST',
+                    data: {
+                        departmentName: selectedDepartment,
+                        userName: userName,
+                        emailID: email,
+                        FirstName: FirstName,
+                        LastName: LastName,
+                        Password: Password,
+                        DesignationICode: DesignationICode
+                    },
+
+                    success: function (response) {
+                        if (response.Result == 'Success') {
+                            CustomAlert("Employee saved successfully");
+                            //append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
+
+                            window.location.reload();
+
+                            var html = '<option value="' + response.EmployeeCode + '">' + response.UserName + '</option>';
+                            $("#Participants").append(html);
+                            ResetEmployeeControls();
+                            //$(".meeting_chairperson").append(html);
+                            //$(".temp_meeting_chairperson").append(html);
+                            //$(".resp").append(html);
+
+                            //$("#hidden_participants").val(response.EmployeeCode + "|");
+                        }
+                        else {
+                            //$(".errorBody").html('Please try again.');
+
+                            var Name_Department = $("#MMS_Meeting_Master_Meeting_Department:selected").text();
+                            CustomAlert("Employee saved successfully...");
+                            window.location.reload();
+                            //var ss = sessionStorage.setItem("Departmentname", selectedDepartment);
+
+                            //$('#MMS_Meeting_Master_Meeting_Department').val() = sessionStorage.getItem(ss);
+                            //$('#MMS_Meeting_Master_Meeting_Department').focus();
+
+                            //var selectedDepartment = $("#MMS_Meeting_Master_Meeting_Department :selected").text();
+
+
+                            OpenAddEmployeeModal();
+
+                            //$(".newEmployeeErrorContainer").show();
+
+                        }
+                    },
+                    error: function (error) { }
+                });
+            }
+            else if (!isValidEmail) {
+                //$(".errorBody").html('Please enter valid email.');
+                $(".newEmployeeErrorContainer").show();
+            }
+            else {
+                $(".errorBody").html('Please fill all the fields..');
+                $(".newEmployeeErrorContainer").show();
+            }
+        //$('.employeeModal').hide();
+    }
+
+    function ResetEmployeeControls() {
+        $("#txtUserName").val('');
+        $("#txtEmail").val('');
+        $("#txtFirstName").val('');
+        $("#txtLastName").val('');
+        $("#txtPassword").val('');
+        $("#ddlDesignation").val('');
+        $(".newEmployeeErrorContainer").hide();
+    }
+
+    function StartEmployeeSync() {
+        startLoading();
+        $.ajax({
+            url: "@Url.Action("StartUserSync","CreateTask")",
+
+            type: 'POST',
+
+            success: function (response) {
+                //if (response.Result == 'Success') {
+                //    CustomAlert("Employee saved successfully");
+                //}
+                //else {
+                stopLoading();
+
+                CustomAlert(response.Message);
+                $("#MMS_Meeting_Master_Meeting_Department").val('');
+
+                //}
+            },
+            error: function (error) {
+                stopLoading();
+            }
+        });
+    }
+    var email = $("#txtEmail").val();
+    if (email != " ") {
+        $('.btnSaveEmployee').removeAttr('disabled');
+
+    }
+
+    function CheckValidEmail() {
+        isValidEmail = false;
+        var email = $("#txtEmail").val();
+        var username = $("#txtUserName").val();
+        var isValidEmailFormat = isValidEmailAddress(email);
+        if (!isValidEmailFormat) {
+            //isValidEmail = false;
+            $(".errorBody").html('Please enter a valid email..');
+            $(".newEmployeeErrorContainer").show();
+        }
+        else {
+            $(".newEmployeeErrorContainer").hide();
+            $.ajax({
+                url: "@Url.Action("CheckEmailExits", "CreateTask")",
+
+                type: 'GET',
+                data: {
+                    emailID: email,
+                    username: username
+                },
+                success: function (response) {
+                    if (response.EmployeeCode == '-1') {
+                        $(".errorBody").html('UserName already exists.');
+                        $(".newEmployeeErrorContainer").show();
+                    }
+                    else if (response.EmployeeCode != '0') {
+                        $(".errorBody").html('Email already exists.');
+                        $(".newEmployeeErrorContainer").show();
+                    }
+                    else {
+                        isValidEmail = true;
+                        $('.btnSaveEmployee').removeAttr('disabled');
+                        $(".newEmployeeErrorContainer").hide();
+                        SaveEmployee();
+                    }
+                },
+                error: function (error) { }
+            });
+        }
+    }
+
+    function startLoading() {
+        $(".loading").css({ "display": "block" });
+        $(".loading").show();
+    }
+    function stopLoading() {
+        $(".loading").hide();
+    }
+
+    function isValidEmailAddress(emailAddress) {
+        var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+        return pattern.test(emailAddress);
+    };
+
+</script>

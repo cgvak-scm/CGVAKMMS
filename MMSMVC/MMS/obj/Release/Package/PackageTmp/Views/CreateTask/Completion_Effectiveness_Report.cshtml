@@ -1,0 +1,564 @@
+﻿@*@model dynamic*@
+@{
+    ViewBag.Title = "Completion_Effectiveness_Report";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    string startDateStr = ViewBag.StartDate;
+    //string endDateStr = ViewBag.EndDate;
+    string endDateStr = Convert.ToDateTime(ViewBag.EndDate).ToString("dd/MMM/yyyy");
+}
+
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<link href="~/Scripts/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Completion Effectiveness Report
+    </div>
+    <div class="panel-body">
+
+        <form name="meetingSearchFrm" id="meetingSearchFrm">
+
+            <fieldset>
+                <div class="alert alert-warning">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="input-group-addon input-sm">Start Date</div>
+                            @Html.TextBox("assign_start_date", startDateStr, new { @class = "datepick required form-control input-sm fromDate", @style = "background-color:white;", @readonly = "true" })
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="input-group-addon input-sm">End Date</div>
+                            @Html.TextBox("assign_end_date", endDateStr, new { @class = " required  form-control input-sm toDate", @style = "background-color:white;", @readonly = "true" })
+                        </div>
+
+
+                        <div class="col-md-2">
+                            <div class="input-group-addon input-sm">Participants</div>
+
+                            <div class="">
+
+                                @Html.DropDownList("Participants", new SelectList(ViewBag.Participants, "Employee_Id", "Name"), "All", new { @class = "form-control input-sm" })
+                            </div>
+                        </div>
+
+                        <div class="space" style="margin:10px 10px;"></div>
+                        <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-sm-6 ">
+                                    <div class="input-group">
+                                        <button type="button" id="btnExport" class="btn btn-primary btn-sm">Export to Excel</button>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-group">
+                                        <button type="button" id="meetingSearch" class="btn btn-primary btn-sm">Search</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <hr />
+
+            <div class="space" style="margin:10px 0px;"></div>
+
+            <div class="row">
+                <div class="space" style="margin:25px 0px;"></div>
+                <div class="responsive-table" style="padding-left:20px; padding-right:20px">
+                    <div id="task-show-result">
+
+                        @{
+                            @*if (ViewBag.MeetingParticipants != null)
+                                {
+                                    <h4 class='task-title alert-warning'>Time Taken For Completion</h4>
+
+                                    <table id="cn_Task_res" class="table table-bordered  col-md-12 col-sm-12 tblTaskPaging ">
+                                        <tr>
+                                            <th>Task Priority</th>
+                                            <th>Total Tasks Assigned </th>
+                                            <th>Total Completed or Exceeded Target Date</th>
+                                            <th>Ontime (No of tasks)</th>
+                                            <th>Delayed (No of Tasks)</th>
+                                            <th>% Ontime</th>
+                                        </tr>
+
+                                        @{
+                                            foreach (var items in ViewBag.MeetingParticipants)
+                                            {
+
+                                                <tr>
+                                                    <td>
+                                                        @items.Participant
+                                                    </td>
+                                                    <td>
+                                                        @items.Total
+                                                    </td>
+                                                    <td>
+                                                        @items.Completed
+                                                    </td>
+                                                    <td>
+                                                        @items.OnTime
+                                                    </td>
+                                                    <td>
+                                                        @items.Delayed
+                                                    </td>
+                                                    <td>
+                                                        @items.OnTime%
+                                                    </td>
+                                                </tr>
+
+                                            }
+                                        }
+                                    </table>
+                                            }*@
+                        }
+                    </div>
+                </div>
+                <div class="space" style="margin:25px 0px;"></div>
+                <div class="space" style="margin:10% 0px;"></div>
+                <div id="bindTaskComments">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/multiselect")
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/jquery.table2excel.min.js"></script>
+    <link href="~/Scripts/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
+
+<script type="text/javascript">
+
+    var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    var start = new Date();
+    start.setFullYear(start.getFullYear() - 70);
+    var end = new Date();
+    end.setFullYear(end.getFullYear() + 1);
+
+    function getCustomDay(dayStr) {
+        var day = parseInt(dayStr);
+        if (day < 10)
+            return '0' + dayStr;
+        else
+            return dayStr;
+    }
+
+    $(function () {
+        $('#status').multiselect({
+            includeSelectAllOption: true
+        });
+
+        //$(".fromDate").datepicker({
+        //    changeMonth: true,
+        //    changeYear: true,
+        //    yearRange: 1990 + ':' + end.getFullYear(),
+        //    autoclose: true,
+        //    minDate: new Date('3/1/2017'),
+        //    dateFormat: 'dd/M/yy',
+        //    onSelect: function (selected) {
+        //        var dt = new Date(selected);
+        //        dt.setDate(dt.getDate() + 1);
+        //        var selectedDate = selected;
+        //        $(".start_date").datepicker("setDate", selected)
+        //        $(".toDate").datepicker("option", "minDate", dt);
+        //    }
+        //})
+
+
+        $(".fromDate").datepicker({
+            changeMonth: false,
+            changeYear: true,
+            //minDate: '1/1/1990',
+            //maxDate: end,
+            minDate: new Date('3/1/2017'),
+            yearRange: 2017 + ':' + end.getFullYear(),
+            autoclose: true, disabled: true,
+            dateFormat: 'dd/M/yy',
+            beforeShowDay: function (date) {
+                var day = date.getDay();
+                return [(day != 0), ''];
+            },
+            onSelect: function (selected) {
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate() + 1);
+                $(".toDate").datepicker("option", "minDate", dt);
+
+
+
+
+            }
+        });
+
+        $(".dt").datepicker({
+            dateFormat: "dd/M/yy", minDate: 0,
+            changeMonth: true, changeYear: true,
+            yearRange: 2017 + ':' + end.getFullYear(),
+            autoclose: true,
+            beforeShowDay: function (date) {
+                var day = date.getDay();
+                return [(day != 0), ''];
+            },
+            onSelect: function (selected) {
+                //var dt = new Date(selected);
+                //dt.setDate(dt.getDate() + 1);
+                //$(".toDate").datepicker("option", "minDate", dt);
+
+
+               var end = $('.toDate').val();
+
+                $.get('@Url.Action("Completion_Effectiveness_Report", "CreateTask")', { end: end });
+
+            }
+        });
+    });
+
+    function InitializePaging() {
+        var jslink = $("<script src='@Url.Content("~/Scripts/jquery.simplePagination.js")' type='text/javascript'/>");
+        $('head').append(jslink);
+        $(".tblPaging").simplePagination();
+    }
+    function IntializeTaskPaging() {
+        $(".tblTaskPaging").simplePagination();
+    }
+
+    function LoadInitialEvents() {
+
+        var d = new Date();
+        var curr_date = getCustomDay(d.getDate());
+        var curr_month = month[d.getMonth()];
+        var curr_year = d.getFullYear();
+
+
+        $(".toDate").datepicker({
+            autoclose: true, changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/M/yy',
+            minDate: '@startDateStr',
+            //  maxDate: end,
+            yearRange: 2017 + ':' + end.getFullYear(),
+            beforeShowDay: function (date) {
+                var day = date.getDay();
+                return [(day != 0), ''];
+            },
+            onSelect: function (selected) {
+                //var dt = new Date(selected);
+                //dt.setDate(dt.getDate() + 1);
+                //$(".toDate").datepicker("option", "minDate", dt);
+
+
+                 var end = $('.toDate').val();
+
+                $.get('@Url.Action("Completion_Effectiveness_Report", "CreateTask")', { end: end });
+
+            }
+        });
+        InitializeTasksMeeting();
+    }
+
+
+    //Participants
+    $("#Participants").on('change', function () {
+        window.sessionStorage.clear();
+        window.sessionStorage.setItem("Participants", this.value);
+    });
+
+    $(document).ready(function () {
+        window.sessionStorage.clear();
+        $("#Participants").val(window.sessionStorage.getItem("Participants"));
+ 
+    });
+
+
+
+
+    function fncOpen() {
+        $("#divAddComment").modal({ 'backdrop': 'static', 'keyboard': false });
+    }
+
+    function InitializeTasksMeeting() {
+        $(".task-title,.participant-title").remove();
+
+        //added This for Date Format Issue
+        var TEMP_start_date = $("#assign_start_date").val();
+
+        var splitStart = TEMP_start_date.split('/');
+
+        var _start_date = splitStart[1] + "/" + splitStart[0] + "/" + splitStart[2];
+
+        var TEMP_end_date = $("#assign_end_date").val();
+
+        var splitEnd = TEMP_end_date.split('/');
+
+        var _end_date = splitEnd[1] + "/" + splitEnd[0] + "/" + splitEnd[2];
+
+        if (_start_date == null || _start_date == "" && _end_date == null || _end_date == "") {
+            alert("Please fill the dates to proceed");
+        }
+        else {
+
+            $("#cn_Task_res").remove();
+            $("#cn_Meeting_Res").remove();
+
+            $(".Paginate").remove();
+
+            var TaskPeriod = $("[name='taskdate']:radio:checked").val();
+
+            if (TaskPeriod == "Tilldate") {
+
+                var date = new Date();
+                var dd = getCustomDay(date.getDate());
+                var mm = month[date.getMonth()];
+                var yy = date.getFullYear();
+
+                var start_date = "01/Mar/2017";
+                var end_date = dd + "/" + mm + "/" + yy;
+
+                $("#assign_start_date").val(start_date).toString("dd/MMM/YYYY");
+                $("#assign_start_date").prop("disabled", true);
+
+                $("#assign_start_date").disableSelection();
+
+                $("#assign_end_date").val(end_date);
+                $("#assign_end_date").prop("disabled", false);
+
+            }
+            //Original BACK TO original
+            var _start_date = $("#assign_start_date").val();
+            var _end_date = $("#assign_end_date").val();
+
+
+            var participants = $("#Participants option:selected").val();
+
+
+            if (participants == "") {
+                participants = 0;
+
+            }
+            var priority = $("#Priority option:selected").text();
+
+            GetReportDetails(_start_date, _end_date, participants, priority);
+        }
+    }
+
+    $(document).ready(function () {
+        $('#status').multiselect();
+        LoadInitialEvents();
+        $("body").on("click", ".ui-dialog-titlebar-close", function () {
+            $("#wrapper").removeClass("overlay");
+        });
+
+        $("[name='taskdate']").change(function () {
+
+            if ($(this).val() == "Tilldate") {
+                date = new Date();
+                dd = date.getDate();
+                mm = date.getMonth();
+                yy = date.getFullYear();
+                var start_date = "01/Mar/2017";
+
+                $("#assign_start_date").css("background-color", "#EEEEEE")
+                $("#assign_start_date").val(start_date);
+                $("#assign_start_date").prop("disabled", true);
+
+                $("#assign_end_date").val('@endDateStr');
+            }
+            else {
+                $("#assign_start_date").prop("disabled", false);
+                $("#assign_end_date").prop("disabled", false);
+            }
+        });
+
+        $("#meetingSearch").click(function (e) {
+            //added now
+            $("#bindTaskComments").hide();
+
+            InitializeTasksMeeting();
+
+        });
+
+    });
+
+
+    $(function () {
+        $("#btnExport").click(function () {
+            $("#cn_Task_res").table2excel({
+                filename: "TimeTakenForCompletion"
+                // fileext: ".xlsx"
+            });
+        });
+    });
+
+
+
+    function RedAlert(status, completion_date) {
+
+        if (status != "Closed") // && status=="In Progress" || status=="Re-opened"
+        {
+            var newdate = new Date();
+            var day = newdate.getDate();
+            var month = newdate.getMonth() + 1;
+            var year = newdate.getFullYear();
+            var TodayDate = month + "/" + day + "/" + year;
+            if (new Date(TodayDate) < new Date(completion_date)) {
+                return "<img src='../Content/Images/blink_square.gif'/>";
+            }
+        }
+        return "";
+    }
+
+    $("body").on("click", ".btn-back", function () {
+
+        $("#meetingSearch").click();
+
+        $(this).hide();
+
+        $("#bindTaskComments").hide();
+        $(".task-title,.participant-title").remove();
+    });
+    function percentagecalculation(var1, var2) {
+        var sum = var1 + var2;
+        var result = (var1 / sum);
+        result = result * 100;
+        if (isNaN(result)) {
+            return 0;
+        }
+        else {
+            return result.toFixed(2);
+        }
+    };
+
+
+    function dividecalculate(a, b, c, d, e, f) {
+        var x = parseInt(a + b + c);
+        var y = parseInt(a + b + c + d + e + f);
+        //var z = y + x;
+        var calculation = x / y;
+        var calculation = calculation * 100;
+        if (isNaN(calculation)) {
+            return 0;
+        }
+        else {
+            return calculation.toFixed(2);
+        }
+    };
+
+    function GetReportDetails(cn_start_date, cn_end_date, SelectedParticipant, cn_priority, back) {
+
+        $.ajax({
+            url: "@Url.Action("EffectivenessFetchRes", "MeetingDetails")",
+            type: 'GET',
+
+            data: "SDate=" + cn_start_date + "&EDate=" + cn_end_date + "&Participant=" + SelectedParticipant + "&Priority=" + cn_priority,
+
+            dataType: 'JSON',
+            contentType: 'Application/JSON;charset=utf-8',
+            beforeSend: function () {
+                $("#task-show-result").append("<img id='wait' style='max-width:100%;padding:5% 40%;'  src='../Content/Images/wait.gif'/>");
+            },
+            success: function (resultData) {
+                console.log(resultData);
+                $("#wait").remove();
+                var cn_TaskItems = "<h4 class='task-title'>Completion Effectiveness report</h4>";
+                cn_TaskItems += '<table id="cn_Task_res" class="table table-bordered  col-md-12 col-sm-12  ">' +
+                         '<th><center>Task Priority</center></th>' +
+                        ' <th><center>Total Tasks Assigned</center></th>' +
+                         '<th><center>Total Completed or Exceeded Target Date</center></th>' +
+                         '<th><center>Ontime (No of tasks)</center></th>' +
+                          '<th><center>Delayed (No of Tasks)</center></th>' +
+                          '<th><center>% Ontime</center></th>';
+
+                //$.each(resultData, function (key, val) {
+                var TaskCnt = 0;
+
+                if (resultData != null) {
+
+                    if (resultData == null) {
+                    }
+                    else {
+
+                        cn_TaskItems += "<tr id='tr_HIGH'>" +
+                            "<td><center>HIGH </center></td>" +
+                            "<td id='totattaskassigned'><center>" + parseInt(resultData.HighTotal) + "</center></td>" +
+                            "<td id='comparexceedtargetdate'><center>" + parseInt(resultData.HighCompleted + resultData.HighDelay) + "</center></td>" +
+                            "<td id='ontime'><center>" + parseInt(resultData.HighCompleted) + "</center></td>" +
+                            "<td id='delay'><center>" + parseInt(resultData.HighDelay) + "</center></td>" +
+                            "<td id='%delay'><center>" + '(' + percentagecalculation(resultData.HighCompleted, resultData.HighDelay) + '%' + ')' + "</center></td>" +
+
+                          "</tr>" +
+                          "<tr id='tr_MEDIUM'>" +
+                            "<td><center>MEDIUM</center></td>" +
+                            "<td id='totattaskassigned'><center>" + parseInt(resultData.MediumTotal) + "</center></td>" +
+                            "<td id='comparexceedtargetdate'><center>" + parseInt(resultData.MediumCompleted + resultData.MediumDelay) + "</center></td>" +
+                            "<td id='ontime'><center>" + parseInt(resultData.MediumCompleted) + "</center></td>" +
+                            "<td id='delay'><center>" + parseInt(resultData.MediumDelay) + "</center></td>" +
+                            "<td id='%delay'><center>" + '(' + percentagecalculation(resultData.MediumCompleted, resultData.MediumDelay) + '%' + ')' + "</center></td>" +
+                          "</tr>" +
+
+                          "<tr id='tr_LOW'>" +
+                            "<td><center>LOW</center></td>" +
+                            "<td id='totattaskassigned'><center>" + parseInt(resultData.LowTotal) + "</center></td>" +
+                            "<td id='comparexceedtargetdate'><center>" + parseInt(resultData.LowCompleted + resultData.LowDelay) + "</center></td>" +
+                            "<td id='ontime'><center>" + parseInt(resultData.LowCompleted) + "</center></td>" +
+                            "<td id='delay'><center>" + parseInt(resultData.LowDelay) + "</center></td>" +
+                            "<td id='%delay'><center>" + '(' + percentagecalculation(resultData.LowCompleted, resultData.LowDelay) + '%' + ')' + "</center></td>" +
+
+                          "<tr id='tr_Total'>" +
+                            "<td><center>Total</center></td>" +
+                           "<td><center>" + parseInt(resultData.HighTotal + resultData.MediumTotal + resultData.LowTotal) + "</center></td>" +
+
+                             "<td><center>" + parseInt(resultData.HighCompleted + resultData.HighDelay + resultData.MediumCompleted + resultData.MediumDelay + resultData.LowCompleted + resultData.LowDelay) + "</center></td>" +
+
+                            "<td><center>" + parseInt(resultData.HighCompleted + resultData.MediumCompleted + resultData.LowCompleted) + "</center></td>" +
+
+                          "<td><center>" + parseInt(resultData.HighDelay + resultData.MediumDelay + resultData.LowDelay) + "</center></td>" +
+
+                          //"<td>" + '(' + (parseInt(parseInt(percentagecalculation(resultData.LowCompleted, resultData.LowDelay)) + parseInt(percentagecalculation(resultData.MediumCompleted, resultData.MediumDelay)) + parseInt(percentagecalculation(resultData.HighCompleted, resultData.HighDelay))) / 3).toFixed(2) + '%' + ')' + "</td>" +
+
+
+
+
+                          "<td><center>" + '(' + dividecalculate(resultData.HighCompleted, resultData.MediumCompleted, resultData.LowCompleted, resultData.HighDelay, resultData.MediumDelay, resultData.LowDelay) + '%' + ')' + "</center></td>" +
+
+                          "</tr>"
+                    }
+                }
+                else {
+                    cn_TaskItems += "<tr><td colspan='9'>No records found</td></tr>";
+                }
+                cn_TaskItems += "</table>";
+                //cn_Task_res
+
+                if (back == null) {
+                    $("#task-show-result").append(cn_TaskItems);
+                }
+                else {
+                    $("#task-show-result").append("<input type='button' class='btn btn-primary btn-sm btn-back pull-right' value='back'  />" + cn_TaskItems);
+                }
+
+                IntializeTaskPaging();
+
+                //});
+            },
+            error: function (xhr, errorType, exception) {
+                var responseText = jQuery.parseJSON(xhr.responseText);
+
+                console.log(responseText.ExceptionType);
+                console.log(responseText.StackTrace);
+                console.log(responseText.Message);
+            }
+        });
+
+    }
+</script>

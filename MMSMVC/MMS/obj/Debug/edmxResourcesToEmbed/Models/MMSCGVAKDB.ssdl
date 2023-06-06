@@ -1,0 +1,1225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="mmsuser_testModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Department_Master">
+    <Key>
+      <PropertyRef Name="DepartmentICode" />
+    </Key>
+    <Property Name="DepartmentICode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyICode" Type="int" Nullable="false" />
+    <Property Name="DepartmentName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Designation_Master">
+    <Key>
+      <PropertyRef Name="DesignationICode" />
+    </Key>
+    <Property Name="DesignationICode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyICode" Type="int" Nullable="false" />
+    <Property Name="DepartmentICode" Type="int" Nullable="false" />
+    <Property Name="Designation" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="RoleICode" Type="int" />
+    <Property Name="Isapprove" Type="int" />
+    <Property Name="parenticode" Type="int" />
+  </EntityType>
+  <EntityType Name="Employee_Department">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Employee_Code" Type="int" />
+    <Property Name="User_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Department_Id" Type="int" Nullable="false" />
+    <Property Name="EmailID" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Employee_Master">
+    <Key>
+      <PropertyRef Name="EmployeeICode" />
+    </Key>
+    <Property Name="EmployeeICode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyICode" Type="int" Nullable="false" />
+    <Property Name="DepartmentICode" Type="int" Nullable="false" />
+    <Property Name="DesignationICode" Type="int" Nullable="false" />
+    <Property Name="EmployeeNumber" Type="char" MaxLength="10" />
+    <Property Name="EmployeeFirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmployeeLastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmployeeDisplayName" Type="varchar" MaxLength="20" />
+    <Property Name="EmployeeCurrentAddress1" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeeCurrentAddress2" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeeCurrentAddress3" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeeCurrentCity" Type="varchar" MaxLength="50" />
+    <Property Name="EmployeeCurrentState" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeeCurrentCountry" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeeCurrentPinCode" Type="varchar" MaxLength="20" />
+    <Property Name="EmployeeCurrentPhoneNo" Type="varchar" MaxLength="20" />
+    <Property Name="IsSameAsCurrentAddress" Type="bit" />
+    <Property Name="EmployeePermanentAddress1" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeePermanentAddress2" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeePermanentAddress3" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeePermanentCity" Type="varchar" MaxLength="50" />
+    <Property Name="EmployeePermanentState" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeePermanentCountry" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeePermanentPinCode" Type="varchar" MaxLength="20" />
+    <Property Name="EmployeePermanentPhoneNo" Type="varchar" MaxLength="20" />
+    <Property Name="EmployeeMobileNo" Type="varchar" MaxLength="20" />
+    <Property Name="EmployeeFatherName" Type="varchar" MaxLength="50" />
+    <Property Name="EmployeeDateofBirth" Type="datetime" />
+    <Property Name="EmployeePersonalEmailId" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeeDateOfJoining" Type="datetime" Nullable="false" />
+    <Property Name="EmployeeCorporateEmailId" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeeIM" Type="varchar" MaxLength="50" />
+    <Property Name="LoginUserName" Type="varchar" MaxLength="25" />
+    <Property Name="LoginPassword" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeeBloodGroupId" Type="int" />
+    <Property Name="EmployeePANNo" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeePFNo" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeeESINo" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeeBankName" Type="varchar" MaxLength="50" />
+    <Property Name="EmployeeBankAccountNo" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeeMaritalStatus" Type="char" MaxLength="1" />
+    <Property Name="EmployeePrimarySkill" Type="varchar" MaxLength="50" />
+    <Property Name="EmployeePreviousEmployer" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeePreviousExperienceYears" Type="int" />
+    <Property Name="EmployeePreviousExperienceMonths" Type="int" />
+    <Property Name="EmployeeReference1Remarks" Type="varchar" MaxLength="200" />
+    <Property Name="EmployeeReference2Remarks" Type="varchar" MaxLength="200" />
+    <Property Name="EmployeeBioData" Type="image" />
+    <Property Name="DocumentExtension" Type="char" MaxLength="10" />
+    <Property Name="EmployeePhoto" Type="image" />
+    <Property Name="PhotoExtension" Type="char" MaxLength="10" />
+    <Property Name="EmployeeDateofLeaving" Type="datetime" />
+    <Property Name="EmployeeReasonforLeaving" Type="varchar" MaxLength="200" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="SwipeICode" Type="int" />
+    <Property Name="Location" Type="char" MaxLength="2" />
+    <Property Name="Group_id" Type="tinyint" />
+    <Property Name="shift_id" Type="int" />
+    <Property Name="original_name" Type="varchar" MaxLength="100" />
+    <Property Name="pseudo" Type="bit" />
+    <Property Name="current_technology" Type="int" />
+    <Property Name="picture" Type="image" />
+    <Property Name="primary_skill_stream_id" Type="int" />
+    <Property Name="emp_photo" Type="varchar" MaxLength="2000" />
+    <Property Name="night_shift" Type="bit" />
+  </EntityType>
+  <EntityType Name="MMS_Attachment">
+    <Key>
+      <PropertyRef Name="MeetingAttachmentID" />
+    </Key>
+    <Property Name="Meeting_Id" Type="int" />
+    <Property Name="MMS_FileName" Type="varchar" MaxLength="50" />
+    <Property Name="MMS_FileExtension" Type="varchar" MaxLength="10" />
+    <Property Name="MMS_File" Type="image" />
+    <Property Name="MeetingAttachmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MMS_Blood_Details">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Descriptions" Type="nvarchar(max)" />
+    <Property Name="Values" Type="int" />
+    <Property Name="Active" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="MMS_Employee_Attachment">
+    <Key>
+      <PropertyRef Name="AttachmentID" />
+    </Key>
+    <Property Name="Id" Type="int" />
+    <Property Name="MMS_FileName" Type="varchar" MaxLength="50" />
+    <Property Name="MMS_FileExtension" Type="varchar" MaxLength="10" />
+    <Property Name="MMS_File" Type="image" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="AttachmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MMS_Employee_Location">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" />
+    <Property Name="Location" Type="nvarchar" MaxLength="50" />
+    <Property Name="Active" Type="int" />
+  </EntityType>
+  <EntityType Name="MMS_Employee_Master">
+    <Key>
+      <PropertyRef Name="Employee_Id" />
+    </Key>
+    <Property Name="Employee_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Employee_FirstName" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Employee_LastName" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Employee_DateofBirth" Type="datetime" />
+    <Property Name="Employee_Address" Type="varchar" MaxLength="500" />
+    <Property Name="Employee_Department" Type="varchar" MaxLength="500" />
+    <Property Name="Employee_Qualification" Type="varchar" MaxLength="500" />
+    <Property Name="Employee_DateofJoin" Type="datetime" />
+    <Property Name="Employee_ContactNo" Type="varchar" MaxLength="20" />
+    <Property Name="Employee_Status" Type="bit" Nullable="false" />
+    <Property Name="Employee_ModifyDate" Type="datetime" />
+    <Property Name="Employee_EmailAddress" Type="varchar" MaxLength="500" />
+    <Property Name="profile_employee_id" Type="int" />
+  </EntityType>
+  <EntityType Name="MMS_Login_Master">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Employee_Id" Type="int" Nullable="false" />
+    <Property Name="User_Status" Type="bit" Nullable="false" />
+    <Property Name="Modify_Date" Type="datetime" />
+    <Property Name="password" Type="varchar" MaxLength="10" />
+    <Property Name="Member_Rights" Type="bit" />
+  </EntityType>
+  <EntityType Name="MMS_Meeting_Category">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="MMS_Meeting_Details">
+    <Key>
+      <PropertyRef Name="Task_Id" />
+    </Key>
+    <Property Name="Task_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Meeting_Id" Type="int" />
+    <Property Name="Employee_Id" Type="int" />
+    <Property Name="Chairperson" Type="int" />
+    <Property Name="Participant" Type="int" />
+    <Property Name="Task" Type="varchar" MaxLength="500" />
+    <Property Name="Completion_Date" Type="datetime" />
+    <Property Name="Priority" Type="varchar" MaxLength="50" />
+    <Property Name="Status" Type="int" />
+    <Property Name="Comments" Type="varchar(max)" />
+    <Property Name="Percentage_Completed" Type="numeric" Precision="5" Scale="2" />
+    <Property Name="Category" Type="int" />
+    <Property Name="is_read_notification" Type="varchar" MaxLength="30" />
+    <Property Name="seen" Type="bit" />
+    <Property Name="is_template" Type="bit" />
+    <Property Name="NextReviewDate" Type="datetime" />
+    <Property Name="ReviewFrequencyID" Type="int" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="ChairPersonID" Type="int" />
+    <Property Name="ParticipantID" Type="int" />
+    <Property Name="TemplateID" Type="int" />
+    <Property Name="baz" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MMS_Meeting_Master">
+    <Key>
+      <PropertyRef Name="Meeting_Id" />
+    </Key>
+    <Property Name="Meeting_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Meeting_Objective" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Meeting_Date" Type="datetime" Nullable="false" />
+    <Property Name="Meeting_Time" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Meeting_Venue" Type="varchar" MaxLength="40" />
+    <Property Name="Meeting_Type" Type="varchar" MaxLength="150" />
+    <Property Name="Meeting_Duration" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Meeting_Department" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Meeting_Chairperson" Type="int" />
+    <Property Name="Minutes_Of_Meeting" Type="nvarchar(max)" />
+    <Property Name="Meeting_No_Of_Participants" Type="int" Nullable="false" />
+    <Property Name="istemplate" Type="bit" />
+    <Property Name="TemplateID" Type="int" />
+  </EntityType>
+  <EntityType Name="MMS_Meeting_Participant">
+    <Key>
+      <PropertyRef Name="MeetingParticipantId" />
+    </Key>
+    <Property Name="Meeting_Id" Type="int" />
+    <Property Name="Participant_Id" Type="int" />
+    <Property Name="Participant_Name" Type="varchar" MaxLength="50" />
+    <Property Name="MeetingParticipantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MMS_Meeting_Status">
+    <Key>
+      <PropertyRef Name="MeetingStatusAutoId" />
+    </Key>
+    <Property Name="Meeting_Status_Employee_Id" Type="int" Nullable="false" />
+    <Property Name="Meeting_Status_Task" Type="varchar" MaxLength="250" />
+    <Property Name="Meeting_Status_ResponsiblePerson" Type="int" />
+    <Property Name="Meeting_Status_Date" Type="datetime" />
+    <Property Name="Meeting_Status_Comments" Type="varchar(max)" />
+    <Property Name="Meeting_Status" Type="int" />
+    <Property Name="Meeting_Id" Type="int" />
+    <Property Name="Meeting_Status_Hours" Type="nvarchar" MaxLength="50" />
+    <Property Name="Commented_By" Type="int" />
+    <Property Name="Commented_By_ID" Type="int" />
+    <Property Name="MeetingStatusAutoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Task_Id" Type="int" />
+    <Property Name="Meeting_Date1" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MMS_Meeting_Status_Update">
+    <Key>
+      <PropertyRef Name="MeetingStatusAutoId" />
+    </Key>
+    <Property Name="MeetingId" Type="int" />
+    <Property Name="EmployeeId" Type="int" />
+    <Property Name="Task" Type="varchar" MaxLength="500" />
+    <Property Name="status" Type="int" />
+    <Property Name="MeetingStatusAutoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TaskId" Type="int" />
+  </EntityType>
+  <EntityType Name="MMS_Meeting_Template">
+    <Key>
+      <PropertyRef Name="tid" />
+    </Key>
+    <Property Name="tid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="meeting_name" Type="varchar" MaxLength="150" />
+    <Property Name="meeting_time" Type="varchar" MaxLength="40" />
+    <Property Name="meeting_duration" Type="varchar" MaxLength="30" />
+    <Property Name="meeting_venue" Type="varchar" MaxLength="150" />
+    <Property Name="department" Type="varchar" MaxLength="50" />
+    <Property Name="objective" Type="varchar" MaxLength="150" />
+    <Property Name="meeting_chairperson" Type="int" />
+  </EntityType>
+  <EntityType Name="MMS_Meeting_Template_Users">
+    <Key>
+      <PropertyRef Name="uid" />
+    </Key>
+    <Property Name="uid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tid" Type="int" />
+    <Property Name="participants" Type="int" />
+  </EntityType>
+  <EntityType Name="MMS_Notifications">
+    <Key>
+      <PropertyRef Name="notify_id" />
+    </Key>
+    <Property Name="notify_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="meeting_id" Type="int" />
+    <Property Name="is_read" Type="int" />
+    <Property Name="chairperson" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mmsuser_test.dbo.MMS_Priority' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="MMS_Priority">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Descriptions" Type="nvarchar" MaxLength="100" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="MMS_Review_Frequency">
+    <Key>
+      <PropertyRef Name="Freq_Id" />
+    </Key>
+    <Property Name="Freq_Id" Type="int" Nullable="false" />
+    <Property Name="Freq_Name" Type="varchar" MaxLength="50" />
+    <Property Name="Freq_In_Days" Type="int" />
+    <Property Name="Active_Flag" Type="varchar" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="MMS_Track_ReviewTasks">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TaskId" Type="int" />
+    <Property Name="NextReviewDate" Type="datetime" />
+    <Property Name="ActualReviewedDate" Type="datetime" />
+    <Property Name="Review_Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Task_Status">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Descriptions" Type="nvarchar" MaxLength="100" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mmsuser_test.dbo.MailDetail_TaskNotCompleted' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="MailDetail_TaskNotCompleted">
+    <Key>
+      <PropertyRef Name="Allocated_Date" />
+      <PropertyRef Name="Employee_FirstName" />
+    </Key>
+    <Property Name="Task" Type="varchar" MaxLength="500" />
+    <Property Name="Assigned_By" Type="int" />
+    <Property Name="Priority" Type="varchar" MaxLength="50" />
+    <Property Name="Comments" Type="varchar(max)" />
+    <Property Name="Allocated_Date" Type="datetime" Nullable="false" />
+    <Property Name="Completed_date" Type="datetime" />
+    <Property Name="Overdue_Days" Type="int" />
+    <Property Name="Meeting_Id" Type="int" />
+    <Property Name="Employee_EmailAddress" Type="varchar" MaxLength="500" />
+    <Property Name="Employee_FirstName" Type="varchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mmsuser_test.dbo.vw_get_Designations' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_get_Designations">
+    <Key>
+      <PropertyRef Name="DesignationICode" />
+      <PropertyRef Name="CompanyICode" />
+      <PropertyRef Name="DepartmentICode" />
+      <PropertyRef Name="Designation" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="CreatedBy" />
+      <PropertyRef Name="CreatedDate" />
+    </Key>
+    <Property Name="DesignationICode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyICode" Type="int" Nullable="false" />
+    <Property Name="DepartmentICode" Type="int" Nullable="false" />
+    <Property Name="Designation" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="RoleICode" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mmsuser_test.dbo.vw_get_EmployeeDepartment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_get_EmployeeDepartment">
+    <Key>
+      <PropertyRef Name="EmployeeICode" />
+      <PropertyRef Name="DepartmentICode" />
+    </Key>
+    <Property Name="EmployeeICode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeDisplayName" Type="varchar" MaxLength="20" />
+    <Property Name="DepartmentICode" Type="int" Nullable="false" />
+    <Property Name="EmployeeCorporateEmailId" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mmsuser_test.dbo.vw_get_EmployeeDepartments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_get_EmployeeDepartments">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="User_name" />
+      <PropertyRef Name="Department_Id" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Employee_Code" Type="int" />
+    <Property Name="User_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Department_Id" Type="int" Nullable="false" />
+    <Property Name="EmailID" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mmsuser_test.dbo.vw_get_Employees' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_get_Employees">
+    <Key>
+      <PropertyRef Name="EmployeeICode" />
+      <PropertyRef Name="CompanyICode" />
+      <PropertyRef Name="DepartmentICode" />
+      <PropertyRef Name="DesignationICode" />
+      <PropertyRef Name="EmployeeFirstName" />
+      <PropertyRef Name="EmployeeLastName" />
+      <PropertyRef Name="EmployeeName" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="CreatedBy" />
+      <PropertyRef Name="CreatedDate" />
+      <PropertyRef Name="EmployeeDateOfJoining" />
+    </Key>
+    <Property Name="EmployeeICode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyICode" Type="int" Nullable="false" />
+    <Property Name="DepartmentICode" Type="int" Nullable="false" />
+    <Property Name="DesignationICode" Type="int" Nullable="false" />
+    <Property Name="EmployeeNumber" Type="char" MaxLength="10" />
+    <Property Name="EmployeeFirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmployeeLastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmployeeName" Type="varchar" MaxLength="101" Nullable="false" />
+    <Property Name="EmployeeDisplayName" Type="varchar" MaxLength="20" />
+    <Property Name="EmployeeCurrentAddress1" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeeCurrentAddress2" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeeCurrentAddress3" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeeCurrentCity" Type="varchar" MaxLength="50" />
+    <Property Name="EmployeeCurrentState" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeeCurrentCountry" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeeCurrentPinCode" Type="varchar" MaxLength="20" />
+    <Property Name="EmployeeCurrentPhoneNo" Type="varchar" MaxLength="20" />
+    <Property Name="IsSameAsCurrentAddress" Type="bit" />
+    <Property Name="EmployeePermanentAddress1" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeePermanentAddress2" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeePermanentAddress3" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeePermanentCity" Type="varchar" MaxLength="50" />
+    <Property Name="EmployeePermanentState" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeePermanentCountry" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeePermanentPinCode" Type="varchar" MaxLength="20" />
+    <Property Name="EmployeePermanentPhoneNo" Type="varchar" MaxLength="20" />
+    <Property Name="EmployeeMobileNo" Type="varchar" MaxLength="20" />
+    <Property Name="EmployeeFatherName" Type="varchar" MaxLength="50" />
+    <Property Name="EmployeeDateofBirth" Type="datetime" />
+    <Property Name="EmployeePersonalEmailId" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeeCorporateEmailId" Type="varchar" MaxLength="100" />
+    <Property Name="LoginUserName" Type="varchar" MaxLength="25" />
+    <Property Name="LoginPassword" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeePANNo" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeePFNo" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeeESINo" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeeBankName" Type="varchar" MaxLength="50" />
+    <Property Name="EmployeeBankAccountNo" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeeMaritalStatus" Type="char" MaxLength="1" />
+    <Property Name="EmployeePrimarySkill" Type="varchar" MaxLength="50" />
+    <Property Name="EmployeePreviousEmployer" Type="varchar" MaxLength="100" />
+    <Property Name="EmployeePreviousExperienceYears" Type="int" />
+    <Property Name="EmployeePreviousExperienceMonths" Type="int" />
+    <Property Name="EmployeeReference1Remarks" Type="varchar" MaxLength="200" />
+    <Property Name="EmployeeReference2Remarks" Type="varchar" MaxLength="200" />
+    <Property Name="EmployeeBioData" Type="image" />
+    <Property Name="DocumentExtension" Type="char" MaxLength="10" />
+    <Property Name="EmployeePhoto" Type="image" />
+    <Property Name="PhotoExtension" Type="char" MaxLength="10" />
+    <Property Name="EmployeeDateofLeaving" Type="datetime" />
+    <Property Name="EmployeeReasonforLeaving" Type="varchar" MaxLength="200" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="EmployeeIM" Type="varchar" MaxLength="50" />
+    <Property Name="EmployeeBloodGroupId" Type="int" />
+    <Property Name="EmployeeDateOfJoining" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mmsuser_test.dbo.vw_get_EmployeesTech' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_get_EmployeesTech">
+    <Key>
+      <PropertyRef Name="EmployeeName" />
+    </Key>
+    <Property Name="EmployeeName" Type="varchar" MaxLength="101" Nullable="false" />
+    <Property Name="DOJ" Type="varchar" MaxLength="25" />
+    <Property Name="EmployeePrimarySkill" Type="varchar" MaxLength="50" />
+    <Property Name="Designation" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK__MMS_Meeti__Meeti__0B91BA14">
+    <End Role="MMS_Meeting_Master" Type="Self.MMS_Meeting_Master" Multiplicity="0..1" />
+    <End Role="MMS_Meeting_Participant" Type="Self.MMS_Meeting_Participant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MMS_Meeting_Master">
+        <PropertyRef Name="Meeting_Id" />
+      </Principal>
+      <Dependent Role="MMS_Meeting_Participant">
+        <PropertyRef Name="Meeting_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_meet_id">
+    <End Role="MMS_Meeting_Master" Type="Self.MMS_Meeting_Master" Multiplicity="0..1" />
+    <End Role="MMS_Notifications" Type="Self.MMS_Notifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MMS_Meeting_Master">
+        <PropertyRef Name="Meeting_Id" />
+      </Principal>
+      <Dependent Role="MMS_Notifications">
+        <PropertyRef Name="meeting_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkey_empid">
+    <End Role="MMS_Employee_Master" Type="Self.MMS_Employee_Master" Multiplicity="1" />
+    <End Role="MMS_Login_Master" Type="Self.MMS_Login_Master" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MMS_Employee_Master">
+        <PropertyRef Name="Employee_Id" />
+      </Principal>
+      <Dependent Role="MMS_Login_Master">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fkey_id">
+    <End Role="MMS_Meeting_Master" Type="Self.MMS_Meeting_Master" Multiplicity="0..1" />
+    <End Role="MMS_Meeting_Details" Type="Self.MMS_Meeting_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MMS_Meeting_Master">
+        <PropertyRef Name="Meeting_Id" />
+      </Principal>
+      <Dependent Role="MMS_Meeting_Details">
+        <PropertyRef Name="Meeting_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fkey_meeting_id">
+    <End Role="MMS_Meeting_Master" Type="Self.MMS_Meeting_Master" Multiplicity="0..1" />
+    <End Role="MMS_Attachment" Type="Self.MMS_Attachment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MMS_Meeting_Master">
+        <PropertyRef Name="Meeting_Id" />
+      </Principal>
+      <Dependent Role="MMS_Attachment">
+        <PropertyRef Name="Meeting_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="getmeetingdetailsNew" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ChairPerson" Type="int" Mode="In" />
+    <Parameter Name="Participant" Type="int" Mode="In" />
+    <Parameter Name="Status" Type="int" Mode="In" />
+    <Parameter Name="SDate" Type="datetime" Mode="In" />
+    <Parameter Name="EDate" Type="datetime" Mode="In" />
+    <Parameter Name="Priority" Type="varchar" Mode="In" />
+    <Parameter Name="IsNotClosed" Type="bit" Mode="In" />
+    <Parameter Name="Category" Type="int" Mode="In" />
+  </Function>
+  <Function Name="getmeetingsummarydetailsNew" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ChairPerson" Type="int" Mode="In" />
+    <Parameter Name="Participant" Type="int" Mode="In" />
+    <Parameter Name="Status" Type="int" Mode="In" />
+    <Parameter Name="SDate" Type="datetime" Mode="In" />
+    <Parameter Name="EDate" Type="datetime" Mode="In" />
+    <Parameter Name="Priority" Type="varchar" Mode="In" />
+    <Parameter Name="IsNotClosed" Type="bit" Mode="In" />
+    <Parameter Name="TemplateID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetTaskComments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TaskId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Get_meeting_status" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Employee_id" Type="int" Mode="In" />
+    <Parameter Name="Meeting_Id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Get_Review_Tasks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Chairperson" Type="int" Mode="In" />
+    <Parameter Name="Category_id" Type="int" Mode="In" />
+    <Parameter Name="Participant" Type="int" Mode="In" />
+    <Parameter Name="PriorityType" Type="varchar" Mode="In" />
+    <Parameter Name="ReviewFrequency" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_MyTask" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Participant" Type="int" Mode="In" />
+    <Parameter Name="SDate" Type="datetime" Mode="In" />
+    <Parameter Name="EDate" Type="datetime" Mode="In" />
+    <Parameter Name="Category" Type="int" Mode="In" />
+    <Parameter Name="ReviewFrequency" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_add_Employee_Department" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="employee_code" Type="int" Mode="In" />
+    <Parameter Name="user_name" Type="nvarchar" Mode="In" />
+    <Parameter Name="department_id" Type="int" Mode="In" />
+    <Parameter Name="emailid" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_add_mms_notifications" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="meeting_id" Type="int" Mode="In" />
+    <Parameter Name="chairperson" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_Check_Login_Details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Username" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_get_EmailId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ParticpanId_In" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_Get_Employee_By_Email" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="email" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_get_Employee_Department" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_get_EmployeeMaster_forJSON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="dept" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_get_meeting_details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Meeting_Id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_get_meeting_details_Advanced" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Meeting_Id" Type="int" Mode="In" />
+    <Parameter Name="Priority" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_get_meeting_id" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_get_meeting_master_viewByDept" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Chairperson" Type="int" Mode="In" />
+    <Parameter Name="fromDate" Type="datetime" Mode="In" />
+    <Parameter Name="toDate" Type="datetime" Mode="In" />
+    <Parameter Name="department" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_get_MeetingSearch_Summary_01102019" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="chairperson" Type="int" Mode="In" />
+    <Parameter Name="participant" Type="int" Mode="In" />
+    <Parameter Name="status" Type="int" Mode="In" />
+    <Parameter Name="sdate" Type="datetime" Mode="In" />
+    <Parameter Name="edate" Type="datetime" Mode="In" />
+    <Parameter Name="priority" Type="varchar" Mode="In" />
+    <Parameter Name="template" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_get_MeetingSearch_Summary_13072018" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="chairperson" Type="int" Mode="In" />
+    <Parameter Name="participant" Type="int" Mode="In" />
+    <Parameter Name="status" Type="int" Mode="In" />
+    <Parameter Name="sdate" Type="datetime" Mode="In" />
+    <Parameter Name="edate" Type="datetime" Mode="In" />
+    <Parameter Name="priority" Type="varchar" Mode="In" />
+    <Parameter Name="category" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_get_mms_notification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="chairperson" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_get_notification_summary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ChairPerson" Type="int" Mode="In" />
+    <Parameter Name="Participant" Type="int" Mode="In" />
+    <Parameter Name="Status" Type="int" Mode="In" />
+    <Parameter Name="Priority" Type="varchar" Mode="In" />
+    <Parameter Name="MeetingId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_get_OverdueDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_get_Participants" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Chairperson" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_getCompletionEffectivenessReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SDate" Type="datetime" Mode="In" />
+    <Parameter Name="EDate" Type="datetime" Mode="In" />
+    <Parameter Name="ChairPerson" Type="int" Mode="In" />
+    <Parameter Name="Participant" Type="int" Mode="In" />
+    <Parameter Name="Task_Id" Type="int" Mode="In" />
+    <Parameter Name="ReviewFrequencyID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_getCompReport_2442018" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SDate" Type="datetime" Mode="In" />
+    <Parameter Name="EDate" Type="datetime" Mode="In" />
+    <Parameter Name="ChairPerson" Type="int" Mode="In" />
+    <Parameter Name="Participant" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_getname_EmployeeMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="User" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_insert_Attachment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Mid" Type="int" Mode="In" />
+    <Parameter Name="Fname" Type="varchar" Mode="In" />
+    <Parameter Name="Fextension" Type="varchar" Mode="In" />
+    <Parameter Name="File" Type="image" Mode="In" />
+  </Function>
+  <Function Name="sp_insert_EmployeeAttachments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Mid" Type="int" Mode="In" />
+    <Parameter Name="Fname" Type="varchar" Mode="In" />
+    <Parameter Name="Fextension" Type="varchar" Mode="In" />
+    <Parameter Name="File" Type="image" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="sp_insert_EmployeeMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CompanyICode" Type="int" Mode="In" />
+    <Parameter Name="DepartmentICode" Type="int" Mode="In" />
+    <Parameter Name="DesignationICode" Type="int" Mode="In" />
+    <Parameter Name="EmployeeNumber" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeFirstName" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeLastName" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeDisplayName" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeCurrentAddress1" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeCurrentAddress2" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeCurrentCity" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeCurrentState" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeCurrentCountry" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeCurrentPinCode" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeCurrentPhoneNo" Type="varchar" Mode="In" />
+    <Parameter Name="IsSameAsCurrentAddress" Type="bit" Mode="In" />
+    <Parameter Name="EmployeePermanentAddress1" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePermanentAddress2" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePermanentCity" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePermanentState" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePermanentCountry" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePermanentPinCode" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePermanentPhoneNo" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeMobileNo" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeFatherName" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeDateofBirth" Type="datetime" Mode="In" />
+    <Parameter Name="EmployeePersonalEmailId" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeDateOfJoining" Type="datetime" Mode="In" />
+    <Parameter Name="EmployeeCorporateEmailId" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeIM" Type="varchar" Mode="In" />
+    <Parameter Name="LoginUserName" Type="varchar" Mode="In" />
+    <Parameter Name="LoginPassword" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeBloodGroupId" Type="int" Mode="In" />
+    <Parameter Name="EmployeePANNo" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePFNo" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeESINo" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeBankName" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeBankAccountNo" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeMaritalStatus" Type="bit" Mode="In" />
+    <Parameter Name="EmployeePrimarySkill" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePreviousEmployer" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePreviousExperienceYears" Type="int" Mode="In" />
+    <Parameter Name="EmployeePreviousExperienceMonths" Type="int" Mode="In" />
+    <Parameter Name="EmployeeReference1Remarks" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeReference2Remarks" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeBioData" Type="image" Mode="In" />
+    <Parameter Name="DocumentExtension" Type="char" Mode="In" />
+    <Parameter Name="EmployeePhoto" Type="image" Mode="In" />
+    <Parameter Name="PhotoExtension" Type="char" Mode="In" />
+    <Parameter Name="EmployeeDateofLeaving" Type="datetime" Mode="In" />
+    <Parameter Name="EmployeeReasonforLeaving" Type="varchar" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="CreatedBy" Type="int" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="ModifiedBy" Type="int" Mode="In" />
+    <Parameter Name="ModifiedDate" Type="datetime" Mode="In" />
+    <Parameter Name="SwipeICode" Type="int" Mode="In" />
+    <Parameter Name="Location" Type="char" Mode="In" />
+    <Parameter Name="Groupid" Type="int" Mode="In" />
+    <Parameter Name="shiftid" Type="int" Mode="In" />
+    <Parameter Name="originalname" Type="varchar" Mode="In" />
+    <Parameter Name="pseudo" Type="bit" Mode="In" />
+    <Parameter Name="currenttechnology" Type="int" Mode="In" />
+    <Parameter Name="picture" Type="image" Mode="In" />
+    <Parameter Name="primaryskillstreamid" Type="int" Mode="In" />
+    <Parameter Name="empphoto" Type="varchar" Mode="In" />
+    <Parameter Name="nightshift" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="sp_insert_Meeting_Participant" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MeetingId_In" Type="int" Mode="In" />
+    <Parameter Name="ParticipantId_In" Type="int" Mode="In" />
+    <Parameter Name="ParticipantName_In" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_insert_Meeting_Status" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpId_In" Type="int" Mode="In" />
+    <Parameter Name="Status_Task_In" Type="varchar" Mode="In" />
+    <Parameter Name="Status_ResponsiblePerson_In" Type="int" Mode="In" />
+    <Parameter Name="Status_Date_In" Type="datetime" Mode="In" />
+    <Parameter Name="Status_Comments_In" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Meeting_status_In" Type="int" Mode="In" />
+    <Parameter Name="Meeting_Status_Hours" Type="varchar" Mode="In" />
+    <Parameter Name="Meeting_Id" Type="int" Mode="In" />
+    <Parameter Name="Commented_By" Type="int" Mode="In" />
+    <Parameter Name="Commented_By_ID" Type="int" Mode="In" />
+    <Parameter Name="Task_Id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_insert_meeting_status_24062014_1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpId_In" Type="int" Mode="In" />
+    <Parameter Name="Status_Task_In" Type="varchar" Mode="In" />
+    <Parameter Name="Status_ResponsiblePerson_In" Type="varchar" Mode="In" />
+    <Parameter Name="Status_Date_In" Type="varchar" Mode="In" />
+    <Parameter Name="Status_Comments_In" Type="varchar" Mode="In" />
+    <Parameter Name="Meeting_Status_In" Type="int" Mode="In" />
+    <Parameter Name="Meeting_Status_Hours" Type="varchar" Mode="In" />
+    <Parameter Name="Meeting_Id" Type="int" Mode="In" />
+    <Parameter Name="Task_Id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_insert_MeetingDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Mid" Type="int" Mode="In" />
+    <Parameter Name="Eid" Type="int" Mode="In" />
+    <Parameter Name="Cperson" Type="int" Mode="In" />
+    <Parameter Name="Participant" Type="int" Mode="In" />
+    <Parameter Name="Task" Type="varchar" Mode="In" />
+    <Parameter Name="Ctime" Type="datetime" Mode="In" />
+    <Parameter Name="Priority" Type="varchar" Mode="In" />
+    <Parameter Name="Comments" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Category" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Isread" Type="varchar" Mode="In" />
+    <Parameter Name="seen" Type="bit" Mode="In" />
+    <Parameter Name="istemplate" Type="bit" Mode="In" />
+    <Parameter Name="NextRevDt" Type="datetime" Mode="In" />
+    <Parameter Name="Revfreq" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_insert_MeetingDetails1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Mid" Type="int" Mode="In" />
+    <Parameter Name="Eid" Type="int" Mode="In" />
+    <Parameter Name="Cperson" Type="int" Mode="In" />
+    <Parameter Name="Participant" Type="int" Mode="In" />
+    <Parameter Name="Task" Type="varchar" Mode="In" />
+    <Parameter Name="Ctime" Type="datetime" Mode="In" />
+    <Parameter Name="Priority" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="int" Mode="In" />
+    <Parameter Name="Comments" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Category" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Isread" Type="varchar" Mode="In" />
+    <Parameter Name="seen" Type="bit" Mode="In" />
+    <Parameter Name="istemplate" Type="bit" Mode="In" />
+    <Parameter Name="NextRevDt" Type="datetime" Mode="In" />
+    <Parameter Name="Revfreq" Type="varchar" Mode="In" />
+    <Parameter Name="TemplateID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_insert_MeetingMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Objective_In" Type="varchar" Mode="In" />
+    <Parameter Name="Date_In" Type="datetime" Mode="In" />
+    <Parameter Name="Time_In" Type="varchar" Mode="In" />
+    <Parameter Name="Venue_In" Type="varchar" Mode="In" />
+    <Parameter Name="Type_In" Type="varchar" Mode="In" />
+    <Parameter Name="Duration_In" Type="varchar" Mode="In" />
+    <Parameter Name="Department_In" Type="varchar" Mode="In" />
+    <Parameter Name="Chairperson_In" Type="int" Mode="In" />
+    <Parameter Name="Minutes_Of_Meeting_In" Type="varchar" Mode="In" />
+    <Parameter Name="Participants_In" Type="int" Mode="In" />
+    <Parameter Name="Istemplate" Type="bit" Mode="In" />
+    <Parameter Name="TemplateID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_insert_status_update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MeetingId" Type="int" Mode="In" />
+    <Parameter Name="EmployeeId" Type="int" Mode="In" />
+    <Parameter Name="Task" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="int" Mode="In" />
+    <Parameter Name="TaskId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_notification_count_message" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Meeting_Id_In" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_select_AttendedMeeting_Name" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Employee_Id" Type="int" Mode="In" />
+    <Parameter Name="StartDate_In" Type="datetime" Mode="In" />
+    <Parameter Name="EndDate_In" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="sp_select_Meeting_Id" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Chairperson" Type="int" Mode="In" />
+    <Parameter Name="StartDate_In" Type="datetime" Mode="In" />
+    <Parameter Name="EndDate_In" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="sp_select_Meeting_Name" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ChairPerson" Type="int" Mode="In" />
+    <Parameter Name="StartDate_In" Type="datetime" Mode="In" />
+    <Parameter Name="EndDate_In" Type="datetime" Mode="In" />
+    <Parameter Name="priority" Type="varchar" Mode="In" />
+    <Parameter Name="status" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_select_Meeting_Participant" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MeetingId_In" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_select_meeting_status" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Status_Task_In" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_select_mms_meeting_details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Meeting_Id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_select_mms_meeting_master" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Meeting_Id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Sp_Update_Attachment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MeetingId" Type="int" Mode="In" />
+    <Parameter Name="Fname" Type="varchar" Mode="In" />
+    <Parameter Name="Fextension" Type="varchar" Mode="In" />
+    <Parameter Name="File" Type="image" Mode="In" />
+  </Function>
+  <Function Name="Sp_Update_EmployeeAttachments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MeetingId" Type="int" Mode="In" />
+    <Parameter Name="Fname" Type="varchar" Mode="In" />
+    <Parameter Name="Fextension" Type="varchar" Mode="In" />
+    <Parameter Name="File" Type="image" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="Sp_Update_EmployeeMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmployeeICode" Type="int" Mode="In" />
+    <Parameter Name="CompanyICode" Type="int" Mode="In" />
+    <Parameter Name="DepartmentICode" Type="int" Mode="In" />
+    <Parameter Name="DesignationICode" Type="int" Mode="In" />
+    <Parameter Name="EmployeeNumber" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeFirstName" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeLastName" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeDisplayName" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeCurrentAddress1" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeCurrentAddress2" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeCurrentCity" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeCurrentState" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeCurrentCountry" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeCurrentPinCode" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeCurrentPhoneNo" Type="varchar" Mode="In" />
+    <Parameter Name="IsSameAsCurrentAddress" Type="bit" Mode="In" />
+    <Parameter Name="EmployeePermanentAddress1" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePermanentAddress2" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePermanentCity" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePermanentState" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePermanentCountry" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePermanentPinCode" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePermanentPhoneNo" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeMobileNo" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeFatherName" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeDateofBirth" Type="datetime" Mode="In" />
+    <Parameter Name="EmployeePersonalEmailId" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeDateOfJoining" Type="datetime" Mode="In" />
+    <Parameter Name="EmployeeCorporateEmailId" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeIM" Type="varchar" Mode="In" />
+    <Parameter Name="LoginUserName" Type="varchar" Mode="In" />
+    <Parameter Name="LoginPassword" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeBloodGroupId" Type="int" Mode="In" />
+    <Parameter Name="EmployeePANNo" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePFNo" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeESINo" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeBankName" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeBankAccountNo" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeMaritalStatus" Type="bit" Mode="In" />
+    <Parameter Name="EmployeePrimarySkill" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePreviousEmployer" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeePreviousExperienceYears" Type="int" Mode="In" />
+    <Parameter Name="EmployeePreviousExperienceMonths" Type="int" Mode="In" />
+    <Parameter Name="EmployeeReference1Remarks" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeReference2Remarks" Type="varchar" Mode="In" />
+    <Parameter Name="EmployeeBioData" Type="image" Mode="In" />
+    <Parameter Name="DocumentExtension" Type="char" Mode="In" />
+    <Parameter Name="EmployeePhoto" Type="image" Mode="In" />
+    <Parameter Name="PhotoExtension" Type="char" Mode="In" />
+    <Parameter Name="EmployeeDateofLeaving" Type="datetime" Mode="In" />
+    <Parameter Name="EmployeeReasonforLeaving" Type="varchar" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="CreatedBy" Type="int" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="ModifiedBy" Type="int" Mode="In" />
+    <Parameter Name="ModifiedDate" Type="datetime" Mode="In" />
+    <Parameter Name="SwipeICode" Type="int" Mode="In" />
+    <Parameter Name="Location" Type="char" Mode="In" />
+    <Parameter Name="Groupid" Type="int" Mode="In" />
+    <Parameter Name="shiftid" Type="int" Mode="In" />
+    <Parameter Name="originalname" Type="varchar" Mode="In" />
+    <Parameter Name="pseudo" Type="bit" Mode="In" />
+    <Parameter Name="currenttechnology" Type="int" Mode="In" />
+    <Parameter Name="picture" Type="image" Mode="In" />
+    <Parameter Name="primaryskillstreamid" Type="int" Mode="In" />
+    <Parameter Name="empphoto" Type="varchar" Mode="In" />
+    <Parameter Name="nightshift" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="sp_update_meeting_Percent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MeetingId" Type="int" Mode="In" />
+    <Parameter Name="EmployeeId" Type="int" Mode="In" />
+    <Parameter Name="Percent" Type="numeric" Mode="In" />
+    <Parameter Name="TaskId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Sp_Update_MMS_Meeting_Details_Change" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="emp_id" Type="int" Mode="In" />
+    <Parameter Name="Task_Id" Type="int" Mode="In" />
+    <Parameter Name="Completion_Date" Type="datetime" Mode="In" />
+    <Parameter Name="Status" Type="int" Mode="In" />
+    <Parameter Name="Category" Type="int" Mode="In" />
+    <Parameter Name="MeetingId" Type="int" Mode="In" />
+    <Parameter Name="Comments" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="NextReviewDate" Type="datetime" Mode="In" />
+    <Parameter Name="ReviewFrequencyID" Type="int" Mode="In" />
+    <Parameter Name="commented_by" Type="int" Mode="In" />
+    <Parameter Name="task" Type="varchar" Mode="In" />
+    <Parameter Name="Priority" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_Update_MMS_Meeting_Details_Change1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MeetingId" Type="int" Mode="In" />
+    <Parameter Name="MeetingObjective" Type="varchar" Mode="In" />
+    <Parameter Name="MeetingDate" Type="datetime" Mode="In" />
+    <Parameter Name="MeetingTime" Type="varchar" Mode="In" />
+    <Parameter Name="MeetingDuration" Type="varchar" Mode="In" />
+    <Parameter Name="MeetingVenue" Type="varchar" Mode="In" />
+    <Parameter Name="MeetingType" Type="varchar" Mode="In" />
+    <Parameter Name="MeetingDepartment" Type="varchar" Mode="In" />
+    <Parameter Name="MeetingChairperson" Type="int" Mode="In" />
+    <Parameter Name="MinutesOfMeeting" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_update_read_notification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="delimited" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="delimiter" Type="nvarchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="val" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <EntityContainer Name="mmsuser_testModelStoreContainer">
+    <EntitySet Name="Department_Master" EntityType="Self.Department_Master" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Designation_Master" EntityType="Self.Designation_Master" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee_Department" EntityType="Self.Employee_Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee_Master" EntityType="Self.Employee_Master" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Attachment" EntityType="Self.MMS_Attachment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Blood_Details" EntityType="Self.MMS_Blood_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Employee_Attachment" EntityType="Self.MMS_Employee_Attachment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Employee_Location" EntityType="Self.MMS_Employee_Location" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Employee_Master" EntityType="Self.MMS_Employee_Master" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Login_Master" EntityType="Self.MMS_Login_Master" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Meeting_Category" EntityType="Self.MMS_Meeting_Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Meeting_Details" EntityType="Self.MMS_Meeting_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Meeting_Master" EntityType="Self.MMS_Meeting_Master" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Meeting_Participant" EntityType="Self.MMS_Meeting_Participant" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Meeting_Status" EntityType="Self.MMS_Meeting_Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Meeting_Status_Update" EntityType="Self.MMS_Meeting_Status_Update" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Meeting_Template" EntityType="Self.MMS_Meeting_Template" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Meeting_Template_Users" EntityType="Self.MMS_Meeting_Template_Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Notifications" EntityType="Self.MMS_Notifications" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Review_Frequency" EntityType="Self.MMS_Review_Frequency" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Track_ReviewTasks" EntityType="Self.MMS_Track_ReviewTasks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Task_Status" EntityType="Self.Task_Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MMS_Priority" EntityType="Self.MMS_Priority" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [MMS_Priority].[Id] AS [Id], 
+    [MMS_Priority].[Name] AS [Name], 
+    [MMS_Priority].[Descriptions] AS [Descriptions], 
+    [MMS_Priority].[Active] AS [Active]
+    FROM [dbo].[MMS_Priority] AS [MMS_Priority]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="MailDetail_TaskNotCompleted" EntityType="Self.MailDetail_TaskNotCompleted" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [MailDetail_TaskNotCompleted].[Task] AS [Task], 
+    [MailDetail_TaskNotCompleted].[Assigned_By] AS [Assigned_By], 
+    [MailDetail_TaskNotCompleted].[Priority] AS [Priority], 
+    [MailDetail_TaskNotCompleted].[Comments] AS [Comments], 
+    [MailDetail_TaskNotCompleted].[Allocated_Date] AS [Allocated_Date], 
+    [MailDetail_TaskNotCompleted].[Completed_date] AS [Completed_date], 
+    [MailDetail_TaskNotCompleted].[Overdue_Days] AS [Overdue_Days], 
+    [MailDetail_TaskNotCompleted].[Meeting_Id] AS [Meeting_Id], 
+    [MailDetail_TaskNotCompleted].[Employee_EmailAddress] AS [Employee_EmailAddress], 
+    [MailDetail_TaskNotCompleted].[Employee_FirstName] AS [Employee_FirstName]
+    FROM [dbo].[MailDetail_TaskNotCompleted] AS [MailDetail_TaskNotCompleted]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_get_Designations" EntityType="Self.vw_get_Designations" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_get_Designations].[DesignationICode] AS [DesignationICode], 
+    [vw_get_Designations].[CompanyICode] AS [CompanyICode], 
+    [vw_get_Designations].[DepartmentICode] AS [DepartmentICode], 
+    [vw_get_Designations].[Designation] AS [Designation], 
+    [vw_get_Designations].[IsActive] AS [IsActive], 
+    [vw_get_Designations].[CreatedBy] AS [CreatedBy], 
+    [vw_get_Designations].[CreatedDate] AS [CreatedDate], 
+    [vw_get_Designations].[ModifiedBy] AS [ModifiedBy], 
+    [vw_get_Designations].[ModifiedDate] AS [ModifiedDate], 
+    [vw_get_Designations].[RoleICode] AS [RoleICode]
+    FROM [dbo].[vw_get_Designations] AS [vw_get_Designations]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_get_EmployeeDepartment" EntityType="Self.vw_get_EmployeeDepartment" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_get_EmployeeDepartment].[EmployeeICode] AS [EmployeeICode], 
+    [vw_get_EmployeeDepartment].[EmployeeDisplayName] AS [EmployeeDisplayName], 
+    [vw_get_EmployeeDepartment].[DepartmentICode] AS [DepartmentICode], 
+    [vw_get_EmployeeDepartment].[EmployeeCorporateEmailId] AS [EmployeeCorporateEmailId]
+    FROM [dbo].[vw_get_EmployeeDepartment] AS [vw_get_EmployeeDepartment]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_get_EmployeeDepartments" EntityType="Self.vw_get_EmployeeDepartments" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_get_EmployeeDepartments].[ID] AS [ID], 
+    [vw_get_EmployeeDepartments].[Employee_Code] AS [Employee_Code], 
+    [vw_get_EmployeeDepartments].[User_name] AS [User_name], 
+    [vw_get_EmployeeDepartments].[Department_Id] AS [Department_Id], 
+    [vw_get_EmployeeDepartments].[EmailID] AS [EmailID]
+    FROM [dbo].[vw_get_EmployeeDepartments] AS [vw_get_EmployeeDepartments]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_get_Employees" EntityType="Self.vw_get_Employees" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_get_Employees].[EmployeeICode] AS [EmployeeICode], 
+    [vw_get_Employees].[CompanyICode] AS [CompanyICode], 
+    [vw_get_Employees].[DepartmentICode] AS [DepartmentICode], 
+    [vw_get_Employees].[DesignationICode] AS [DesignationICode], 
+    [vw_get_Employees].[EmployeeNumber] AS [EmployeeNumber], 
+    [vw_get_Employees].[EmployeeFirstName] AS [EmployeeFirstName], 
+    [vw_get_Employees].[EmployeeLastName] AS [EmployeeLastName], 
+    [vw_get_Employees].[EmployeeName] AS [EmployeeName], 
+    [vw_get_Employees].[EmployeeDisplayName] AS [EmployeeDisplayName], 
+    [vw_get_Employees].[EmployeeCurrentAddress1] AS [EmployeeCurrentAddress1], 
+    [vw_get_Employees].[EmployeeCurrentAddress2] AS [EmployeeCurrentAddress2], 
+    [vw_get_Employees].[EmployeeCurrentAddress3] AS [EmployeeCurrentAddress3], 
+    [vw_get_Employees].[EmployeeCurrentCity] AS [EmployeeCurrentCity], 
+    [vw_get_Employees].[EmployeeCurrentState] AS [EmployeeCurrentState], 
+    [vw_get_Employees].[EmployeeCurrentCountry] AS [EmployeeCurrentCountry], 
+    [vw_get_Employees].[EmployeeCurrentPinCode] AS [EmployeeCurrentPinCode], 
+    [vw_get_Employees].[EmployeeCurrentPhoneNo] AS [EmployeeCurrentPhoneNo], 
+    [vw_get_Employees].[IsSameAsCurrentAddress] AS [IsSameAsCurrentAddress], 
+    [vw_get_Employees].[EmployeePermanentAddress1] AS [EmployeePermanentAddress1], 
+    [vw_get_Employees].[EmployeePermanentAddress2] AS [EmployeePermanentAddress2], 
+    [vw_get_Employees].[EmployeePermanentAddress3] AS [EmployeePermanentAddress3], 
+    [vw_get_Employees].[EmployeePermanentCity] AS [EmployeePermanentCity], 
+    [vw_get_Employees].[EmployeePermanentState] AS [EmployeePermanentState], 
+    [vw_get_Employees].[EmployeePermanentCountry] AS [EmployeePermanentCountry], 
+    [vw_get_Employees].[EmployeePermanentPinCode] AS [EmployeePermanentPinCode], 
+    [vw_get_Employees].[EmployeePermanentPhoneNo] AS [EmployeePermanentPhoneNo], 
+    [vw_get_Employees].[EmployeeMobileNo] AS [EmployeeMobileNo], 
+    [vw_get_Employees].[EmployeeFatherName] AS [EmployeeFatherName], 
+    [vw_get_Employees].[EmployeeDateofBirth] AS [EmployeeDateofBirth], 
+    [vw_get_Employees].[EmployeePersonalEmailId] AS [EmployeePersonalEmailId], 
+    [vw_get_Employees].[EmployeeCorporateEmailId] AS [EmployeeCorporateEmailId], 
+    [vw_get_Employees].[LoginUserName] AS [LoginUserName], 
+    [vw_get_Employees].[LoginPassword] AS [LoginPassword], 
+    [vw_get_Employees].[EmployeePANNo] AS [EmployeePANNo], 
+    [vw_get_Employees].[EmployeePFNo] AS [EmployeePFNo], 
+    [vw_get_Employees].[EmployeeESINo] AS [EmployeeESINo], 
+    [vw_get_Employees].[EmployeeBankName] AS [EmployeeBankName], 
+    [vw_get_Employees].[EmployeeBankAccountNo] AS [EmployeeBankAccountNo], 
+    [vw_get_Employees].[EmployeeMaritalStatus] AS [EmployeeMaritalStatus], 
+    [vw_get_Employees].[EmployeePrimarySkill] AS [EmployeePrimarySkill], 
+    [vw_get_Employees].[EmployeePreviousEmployer] AS [EmployeePreviousEmployer], 
+    [vw_get_Employees].[EmployeePreviousExperienceYears] AS [EmployeePreviousExperienceYears], 
+    [vw_get_Employees].[EmployeePreviousExperienceMonths] AS [EmployeePreviousExperienceMonths], 
+    [vw_get_Employees].[EmployeeReference1Remarks] AS [EmployeeReference1Remarks], 
+    [vw_get_Employees].[EmployeeReference2Remarks] AS [EmployeeReference2Remarks], 
+    [vw_get_Employees].[EmployeeBioData] AS [EmployeeBioData], 
+    [vw_get_Employees].[DocumentExtension] AS [DocumentExtension], 
+    [vw_get_Employees].[EmployeePhoto] AS [EmployeePhoto], 
+    [vw_get_Employees].[PhotoExtension] AS [PhotoExtension], 
+    [vw_get_Employees].[EmployeeDateofLeaving] AS [EmployeeDateofLeaving], 
+    [vw_get_Employees].[EmployeeReasonforLeaving] AS [EmployeeReasonforLeaving], 
+    [vw_get_Employees].[IsActive] AS [IsActive], 
+    [vw_get_Employees].[CreatedBy] AS [CreatedBy], 
+    [vw_get_Employees].[CreatedDate] AS [CreatedDate], 
+    [vw_get_Employees].[ModifiedBy] AS [ModifiedBy], 
+    [vw_get_Employees].[ModifiedDate] AS [ModifiedDate], 
+    [vw_get_Employees].[EmployeeIM] AS [EmployeeIM], 
+    [vw_get_Employees].[EmployeeBloodGroupId] AS [EmployeeBloodGroupId], 
+    [vw_get_Employees].[EmployeeDateOfJoining] AS [EmployeeDateOfJoining]
+    FROM [dbo].[vw_get_Employees] AS [vw_get_Employees]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_get_EmployeesTech" EntityType="Self.vw_get_EmployeesTech" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_get_EmployeesTech].[EmployeeName] AS [EmployeeName], 
+    [vw_get_EmployeesTech].[DOJ] AS [DOJ], 
+    [vw_get_EmployeesTech].[EmployeePrimarySkill] AS [EmployeePrimarySkill], 
+    [vw_get_EmployeesTech].[Designation] AS [Designation]
+    FROM [dbo].[vw_get_EmployeesTech] AS [vw_get_EmployeesTech]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__MMS_Meeti__Meeti__0B91BA14" Association="Self.FK__MMS_Meeti__Meeti__0B91BA14">
+      <End Role="MMS_Meeting_Master" EntitySet="MMS_Meeting_Master" />
+      <End Role="MMS_Meeting_Participant" EntitySet="MMS_Meeting_Participant" />
+    </AssociationSet>
+    <AssociationSet Name="fk_meet_id" Association="Self.fk_meet_id">
+      <End Role="MMS_Meeting_Master" EntitySet="MMS_Meeting_Master" />
+      <End Role="MMS_Notifications" EntitySet="MMS_Notifications" />
+    </AssociationSet>
+    <AssociationSet Name="fkey_empid" Association="Self.fkey_empid">
+      <End Role="MMS_Employee_Master" EntitySet="MMS_Employee_Master" />
+      <End Role="MMS_Login_Master" EntitySet="MMS_Login_Master" />
+    </AssociationSet>
+    <AssociationSet Name="Fkey_id" Association="Self.Fkey_id">
+      <End Role="MMS_Meeting_Master" EntitySet="MMS_Meeting_Master" />
+      <End Role="MMS_Meeting_Details" EntitySet="MMS_Meeting_Details" />
+    </AssociationSet>
+    <AssociationSet Name="fkey_meeting_id" Association="Self.fkey_meeting_id">
+      <End Role="MMS_Meeting_Master" EntitySet="MMS_Meeting_Master" />
+      <End Role="MMS_Attachment" EntitySet="MMS_Attachment" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

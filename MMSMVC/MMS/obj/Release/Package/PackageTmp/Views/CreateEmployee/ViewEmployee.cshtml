@@ -1,0 +1,152 @@
+﻿@model MMS.Models.EmployeeSummary
+@{
+    ViewBag.Title = "ViewEmployee";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>Employee Master</h2>
+
+
+<div class="panel panel-primary">
+
+    <div class="panel-heading">
+        View/Update Employee
+    </div>
+
+
+    <div class="panel-body">
+
+        @using (Html.BeginForm())
+        {
+
+            <div class="space" style="margin:10px 0px;"></div>
+
+            <div class="row">
+
+                <div class="space" style="margin:4% 0px;"></div>
+
+                <div class="responsive-table">
+                    <div id="grid-show-result" class="col-md-12">
+
+                        <!--dynamic results fetched here-->
+                    </div>
+                </div>
+
+            </div>
+
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/customVal")
+}
+
+
+<script>
+
+    var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    var start = new Date();
+    start.setFullYear(start.getFullYear() - 70);
+    var end = new Date();
+    end.setFullYear(end.getFullYear() + 1);
+
+    function getCustomDay(dayStr) {
+        var day = parseInt(dayStr);
+        if (day < 10)
+            return '0' + dayStr;
+        else
+            return dayStr;
+    }
+
+
+    $(document).ready(function () {
+
+        getEmployee();
+
+        function getEmployee() {
+
+            
+            $.ajax({
+                url: "@Url.Action("ViewEmployee", "EmployeeDetails")",
+                type: 'GET',                
+                success: function (data) {
+                    var grid = $("#grid-show-result");
+
+                    var TableStr = '<table id="Assigned" class="table table-bordered assigned col-md-12 col-sm-12 "><thead><tr>' +
+                        '<th><center>User Name</center></th>' +
+                        '<th><center>Location</center></th>' +
+                        '<th><center>Corp Email</center></th>' +
+                        '<th><center>Date Of Join</center></th>' +
+                        '<th><center>Primary Skill</center></th>' +
+                        '<th><center>Experience</center></th>' +
+                        '<th><center>Employee Code</center></th>' +
+                        '<th><center>Swipe ICode</center></th></tr></thead>';
+
+                    if (data == null || data == "") {
+                        TableStr += "<tr><td colspan='8'>No records found</td></tr>";
+                    }
+                    else {
+                        $.each(data, function (Empkey, Empval) {
+                            
+                            var JoiningDate = new Date(parseInt(Empval.EmployeeDateOfJoining.substr(6)));
+                            var Jsdate = new Date(JoiningDate);
+                            var Jsgetdate = getCustomDay(Jsdate.getDate());
+                            var Jsnmonth = month[Jsdate.getMonth()];                            
+                            var Jyear = Jsdate.getFullYear();
+                            var JsJoiningDate = Jsgetdate + "-" + Jsnmonth + "-" + Jyear;
+                            var EmployeePreviousExperience = "";
+
+                            if (Empval.Location == null)
+                                Empval.Location = "";
+                            if (Empval.EmployeeCorporateEmailId == null)
+                                Empval.EmployeeCorporateEmailId = "";
+                            if (Empval.EmployeePrimarySkill == null)
+                                Empval.EmployeePrimarySkill = "";
+                            if (Empval.EmployeePreviousExperienceYears != null || Empval.EmployeePreviousExperienceMonths != null) {
+
+                                if (Empval.EmployeePreviousExperienceMonths == null)
+                                    Empval.EmployeePreviousExperienceMonths = 0;
+
+                                if (Empval.EmployeePreviousExperienceYears == null)
+                                    Empval.EmployeePreviousExperienceYears = 0;
+
+                                if (Empval.EmployeePreviousExperienceYears != 0 || Empval.EmployeePreviousExperienceMonths != 0)
+                                    EmployeePreviousExperience = Empval.EmployeePreviousExperienceYears + "." + Empval.EmployeePreviousExperienceMonths + " Years";
+                                else
+                                    EmployeePreviousExperience = "";
+                            }
+                                
+                            if (Empval.EmployeeNumber == null)
+                                Empval.EmployeeNumber = "";
+                            if (Empval.SwipeICode == null)
+                                Empval.SwipeICode = "";
+
+                            TableStr += "<tr class='alert-info'>" +
+
+                                "<td>" + "<a href='@Url.Action("ViewAndUpdateEmployeePage1", "CreateEmployee")?EmployeeICode=" + Empval.EmployeeICode + "' class='btn btn-sm' title='Edit' data-placement='top' >" + Empval.LoginUserName + "</a></td>" +
+                                "<td>" + Empval.Location + "</td>" +
+                                "<td>" + Empval.EmployeeCorporateEmailId + "</td>" +
+                                "<td><center>" + JsJoiningDate + "</center></td>" +
+                                "<td>" + Empval.EmployeePrimarySkill + "</td>" +
+                                "<td><center>" + EmployeePreviousExperience + "</center></td>" +
+                                "<td><center>" + Empval.EmployeeNumber + "</center></td>" +
+                                "<td><center>" + Empval.SwipeICode + "</center></td>"
+                            "</tr>";
+                        });
+                    }
+
+                    TableStr += "</table>";
+                    grid.html(TableStr);
+                }
+            });
+
+        }
+    });   
+
+</script>
+
+<script src="~/Scripts/customScript.js"></script>

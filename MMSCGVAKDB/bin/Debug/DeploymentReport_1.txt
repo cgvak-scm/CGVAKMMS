@@ -1,0 +1,66 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       None
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Create
+       [dbo].[getmeetingdetailsNew] (Procedure)
+       [dbo].[getmeetingsummarydetailsNew] (Procedure)
+       [dbo].[GetTaskComments] (Procedure)
+       [dbo].[Proc_Get_meeting_status] (Procedure)
+       [dbo].[Proc_Get_Review_Tasks] (Procedure)
+       [dbo].[Proc_MyTask] (Procedure)
+       [dbo].[sp_add_Employee_Department] (Procedure)
+       [dbo].[sp_add_mms_notifications] (Procedure)
+       [dbo].[sp_Check_Login_Details] (Procedure)
+       [dbo].[sp_get_EmailId] (Procedure)
+       [dbo].[sp_Get_Employee_By_Email] (Procedure)
+       [dbo].[sp_get_Employee_Department] (Procedure)
+       [dbo].[sp_get_EmployeeMaster_forJSON] (Procedure)
+       [dbo].[sp_get_meeting_details] (Procedure)
+       [dbo].[sp_get_meeting_details_Advanced] (Procedure)
+       [dbo].[sp_get_meeting_id] (Procedure)
+       [dbo].[sp_get_meeting_master_viewByDept] (Procedure)
+       [dbo].[sp_get_MeetingSearch_Summary_01102019] (Procedure)
+       [dbo].[sp_get_MeetingSearch_Summary_13072018] (Procedure)
+       [dbo].[sp_get_mms_notification] (Procedure)
+       [dbo].[sp_get_notification_summary] (Procedure)
+       [dbo].[sp_get_Participants] (Procedure)
+       [dbo].[sp_getCompletionEffectivenessReport] (Procedure)
+       [dbo].[sp_getCompReport_2442018] (Procedure)
+       [dbo].[sp_getname_EmployeeMaster] (Procedure)
+       [dbo].[sp_insert_Attachment] (Procedure)
+       [dbo].[sp_insert_EmployeeAttachments] (Procedure)
+       [dbo].[sp_insert_EmployeeMaster] (Procedure)
+       [dbo].[sp_insert_Meeting_Participant] (Procedure)
+       [dbo].[sp_insert_Meeting_Status] (Procedure)
+       [dbo].[sp_insert_meeting_status_24062014_1] (Procedure)
+       [dbo].[sp_insert_MeetingDetails] (Procedure)
+       [dbo].[sp_insert_MeetingDetails1] (Procedure)
+       [dbo].[sp_insert_MeetingMaster] (Procedure)
+       [dbo].[sp_insert_status_update] (Procedure)
+       [dbo].[sp_notification_count_message] (Procedure)
+       [dbo].[sp_select_AttendedMeeting_Name] (Procedure)
+       [dbo].[sp_select_Meeting_Id] (Procedure)
+       [dbo].[sp_select_Meeting_Name] (Procedure)
+       [dbo].[sp_select_Meeting_Participant] (Procedure)
+       [dbo].[sp_select_meeting_status] (Procedure)
+       [dbo].[sp_select_mms_meeting_details] (Procedure)
+       [dbo].[sp_select_mms_meeting_master] (Procedure)
+       [dbo].[Sp_Update_Attachment] (Procedure)
+       [dbo].[Sp_Update_EmployeeAttachments] (Procedure)
+       [dbo].[Sp_Update_EmployeeMaster] (Procedure)
+       [dbo].[sp_update_meeting_Percent] (Procedure)
+       [dbo].[Sp_Update_MMS_Meeting_Details_Change] (Procedure)
+       [dbo].[Sp_Update_MMS_Meeting_Details_Change1] (Procedure)
+       [dbo].[sp_update_read_notification] (Procedure)
+       [dbo].[vw_get_EmployeeDepartment].[MS_DiagramPane1] (Extended Property)
+       [dbo].[vw_get_EmployeeDepartment].[MS_DiagramPaneCount] (Extended Property)
+
+** Supporting actions

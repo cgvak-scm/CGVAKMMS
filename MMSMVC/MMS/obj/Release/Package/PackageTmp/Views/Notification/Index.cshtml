@@ -1,0 +1,114 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "Notification";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Notification
+    </div>
+    <div class="panel-body">
+
+        <div class="row">
+
+            <table id='resTable' class='table table-responsive  tbl_cus'>
+                <tr>
+                    <th>
+                        Participant
+                    </th>
+                    <th>
+                        Task
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Date Assigned
+                    </th>
+                    <th>
+                        Target Date
+                    </th>
+                    <th>
+                        Priority
+                    </th>
+                </tr>
+
+                @{
+
+                    foreach (var item in ViewBag.MeetingDetails)
+                    {
+                        <tr>
+
+                            <td>@item.Participant</td>
+
+                            <td>@item.Task</td>
+
+                            <td>@item.Status</td>
+
+                            @{
+                                foreach (var meetingItem in ViewBag.MeetingMaster)
+                                {
+                                    <td>@meetingItem.Meeting_Date</td>
+                                }
+                            }
+
+                            <td>@item.Completion_Date </td>
+
+                            <td>@item.Priority</td>
+                        </tr>
+                                }
+
+                }
+            </table>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+    @*<div class="panel-heading">
+            Comments
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+
+                <div>
+                      @{var cnt = 1; }
+                        @{
+
+                            foreach (var items in ViewBag.NotificationResult)
+                            {
+
+                                <p class='comment' name=text style="background-color:Lightgreen">
+                                  @cnt :  @items.Meeting_Status_Comments
+                                  @{ cnt += 1; }
+                                </p>
+
+
+                            }
+
+                        }
+
+                </div>
+
+            </div>
+
+
+
+        </div>*@
+
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/customVal")
+}
+<link rel="stylesheet" href="~/Content/mms.css" type="text/css" />

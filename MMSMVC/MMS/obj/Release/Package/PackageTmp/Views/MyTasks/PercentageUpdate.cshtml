@@ -1,0 +1,185 @@
+﻿
+
+<form id="percentupload" name="percentupload">
+    <div class="modal-header" id="modal-header">
+        <button type="button" class="close btn_close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <b>Percentage Update</b>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="modal-body">
+                <div class="form-inline">
+                    @{
+                        var meetingId = Request.QueryString["meetingId"].ToString();
+                        var taskId = Request.QueryString["taskId"].ToString();
+                        <input type="hidden" id="meetingId" value="@meetingId" />
+                            <input type="hidden" id="taskId" value="@taskId" />
+                    }
+                    @Html.Label("Percentage Completed:")
+                    @Html.Editor("txtPercent", new
+                   {
+                       htmlattributes = new
+                       {
+                           @class = "form-control",
+                           onkeypress = "return IsValidPercentage(event)",
+                           max="100"
+                       }
+                   })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <p id="resMsg" style="color:forestgreen;"></p>
+        <input type="button" id="add_percentage" class="btn btn-primary" value="Save" />
+        <button type="button" id="close_percentage" class="btn btn_close btn-default" data-dismiss="modal">Close</button>
+    </div>
+
+    <!-- Modal HTML -->
+    @*<div id="myModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Percentage Update</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal">
+                                <div class="form-inline">
+                                    @{
+                                        var meetingId = Request.QueryString["meetingId"].ToString();
+                                        var taskId = Request.QueryString["taskId"].ToString();
+                                        <input type="hidden" id="meetingId" value="@meetingId" />
+                                        <input type="hidden" id="taskId" value="@taskId" />
+                                    }
+
+                                    @Html.Label("Percentage Completed:")
+                                    @Html.Editor("txtPercent", new
+                               {
+                                   htmlattributes = new
+                                   {
+                                       @class = "form-control",
+                                       onkeypress = "return IsValidPercentage(event)"
+                                   }
+                               })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+
+
+    <div id="percentege-success" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h5 class="modal-title" id="mySmallModalLabel">+'resData'+ </h5>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="percentege-fail" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h5 class="modal-title" id="mySmallModalLabel">Please fill the field</h5>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</form>
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        $('#modal-header').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    });
+</script>*@
+<script>
+    function IsValidPercentage(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        else {
+            var oldPercentage = $("#txtPercent").val();
+            var enteredValue = String.fromCharCode(charCode);
+            var newValue = oldPercentage + enteredValue;
+
+            if (parseInt(newValue) > 100)
+                return false;
+        }
+        return true;
+    }
+
+    $("#close_percentage").click(function () {
+        $(".btn_close").click();
+        window.location.reload();
+        $("#view_task").click();
+    });
+
+    $(".btn_close").click(function () {
+        window.location.reload();
+        $("#view_task").click();
+    });
+
+
+    $("#add_percentage").click(function () {       
+        var txtPercent = $("#txtPercent").val();
+        var txtComments = $("#Comments").val();
+
+        if (parseInt(txtPercent) > 100)
+        {
+            return false;
+            
+        }
+ 
+        if (txtPercent != "" && txtComments != "") {
+            $.ajax({
+                url: "@Url.Action("PercentageUpdateChanges", "MyTasks")",
+                type: 'post',
+                data: JSON.stringify({ "percent": txtPercent, "meetingId": $("#meetingId").val(), "taskId": $("#taskId").val() }),
+                dataType: 'json',
+                contentType: 'Application/json;charset=utf-8',
+                success: function (resData) {
+                    alert(resData);
+                    // $('#percentege-success').modal('show');
+                    $(".btn_close").click();
+                    window.location.reload();
+                    $("#view_task").click();
+                }
+
+            });
+        }
+        else {
+            // alert("Please fill the field");
+            $('#percentege-fail').modal('show');
+        }
+
+    });
+
+
+</script>
+
+
+

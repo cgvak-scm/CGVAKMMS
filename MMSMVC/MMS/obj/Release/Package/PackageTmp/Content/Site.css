@@ -1,0 +1,166 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background: #EEEEEE;
+}
+
+.body {
+    background-color: rgba(248, 247, 216, 0.7);
+    background: url(Images/background.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    /*max-width: 280px;*/
+}
+.number-spinner .form-control
+{
+    margin-bottom:0px !important;
+}
+   /* Dialog
+    ----------------------------------*/
+        .ui-dialog {
+            position: relative;
+            padding: .2em;
+            width: 300px;
+            left: 498px;
+            top: -512px;
+            background-color: beige;
+        }
+
+            .ui-dialog .ui-dialog-titlebar {
+                padding: .5em .3em .3em 1em;
+                position: relative;
+            }
+
+            .ui-dialog .ui-dialog-title {
+                float: left;
+                margin: .1em 0 .2em;
+            }
+
+            .ui-dialog .ui-dialog-titlebar-close {
+                position: absolute;
+                right: .3em;
+                top: 50%;
+                width: 19px;
+                margin: -10px 0 0 0;
+                padding: 1px;
+                height: 18px;
+                background-image: url(../../Content/Images/close.png);
+                background-size: 16px;
+            }
+
+                .ui-dialog .ui-dialog-titlebar-close span {
+                    display: block;
+                }
+
+                .ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus {
+                    padding: 0;
+                }
+
+            .ui-dialog .ui-dialog-content {
+                border: 0;
+                padding: .5em 1em;
+                background: none;
+                overflow: auto;
+                zoom: 1;
+            }
+
+            .ui-dialog .ui-dialog-buttonpane {
+                text-align: left;
+                border-width: 1px 0 0 0;
+                background-image: none;
+                margin: .5em 0 0 0;
+                padding: .3em 1em .5em .4em;
+            }
+
+                .ui-dialog .ui-dialog-buttonpane button {
+                    float: right;
+                    margin: .5em .4em .5em 0;
+                    cursor: pointer;
+                    padding: .2em .6em .3em .6em;
+                    line-height: 1.4em;
+                    width: auto;
+                    overflow: visible;
+                }
+
+            .ui-dialog .ui-resizable-se {
+                width: 14px;
+                height: 14px;
+                right: 3px;
+                bottom: 3px;
+            }
+
+        .ui-draggable .ui-dialog-titlebar {
+            cursor: move;
+        }
+
+        .overlay {
+            opacity: 0.4;
+            z-index: 1000;
+        }
+
+.notification_nav{
+
+}
+#task-show-result img, #bindTaskComments img {
+    max-width: 100%;
+	padding:0 10px;
+}
+
+@media only screen and (max-width: 1025px) {
+#meetingSearchFrm .radioSelections {display: inline-block; margin: 0; text-align: center;}
+.input-group{ margin-bottom:10px;}
+.responsive-table, #res_print { overflow-x: scroll; margin-bottom:10px; padding-top:10px; width: 100%;}
+}
+
+
+@media only screen and (max-width: 991px) {
+   .form-group .inputbottom { margin-bottom:15px; }
+   #meetingSearchFrm .radioSelections{ margin:0;}
+	#meetingSearchFrm input, #meetingSearchFrm select, #meetingSearchFrm .task_status { margin-bottom: 10px; width: 100%;}
+	#meetingSearchFrm .input-group {width: 100%;}
+	#meetingSearchFrm .checkbox  input, #meetingSearchFrm .radioSelections  input{ width: auto;}
+	.responsive-table { overflow-x: scroll; margin-bottom:10px; padding-top:10px; width: 100%;}
+	.input-group{ margin-bottom:10px;}
+	#meetingSearchFrm .radioSelections{ margin-bottom:10px;}
+	.compare_box{margin:10px 0;}
+}
+@media only screen and (max-width: 767px) {
+    #topnav .navbar-nav { position:relative; }
+    #topnav .nav > li { display: inline-block; }
+    #topnav .nav > li:first-child { position: absolute; top: 0; z-index: 999; left: -70px; } 
+    .form-horizontal .form-group { margin-bottom:0; } 
+    .form-horizontal .form-group input, .form-horizontal .form-group textarea, .form-horizontal .form-group select { margin-bottom:15px; } 
+    .smcenter .form-horizontal {text-align:center; }
+	.notification_nav.navbar-nav .open .dropdown-menu{ background: #000 none repeat scroll 0 0; position:absolute; max-height: 187px;	}
+	.navbar-collapse.in.notification-con{overflow: unset;}
+	.responsive-table { overflow-x: scroll; margin-bottom:10px; padding-top:10px; width: 100%;}
+	#wrapper{padding-left: 36px !important;}
+	#task-show-result img, #bindTaskComments img { max-width: 100%;padding:0 10px !important;}
+	
+}
+@media only screen and (max-width: 479px) {
+   .navbar-brand{ font-size:13px;}
+   #EmailSend, .ui-dialog { width:100% !important;}
+}
+@media only screen and (max-width: 360px) {
+   .navbar-brand{ font-size:11px;}
+}

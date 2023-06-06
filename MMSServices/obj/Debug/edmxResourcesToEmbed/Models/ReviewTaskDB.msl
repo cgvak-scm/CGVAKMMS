@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ReviewTaskDBModelStoreContainer" CdmEntityContainer="ReviewTaskDBEntities">
+    <EntitySetMapping Name="Employee_Master">
+      <EntityTypeMapping TypeName="ReviewTaskDBModel.Employee_Master">
+        <MappingFragment StoreEntitySet="Employee_Master">
+          <ScalarProperty Name="EmployeeICode" ColumnName="EmployeeICode" />
+          <ScalarProperty Name="CompanyICode" ColumnName="CompanyICode" />
+          <ScalarProperty Name="DepartmentICode" ColumnName="DepartmentICode" />
+          <ScalarProperty Name="DesignationICode" ColumnName="DesignationICode" />
+          <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+          <ScalarProperty Name="EmployeeFirstName" ColumnName="EmployeeFirstName" />
+          <ScalarProperty Name="EmployeeLastName" ColumnName="EmployeeLastName" />
+          <ScalarProperty Name="EmployeeDisplayName" ColumnName="EmployeeDisplayName" />
+          <ScalarProperty Name="EmployeeCurrentAddress1" ColumnName="EmployeeCurrentAddress1" />
+          <ScalarProperty Name="EmployeeCurrentAddress2" ColumnName="EmployeeCurrentAddress2" />
+          <ScalarProperty Name="EmployeeCurrentAddress3" ColumnName="EmployeeCurrentAddress3" />
+          <ScalarProperty Name="EmployeeCurrentCity" ColumnName="EmployeeCurrentCity" />
+          <ScalarProperty Name="EmployeeCurrentState" ColumnName="EmployeeCurrentState" />
+          <ScalarProperty Name="EmployeeCurrentCountry" ColumnName="EmployeeCurrentCountry" />
+          <ScalarProperty Name="EmployeeCurrentPinCode" ColumnName="EmployeeCurrentPinCode" />
+          <ScalarProperty Name="EmployeeCurrentPhoneNo" ColumnName="EmployeeCurrentPhoneNo" />
+          <ScalarProperty Name="IsSameAsCurrentAddress" ColumnName="IsSameAsCurrentAddress" />
+          <ScalarProperty Name="EmployeePermanentAddress1" ColumnName="EmployeePermanentAddress1" />
+          <ScalarProperty Name="EmployeePermanentAddress2" ColumnName="EmployeePermanentAddress2" />
+          <ScalarProperty Name="EmployeePermanentAddress3" ColumnName="EmployeePermanentAddress3" />
+          <ScalarProperty Name="EmployeePermanentCity" ColumnName="EmployeePermanentCity" />
+          <ScalarProperty Name="EmployeePermanentState" ColumnName="EmployeePermanentState" />
+          <ScalarProperty Name="EmployeePermanentCountry" ColumnName="EmployeePermanentCountry" />
+          <ScalarProperty Name="EmployeePermanentPinCode" ColumnName="EmployeePermanentPinCode" />
+          <ScalarProperty Name="EmployeePermanentPhoneNo" ColumnName="EmployeePermanentPhoneNo" />
+          <ScalarProperty Name="EmployeeMobileNo" ColumnName="EmployeeMobileNo" />
+          <ScalarProperty Name="EmployeeFatherName" ColumnName="EmployeeFatherName" />
+          <ScalarProperty Name="EmployeeDateofBirth" ColumnName="EmployeeDateofBirth" />
+          <ScalarProperty Name="EmployeePersonalEmailId" ColumnName="EmployeePersonalEmailId" />
+          <ScalarProperty Name="EmployeeDateOfJoining" ColumnName="EmployeeDateOfJoining" />
+          <ScalarProperty Name="EmployeeCorporateEmailId" ColumnName="EmployeeCorporateEmailId" />
+          <ScalarProperty Name="EmployeeIM" ColumnName="EmployeeIM" />
+          <ScalarProperty Name="LoginUserName" ColumnName="LoginUserName" />
+          <ScalarProperty Name="LoginPassword" ColumnName="LoginPassword" />
+          <ScalarProperty Name="EmployeeBloodGroupId" ColumnName="EmployeeBloodGroupId" />
+          <ScalarProperty Name="EmployeePANNo" ColumnName="EmployeePANNo" />
+          <ScalarProperty Name="EmployeePFNo" ColumnName="EmployeePFNo" />
+          <ScalarProperty Name="EmployeeESINo" ColumnName="EmployeeESINo" />
+          <ScalarProperty Name="EmployeeBankName" ColumnName="EmployeeBankName" />
+          <ScalarProperty Name="EmployeeBankAccountNo" ColumnName="EmployeeBankAccountNo" />
+          <ScalarProperty Name="EmployeeMaritalStatus" ColumnName="EmployeeMaritalStatus" />
+          <ScalarProperty Name="EmployeePrimarySkill" ColumnName="EmployeePrimarySkill" />
+          <ScalarProperty Name="EmployeePreviousEmployer" ColumnName="EmployeePreviousEmployer" />
+          <ScalarProperty Name="EmployeePreviousExperienceYears" ColumnName="EmployeePreviousExperienceYears" />
+          <ScalarProperty Name="EmployeePreviousExperienceMonths" ColumnName="EmployeePreviousExperienceMonths" />
+          <ScalarProperty Name="EmployeeReference1Remarks" ColumnName="EmployeeReference1Remarks" />
+          <ScalarProperty Name="EmployeeReference2Remarks" ColumnName="EmployeeReference2Remarks" />
+          <ScalarProperty Name="EmployeeBioData" ColumnName="EmployeeBioData" />
+          <ScalarProperty Name="DocumentExtension" ColumnName="DocumentExtension" />
+          <ScalarProperty Name="EmployeePhoto" ColumnName="EmployeePhoto" />
+          <ScalarProperty Name="PhotoExtension" ColumnName="PhotoExtension" />
+          <ScalarProperty Name="EmployeeDateofLeaving" ColumnName="EmployeeDateofLeaving" />
+          <ScalarProperty Name="EmployeeReasonforLeaving" ColumnName="EmployeeReasonforLeaving" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="SwipeICode" ColumnName="SwipeICode" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Group_id" ColumnName="Group_id" />
+          <ScalarProperty Name="shift_id" ColumnName="shift_id" />
+          <ScalarProperty Name="original_name" ColumnName="original_name" />
+          <ScalarProperty Name="pseudo" ColumnName="pseudo" />
+          <ScalarProperty Name="current_technology" ColumnName="current_technology" />
+          <ScalarProperty Name="picture" ColumnName="picture" />
+          <ScalarProperty Name="primary_skill_stream_id" ColumnName="primary_skill_stream_id" />
+          <ScalarProperty Name="emp_photo" ColumnName="emp_photo" />
+          <ScalarProperty Name="night_shift" ColumnName="night_shift" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MMS_Employee_Master">
+      <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Employee_Master">
+        <MappingFragment StoreEntitySet="MMS_Employee_Master">
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="Employee_FirstName" ColumnName="Employee_FirstName" />
+          <ScalarProperty Name="Employee_LastName" ColumnName="Employee_LastName" />
+          <ScalarProperty Name="Employee_DateofBirth" ColumnName="Employee_DateofBirth" />
+          <ScalarProperty Name="Employee_Address" ColumnName="Employee_Address" />
+          <ScalarProperty Name="Employee_Department" ColumnName="Employee_Department" />
+          <ScalarProperty Name="Employee_Qualification" ColumnName="Employee_Qualification" />
+          <ScalarProperty Name="Employee_DateofJoin" ColumnName="Employee_DateofJoin" />
+          <ScalarProperty Name="Employee_ContactNo" ColumnName="Employee_ContactNo" />
+          <ScalarProperty Name="Employee_Status" ColumnName="Employee_Status" />
+          <ScalarProperty Name="Employee_ModifyDate" ColumnName="Employee_ModifyDate" />
+          <ScalarProperty Name="Employee_EmailAddress" ColumnName="Employee_EmailAddress" />
+          <ScalarProperty Name="profile_employee_id" ColumnName="profile_employee_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MMS_Meeting_Category">
+      <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Meeting_Category">
+        <MappingFragment StoreEntitySet="MMS_Meeting_Category">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MMS_Meeting_Details">
+      <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Meeting_Details">
+        <MappingFragment StoreEntitySet="MMS_Meeting_Details">
+          <ScalarProperty Name="Task_Id" ColumnName="Task_Id" />
+          <ScalarProperty Name="Meeting_Id" ColumnName="Meeting_Id" />
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="Chairperson" ColumnName="Chairperson" />
+          <ScalarProperty Name="Participant" ColumnName="Participant" />
+          <ScalarProperty Name="Task" ColumnName="Task" />
+          <ScalarProperty Name="Completion_Date" ColumnName="Completion_Date" />
+          <ScalarProperty Name="Priority" ColumnName="Priority" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Percentage_Completed" ColumnName="Percentage_Completed" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="is_read_notification" ColumnName="is_read_notification" />
+          <ScalarProperty Name="seen" ColumnName="seen" />
+          <ScalarProperty Name="is_template" ColumnName="is_template" />
+          <ScalarProperty Name="NextReviewDate" ColumnName="NextReviewDate" />
+          <ScalarProperty Name="ReviewFrequencyID" ColumnName="ReviewFrequencyID" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ChairPersonID" ColumnName="ChairPersonID" />
+          <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
+          <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
+          <ScalarProperty Name="baz" ColumnName="baz" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MMS_Meeting_Participant">
+      <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Meeting_Participant">
+        <MappingFragment StoreEntitySet="MMS_Meeting_Participant">
+          <ScalarProperty Name="Meeting_Id" ColumnName="Meeting_Id" />
+          <ScalarProperty Name="Participant_Id" ColumnName="Participant_Id" />
+          <ScalarProperty Name="Participant_Name" ColumnName="Participant_Name" />
+          <ScalarProperty Name="MeetingParticipantId" ColumnName="MeetingParticipantId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MMS_Meeting_Status">
+      <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Meeting_Status">
+        <MappingFragment StoreEntitySet="MMS_Meeting_Status">
+          <ScalarProperty Name="Meeting_Status_Employee_Id" ColumnName="Meeting_Status_Employee_Id" />
+          <ScalarProperty Name="Meeting_Status_Task" ColumnName="Meeting_Status_Task" />
+          <ScalarProperty Name="Meeting_Status_ResponsiblePerson" ColumnName="Meeting_Status_ResponsiblePerson" />
+          <ScalarProperty Name="Meeting_Status_Date" ColumnName="Meeting_Status_Date" />
+          <ScalarProperty Name="Meeting_Status_Comments" ColumnName="Meeting_Status_Comments" />
+          <ScalarProperty Name="Meeting_Status" ColumnName="Meeting_Status" />
+          <ScalarProperty Name="Meeting_Id" ColumnName="Meeting_Id" />
+          <ScalarProperty Name="Meeting_Status_Hours" ColumnName="Meeting_Status_Hours" />
+          <ScalarProperty Name="Commented_By" ColumnName="Commented_By" />
+          <ScalarProperty Name="Commented_By_ID" ColumnName="Commented_By_ID" />
+          <ScalarProperty Name="MeetingStatusAutoId" ColumnName="MeetingStatusAutoId" />
+          <ScalarProperty Name="Task_Id" ColumnName="Task_Id" />
+          <ScalarProperty Name="Meeting_Date1" ColumnName="Meeting_Date1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MMS_Meeting_Status_Update">
+      <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Meeting_Status_Update">
+        <MappingFragment StoreEntitySet="MMS_Meeting_Status_Update">
+          <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="Task" ColumnName="Task" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="MeetingStatusAutoId" ColumnName="MeetingStatusAutoId" />
+          <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MMS_Review_Frequency">
+      <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Review_Frequency">
+        <MappingFragment StoreEntitySet="MMS_Review_Frequency">
+          <ScalarProperty Name="Freq_Id" ColumnName="Freq_Id" />
+          <ScalarProperty Name="Freq_Name" ColumnName="Freq_Name" />
+          <ScalarProperty Name="Freq_In_Days" ColumnName="Freq_In_Days" />
+          <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MMS_Track_ReviewTasks">
+      <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Track_ReviewTasks">
+        <MappingFragment StoreEntitySet="MMS_Track_ReviewTasks">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+          <ScalarProperty Name="NextReviewDate" ColumnName="NextReviewDate" />
+          <ScalarProperty Name="ActualReviewedDate" ColumnName="ActualReviewedDate" />
+          <ScalarProperty Name="Review_Status" ColumnName="Review_Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Task_Status">
+      <EntityTypeMapping TypeName="ReviewTaskDBModel.Task_Status">
+        <MappingFragment StoreEntitySet="Task_Status">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Descriptions" ColumnName="Descriptions" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_insert_Meeting_Status" FunctionName="ReviewTaskDBModel.Store.sp_insert_Meeting_Status" />
+    <FunctionImportMapping FunctionImportName="sp_select_meeting_status" FunctionName="ReviewTaskDBModel.Store.sp_select_meeting_status">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReviewTaskDBModel.sp_select_meeting_status_Result">
+          <ScalarProperty Name="Meeting_Status_Employee_Id" ColumnName="Meeting_Status_Employee_Id" />
+          <ScalarProperty Name="Meeting_Status_Task" ColumnName="Meeting_Status_Task" />
+          <ScalarProperty Name="Meeting_Status_ResponsiblePerson" ColumnName="Meeting_Status_ResponsiblePerson" />
+          <ScalarProperty Name="Meeting_Status_Date" ColumnName="Meeting_Status_Date" />
+          <ScalarProperty Name="Meeting_Status_Comments" ColumnName="Meeting_Status_Comments" />
+          <ScalarProperty Name="Meeting_Status" ColumnName="Meeting_Status" />
+          <ScalarProperty Name="Meeting_Id" ColumnName="Meeting_Id" />
+          <ScalarProperty Name="Meeting_Status_Hours" ColumnName="Meeting_Status_Hours" />
+          <ScalarProperty Name="Commented_By" ColumnName="Commented_By" />
+          <ScalarProperty Name="Commented_By_ID" ColumnName="Commented_By_ID" />
+          <ScalarProperty Name="MeetingStatusAutoId" ColumnName="MeetingStatusAutoId" />
+          <ScalarProperty Name="Task_Id" ColumnName="Task_Id" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_Get_Review_Tasks" FunctionName="ReviewTaskDBModel.Store.Proc_Get_Review_Tasks">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReviewTaskDBModel.Proc_Get_Review_Tasks_Result">
+          <ScalarProperty Name="Task_Id" ColumnName="Task_Id" />
+          <ScalarProperty Name="Meeting_Id" ColumnName="Meeting_Id" />
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="Chairperson" ColumnName="Chairperson" />
+          <ScalarProperty Name="Participant" ColumnName="Participant" />
+          <ScalarProperty Name="Task" ColumnName="Task" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Completion_Date" ColumnName="Completion_Date" />
+          <ScalarProperty Name="Priority" ColumnName="Priority" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="CommenterName" ColumnName="CommenterName" />
+          <ScalarProperty Name="Review_Status" ColumnName="Review_Status" />
+          <ScalarProperty Name="Review_Date" ColumnName="Review_Date" />
+          <ScalarProperty Name="Assigned_Date" ColumnName="Assigned_Date" />
+          <ScalarProperty Name="Overdue_days" ColumnName="Overdue_days" />
+          <ScalarProperty Name="Comments_count" ColumnName="Comments_count" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_select_Meeting_Name" FunctionName="ReviewTaskDBModel.Store.sp_select_Meeting_Name">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReviewTaskDBModel.sp_select_Meeting_Name_Result">
+          <ScalarProperty Name="meeting_id" ColumnName="meeting_id" />
+          <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+          <ScalarProperty Name="Task_Id" ColumnName="Task_Id" />
+          <ScalarProperty Name="Task" ColumnName="Task" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Participant" ColumnName="Participant" />
+          <ScalarProperty Name="meeting_date" ColumnName="meeting_date" />
+          <ScalarProperty Name="completion_date" ColumnName="completion_date" />
+          <ScalarProperty Name="priority" ColumnName="priority" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="Overdue_Days" ColumnName="Overdue_Days" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Update_MMS_Meeting_Details_Change" FunctionName="ReviewTaskDBModel.Store.Sp_Update_MMS_Meeting_Details_Change" />
+    <FunctionImportMapping FunctionImportName="Sp_Update_MMS_Meeting_Details_Change1" FunctionName="ReviewTaskDBModel.Store.Sp_Update_MMS_Meeting_Details_Change1" />
+    <EntitySetMapping Name="MMS_Priority">
+      <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Priority">
+        <MappingFragment StoreEntitySet="MMS_Priority">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Descriptions" ColumnName="Descriptions" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MMS_Meeting_Master">
+      <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Meeting_Master">
+        <MappingFragment StoreEntitySet="MMS_Meeting_Master">
+          <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
+          <ScalarProperty Name="istemplate" ColumnName="istemplate" />
+          <ScalarProperty Name="Meeting_No_Of_Participants" ColumnName="Meeting_No_Of_Participants" />
+          <ScalarProperty Name="Minutes_Of_Meeting" ColumnName="Minutes_Of_Meeting" />
+          <ScalarProperty Name="Meeting_Chairperson" ColumnName="Meeting_Chairperson" />
+          <ScalarProperty Name="Meeting_Department" ColumnName="Meeting_Department" />
+          <ScalarProperty Name="Meeting_Duration" ColumnName="Meeting_Duration" />
+          <ScalarProperty Name="Meeting_Type" ColumnName="Meeting_Type" />
+          <ScalarProperty Name="Meeting_Venue" ColumnName="Meeting_Venue" />
+          <ScalarProperty Name="Meeting_Time" ColumnName="Meeting_Time" />
+          <ScalarProperty Name="Meeting_Date" ColumnName="Meeting_Date" />
+          <ScalarProperty Name="Meeting_Objective" ColumnName="Meeting_Objective" />
+          <ScalarProperty Name="Meeting_Id" ColumnName="Meeting_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MMS_Meeting_Template">
+      <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Meeting_Template">
+        <MappingFragment StoreEntitySet="MMS_Meeting_Template">
+          <ScalarProperty Name="meeting_chairperson" ColumnName="meeting_chairperson" />
+          <ScalarProperty Name="objective" ColumnName="objective" />
+          <ScalarProperty Name="department" ColumnName="department" />
+          <ScalarProperty Name="meeting_venue" ColumnName="meeting_venue" />
+          <ScalarProperty Name="meeting_duration" ColumnName="meeting_duration" />
+          <ScalarProperty Name="meeting_time" ColumnName="meeting_time" />
+          <ScalarProperty Name="meeting_name" ColumnName="meeting_name" />
+          <ScalarProperty Name="tid" ColumnName="tid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MMS_Notifications">
+      <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Notifications">
+        <MappingFragment StoreEntitySet="MMS_Notifications">
+          <ScalarProperty Name="chairperson" ColumnName="chairperson" />
+          <ScalarProperty Name="is_read" ColumnName="is_read" />
+          <ScalarProperty Name="meeting_id" ColumnName="meeting_id" />
+          <ScalarProperty Name="notify_id" ColumnName="notify_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_add_mms_notifications" FunctionName="ReviewTaskDBModel.Store.sp_add_mms_notifications" />
+    <FunctionImportMapping FunctionImportName="sp_get_EmailId" FunctionName="ReviewTaskDBModel.Store.sp_get_EmailId" />
+    <FunctionImportMapping FunctionImportName="sp_insert_Attachment" FunctionName="ReviewTaskDBModel.Store.sp_insert_Attachment" />
+    <FunctionImportMapping FunctionImportName="sp_insert_meeting_status_24062014_1" FunctionName="ReviewTaskDBModel.Store.sp_insert_meeting_status_24062014_1" />
+    <FunctionImportMapping FunctionImportName="sp_insert_MeetingDetails1" FunctionName="ReviewTaskDBModel.Store.sp_insert_MeetingDetails1" />
+    <FunctionImportMapping FunctionImportName="sp_insert_MeetingMaster" FunctionName="ReviewTaskDBModel.Store.sp_insert_MeetingMaster" />
+    <FunctionImportMapping FunctionImportName="sp_insert_status_update" FunctionName="ReviewTaskDBModel.Store.sp_insert_status_update" />
+    <FunctionImportMapping FunctionImportName="Sp_get_DepartmentsList" FunctionName="ReviewTaskDBModel.Store.Sp_get_DepartmentsList" />
+    <FunctionImportMapping FunctionImportName="sp_get_EmployeeMaster_forJSON" FunctionName="ReviewTaskDBModel.Store.sp_get_EmployeeMaster_forJSON">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReviewTaskDBModel.sp_get_EmployeeMaster_forJSON_Result">
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="Employee_Name" ColumnName="Employee_Name" />
+          <ScalarProperty Name="Employee_LastName" ColumnName="Employee_LastName" />
+          <ScalarProperty Name="Department_ICode" ColumnName="Department_ICode" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_get_Employee_Department" FunctionName="ReviewTaskDBModel.Store.sp_get_Employee_Department">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReviewTaskDBModel.sp_get_Employee_Department_Result">
+          <ScalarProperty Name="Employee_Code" ColumnName="Employee_Code" />
+          <ScalarProperty Name="User_name" ColumnName="User_name" />
+          <ScalarProperty Name="Department_Id" ColumnName="Department_Id" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

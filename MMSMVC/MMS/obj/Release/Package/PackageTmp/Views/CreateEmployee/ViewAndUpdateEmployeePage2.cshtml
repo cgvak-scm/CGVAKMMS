@@ -1,0 +1,518 @@
+﻿@model MMS.Models.EmpOthersViewDetails
+
+@{
+    ViewBag.Title = "Create Employee";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    var ID = @ViewBag.RowId;
+}
+<div class="modal" id="Inner-modal">
+    <div class="modal-dialog modal-md" style="background-color:lightskyblue">
+        <div class="modal-body">
+            <div class="form-inline">
+
+                Upload  File:
+                <input type="file" id="UploadImg" class="btn-sm" required />
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <p id="resMsg" style="color:forestgreen;"></p>
+            <button type="button" id="Inner-close" class="btn btn-default">Close</button>
+            <input type="button" class="btn btn-primary btnSave" value="Save" id="_save" />
+        </div>
+    </div>
+</div>
+
+<style>
+    .editor-field textarea {
+        margin: 12px;
+        width: 644px;
+        height: 72px;
+    }
+</style>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        View Employee Other Details
+    </div>
+
+    <div class="panel-body">
+        @using (Html.BeginForm("ViewAndUpdateEmployeePage2", "CreateEmployee", FormMethod.Post, htmlAttributes: new { @class = "Update-form", @enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary(true, "fill the errors", new { @class = "text-danger" })
+
+            <input type="hidden" class="files" name="files" />
+
+            <div class="form-horizontal">
+                <div class="col-md-12 col-sm-12">
+                    <input type="hidden" value="@ID" id="emp_id" />
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            @Html.Label("Company ICode", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.CompanyICode, new { htmlAttributes = new { @class = "form-control required", @id = "EmpCompanyICode", @maxlength = "150", @required = "required" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Department ICode", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.DepartmentICode, new { htmlAttributes = new { @class = "form-control required", @id = "EmpDeptICode", @maxlength = "150", @required = "required" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Designation ICode", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.DesignationICode, new { htmlAttributes = new { @class = "form-control required", @id = "EmpDesignICode", @maxlength = "150", @required = "required" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            @Html.Label("Employee Number", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeNumber, new { htmlAttributes = new { @class = "form-control", @id = "EmpNumber", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Date Of Joining", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeDateOfJoining, new { htmlAttributes = new { @class = "form-control join_datepicker", @id = "EmpDateOfJoin", @maxlength = "150", @required = "required" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Corporate Email-Id", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeCorporateEmailId, new { htmlAttributes = new { @class = "form-control", @id = "EmpCorpEmailId", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            @Html.Label("Primary Skill", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeePrimarySkill, new { htmlAttributes = new { @class = "form-control", @id = "EmpPrimarySkill", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Previous Employer", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeePreviousEmployer, new { htmlAttributes = new { @class = "form-control", @id = "EmpDeptICode", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Experience Years & Month", htmlAttributes: new { @class = "control-label col-lg-5 col-md-5" })
+                            <div class="col-md-3">
+                                @Html.EditorFor(model => model.EmployeePreviousExperienceYears, new { htmlAttributes = new { @class = "form-control", @id = "EmpPreviousExpYears", @maxlength = "150" } })
+
+                            </div>
+                            <div class="col-md-3">
+                                @Html.EditorFor(model => model.EmployeePreviousExperienceMonths, new { htmlAttributes = new { @class = "form-control", @id = "EmpPreviousExpMonths", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            @Html.Label("Swipe ICode", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.SwipeICode, new { htmlAttributes = new { @class = "form-control", @id = "EmpSwipeICode", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Group Id", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.GroupId, new { htmlAttributes = new { @class = "form-control", @id = "EmpGroupId", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Shift Id", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.ShiftId, new { htmlAttributes = new { @class = "form-control", @id = "EmpShiftId", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            @Html.Label("Date Of Leaving", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeDateofLeaving, new { htmlAttributes = new { @class = "leaving_datepicker form-control", @id = "EmpDateOfLeaving", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                @Html.Label("Reference 1", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                                <div class="col-md-7">
+                                    @Html.EditorFor(model => model.EmployeeReference1Remarks, new { htmlAttributes = new { @class = "form-control", @id = "EmpReference1", @maxlength = "150" } })
+
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.Label("Reference 2", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                                <div class="col-md-7">
+                                    @Html.EditorFor(model => model.EmployeeReference2Remarks, new { htmlAttributes = new { @class = "form-control", @id = "EmpReference2", @maxlength = "150" } })
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            @Html.Label("Reason for Leaving", htmlAttributes: new { @class = "control-label col-lg-5 col-md-5" })
+                            <div class="editor-field">
+                                @Html.TextAreaFor(model => model.EmployeeReasonforLeaving, new { htmlAttributes = new { @class = "form-control col-lg-4 col-md-5", @id = "EmpReasonforLeaving" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Is Active?", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="control-label col-md-8">
+                                @Html.CheckBoxFor(model => model.IsActive, new { htmlAttributes = new { @class = "EmpIsActive", @id = "EmpMaritalStatus1", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-row" id="FileUploaded">
+                        <div class="form-group col-md-4">
+                            @Html.Label("Bio-Data", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                <button type="button" id="upload-modal" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#Inner-modal">Upload file</button>
+                                <input type="hidden" id="hid_txt" />
+                            </div>
+                        </div>
+                        <div class="hide col-md-4" id='dynFile'>
+                            <div class="col-md-7">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-row" id="ImageUploaded">
+                        <div class="form-group col-md-4">
+                            @Html.Label("Employee Photo", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                <button type="button" id="upload-modal" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#Inner-modal">Upload Image</button>
+                                <input type="hidden" id="hid_txt" />
+                            </div>
+                        </div>
+                        <div class="hide col-md-4" id='dynImage'>
+                            <div class="col-md-7">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-inline alert alert-warning" style="padding: 8px;">
+
+                        <label>
+                            Banking Details
+                        </label>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            @Html.Label("Bank Name", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeBankName, new { htmlAttributes = new { @class = "form-control", @id = "EmpBankName", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Bank Account No", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeBankAccountNo, new { htmlAttributes = new { @class = "form-control", @id = "EmpBankAccountNo", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("IM", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeIM, new { htmlAttributes = new { @class = "form-control", @id = "EmpIM", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4">
+                            @Html.Label("PAN No", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeePANNo, new { htmlAttributes = new { @class = "form-control", @id = "EmpPANNo", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("PF No", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeePFNo, new { htmlAttributes = new { @class = "form-control", @id = "EmpPFNo", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("ESI No", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeESINo, new { htmlAttributes = new { @class = "form-control", @id = "EmpESINo", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-inline alert alert-warning" style="padding: 8px;">
+
+                        <label>
+                            Login Credential
+                        </label>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4">
+                            @Html.Label("User Name", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.LoginUserName, new { htmlAttributes = new { @class = "form-control required", @id = "EmpLoginUserName", @maxlength = "150", @required = "required" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Password", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.LoginPassword, new { htmlAttributes = new { @class = "form-control required", @id = "EmpLoginPassword", @maxlength = "150", @type = "Password", @required = "required" } })
+
+                            </div>
+                        </div>
+                        @*<div class="form-group col-md-4">
+                                @Html.Label("Confirm Password", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                                <div class="col-md-7">
+                                    @Html.EditorFor(model => model.LoginConfirmPassword, new { htmlAttributes = new { @class = "form-control required", @id = "EmpLoginConfirmPassword", @maxlength = "150", @type = "Password", @required = "required" } })
+
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="pull-right">
+                <input type="button" value="Previous Page" class="btn" name="command" id="previous_page" onclick="history.go(-1);" />
+                <input type="submit" value="Update" class="btn" name="command" id="Update_emloyee" />
+            </div>
+        }
+    </div>
+
+    @{ var EmployeeICode = @ViewBag.employeeICode; }
+    <input type="hidden" value="@EmployeeICode" id="employee_icode" />
+</div>
+
+@section Scripts{
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/customValScript")
+    }
+
+<script>
+
+    $(document).ready(function () {
+
+
+        $(".join_datepicker").datepicker({
+            dateFormat: "dd - mm - yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "2000:2019",
+
+        });
+
+        $(".leaving_datepicker").datepicker({
+            dateFormat: "dd - mm - yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "2015:2019",
+
+        });
+    });
+
+</script>
+
+<script>
+
+    LoadUpdatedFiles();
+    LoadUpdatedImages();
+
+    $("#save_emloyee").click(function () {
+        
+        FindoutDupliEmpPage2();       
+    });
+
+    $("#_save").click(function () {
+            
+            var fileUpload = $("#UploadImg").get(0);
+
+            var files = fileUpload.files;
+            var fileList = $(".files").val();
+            if (fileList != "") {
+                fileList = fileList + ",";
+            }
+
+            var fileData = new FormData();
+
+            for (var i = 0; i < files.length; i++) {
+                fileData.append("file", files[i]);
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "@Url.Action("UploadFile", "Upload")");
+            xhr.send(fileData);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var jsonResult = JSON.parse(xhr.responseText);
+                    var FileNames = jsonResult.FileNames;
+                    $(".files").val(fileList + FileNames);
+                    $.each(FileNames, function (TotalNo, TotalFileNames) {
+
+                        $("<div><h5><b>The files are:</b></h5>" + TotalFileNames + "</div>").insertAfter("#FileUploaded");
+
+                        $("#Inner-modal").modal('hide');
+
+                    });
+                }
+            }
+
+    });
+
+
+    function LoadUpdatedFiles() {
+        
+        var FileList = @Html.Raw(Json.Encode(@TempData["AttachFiles"]));
+        var startIndex = 0;
+        var UploadImgRow = document.getElementById("UploadImg");
+
+        if (FileList != null && FileList != " ") {
+            for (var i = 0; i < FileList.length; i++) {
+                var filename = FileList[i].FileName;
+
+                var attachedfiles = $("<div class='files'><h5><b>files:</b></h5>" + filename + "</div>");
+                $("#dynFile").removeClass("hide");
+                $("#dynFile").addClass("show");
+                $("#dynFile").append(attachedfiles);
+            }
+        }
+    }
+
+    function LoadUpdatedImages() {
+        
+        var FileList = @Html.Raw(Json.Encode(@TempData["AttachImages"]));
+        var startIndex = 0;
+        var UploadImgRow = document.getElementById("UploadImg");
+
+        if (FileList != null && FileList != " ") {
+            for (var i = 0; i < FileList.length; i++) {
+                var filename = FileList[i].FileName;
+
+                var attachedfiles = $("<div class='files'><h5><b>files:</b></h5>" + filename + "</div>");
+                $("#dynImage").removeClass("hide");
+                $("#dynImage").addClass("show");
+                $("#dynImage").append(attachedfiles);
+            }
+        }
+    }
+
+    function FindoutDupliEmpPage2() {            
+            $.ajax({
+                url: "@Url.Action("FindoutDupliEmpPage2", "CreateEmployee")",
+                content: "application/json; charset=utf-8",
+                dataType: "json",
+                type: "Post",
+                data: {
+                    EmployeeICode: $("#employee_icode").val(),
+                    EmpLoginUserName: $("#EmpLoginUserName").val(),
+                    EmployeeNumber: $("#EmpNumber").val(),
+                    EmpCorpEmailId: $("#EmpCorpEmailId").val(),
+                    EmpBankAccountNo: $("#EmpBankAccountNo").val(),
+                    EmpPFNo: $("#EmpPFNo").val()
+
+                },
+                success: function (response) {
+
+                    if (response == 5) {
+                        alert("Employee Login User Name is Already Exist");
+                        $("#EmpLoginUserName").html('<font color="Red"></font>');
+                        $("#EmpLoginUserName").css("border-color", "Red");
+                        return false;
+                    }
+                    else if (response == 4) {
+                        alert("Employee Number is Already Exist");
+                        $("#EmpNumber").html('<font color="Red"></font>');
+                        $("#EmpNumber").css("border-color", "Red");
+                        return false;
+                    }
+                    else if (response == 3) {
+                        alert("Employee Corporate Email Id is Already Exist");
+                        $("#EmpCorpEmailId").html('<font color="Red"></font>');
+                        $("#EmpCorpEmailId").css("border-color", "Red");
+                        return false;
+                    }
+                    else if (response == 2) {
+                        alert("Employee Bank Account Number is Already Exist");
+                        $("#EmpBankAccountNo").html('<font color="Red"></font>');
+                        $("#EmpBankAccountNo").css("border-color", "Red");
+                        return false;
+                    }
+                    else if (response == 1) {
+                        alert("Employee PF Number is Already Exist");
+                        $("#EmpPFNo").html('<font color="Red"></font>');
+                        $("#EmpPFNo").css("border-color", "Red");
+                        return false;
+                    }
+                    else {
+                        submitform();
+                        return true;
+                    }
+                }
+            });
+        }
+
+        function submitform() {
+
+            $("#Employeeform").submit();
+        }
+</script>
+
+
+
+
+
+

@@ -1,0 +1,258 @@
+﻿@model MMS.Models.MeetingEditDetails
+
+@{
+    ViewBag.Title = "NotificationChanges";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    string CompletionDateStr = ViewBag.EndDate;
+}
+
+
+<form id="MeetingUpdateFrm" name="MeetingUpdateFrm" class="form-horizontal">
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            My Tasks
+        </div>
+
+        <div class="panel-body">
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Responsible Person", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DisplayFor(model => model.RespPerson, new { htmlattributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Priority", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DisplayFor(model => model.Priority, new { htmlattributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+
+                    @*@Html.TextBox("end_date", endDateStr, new { @class = "form-control input-sm toDate", @style = "background-color:white;", @required = "required", @readonly = "readonly" })*@
+
+                    <div class="form-group">
+                        @Html.Label("Completion Date", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.TextBox("Completion_Date", CompletionDateStr, new { htmlattributes = new { @class = "form-control datepicker", @style = "background-color:white;", @required = "required", @readonly = "readonly", @id = "Completion_Date" } })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <p><strong>Task</strong></p>
+
+                    <div class="task">
+
+                        @Html.DisplayFor(model => model.Task, new { htmlattributes = new { @class = "form-control" } })
+
+                    </div>
+                </div>
+
+
+                @Html.HiddenFor(model => model.CompletionDate)
+                @Html.HiddenFor(model => model.RespPerson)
+                @Html.HiddenFor(model => model.Task)
+                @Html.HiddenFor(model => model.empId)
+                @Html.HiddenFor(model => model.meetingId)
+            </div>
+
+
+
+            <div class="row">
+                <div class="modal-header" id="modal-header">
+                    <b>Status Update</b>
+                </div>
+
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="form-group">
+                        @Html.Label("Comments", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextArea("txtComments", new { @class = "form-control", @rows = "3" })
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-4" })
+
+                        <div class="col-md-8">
+                            @Html.DropDownList("DrpStatus", new List<SelectListItem> {
+                                     new SelectListItem {  Text="Completed", Value="Completed" }
+                                        }, "In Progress", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("TotalHours", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-4">
+                            <select id="HrsDrpdwn" name="HrsDrpdwn" class="form-control drpdwn" required>
+                                <option value="">Hrs</option>
+                                <option value="00">00</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select id="TimeDrpdwn" class="form-control drpdwn" required>
+                                <option value="">Mins</option>
+                                <option value="00">00</option>
+                                <option value="05">05</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="40">40</option>
+                                <option value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                @{
+                    if (Model != null)
+                    {
+                        var MeetingId = Model.meetingId;
+                        <input type="hidden" value="@MeetingId" id="meeting_id" />
+                    }
+
+                }
+
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 pull-right">
+                    <div class="row">
+                        <div class="modal-footer">
+                            <p id="resMsg" style="color:forestgreen;"></p>
+                            <input type="submit" id="update_task" class="btn btn-primary" value="Update" />
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            @Html.HiddenFor(model => model.empId, new { @class = "Emp_id" })
+            @Html.HiddenFor(model => model.TaskID, new { @class = "Task_id" })
+
+            @{
+                if (ViewBag.Comments.Count > 0)
+                {
+                    <div class="modal-header" id="modal-header">
+                        <b>Comments List</b>
+
+                    </div>
+                    foreach (var item in ViewBag.Comments)
+                    {
+                        <div style="padding:10px 10px;">
+                            @item
+                            @*@item.comments*@
+                            <br />
+                        </div>
+                    }
+                }
+
+            }
+        </div>
+
+
+
+
+</form>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/customVal")
+}
+
+
+<script>
+
+    $(document).ready(function () {
+        $(function () {
+
+            //code added by Vijay
+            $("#Completion_Date").datepicker(
+                {
+                    changeMonth: true,
+                    changeYear: true, autoclose: true,
+                    dateFormat: 'dd/M/yy',
+                });
+        });
+
+        $("#update_task").click(function (e) {
+
+            e.preventDefault();
+
+            var EmpId = $(".Emp_id").val();
+          
+            var CompletionDate = $("#Completion_Date").val();
+            var Task = $(".task").text();
+            var Status = $("#DrpStatus option:selected").text();
+            var Comments = $("#txtComments").val();
+            var RespPerson = $("#RespPerson").val();
+            var taskId = $(".Task_id").val();
+
+            var CommentedBy = $("#RespPerson").val();
+            var CommentedById = $("#empId").val();
+            var Hours = $("#HrsDrpdwn option:selected").val() + ":" + $("#TimeDrpdwn option:selected").val();
+            var MeetingId = $("#meeting_id").val();
+
+
+            if (CompletionDate != "" && Comments != "" && Status != "" && $("#HrsDrpdwn option:selected").val() != "" && $("#TimeDrpdwn option:selected").val()!="") {
+                $.ajax({
+
+                    url: "@Url.Action("UpdateMeetingDetails", "MyTasks")",
+                    data: JSON.stringify({
+                        "empId": EmpId, "task": Task, "status": Status, "comments": Comments, "completionDate": CompletionDate, "respPerson": RespPerson, "meetingId": MeetingId, "commentedBy": CommentedBy
+                        , "commentedById": CommentedById, "hours": Hours, "taskId": taskId
+                    }),
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: 'application/json;charset=utf-8',
+                    success: function (resData) {
+                        alert(resData);
+                        $(".btn-close").click();
+                        $("#view_task").click();
+                        window.location.href = "index";
+                    }
+                });
+            }
+            else {
+                alert("Please fill the fields");
+            }
+
+        });
+    });
+</script>
