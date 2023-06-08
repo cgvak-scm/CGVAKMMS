@@ -1,0 +1,1320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ReviewTaskDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employee_Master">
+          <Key>
+            <PropertyRef Name="EmployeeICode" />
+          </Key>
+          <Property Name="EmployeeICode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyICode" Type="int" Nullable="false" />
+          <Property Name="DepartmentICode" Type="int" Nullable="false" />
+          <Property Name="DesignationICode" Type="int" Nullable="false" />
+          <Property Name="EmployeeNumber" Type="char" MaxLength="10" />
+          <Property Name="EmployeeFirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmployeeLastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmployeeDisplayName" Type="varchar" MaxLength="20" />
+          <Property Name="EmployeeCurrentAddress1" Type="varchar" MaxLength="100" />
+          <Property Name="EmployeeCurrentAddress2" Type="varchar" MaxLength="100" />
+          <Property Name="EmployeeCurrentAddress3" Type="varchar" MaxLength="100" />
+          <Property Name="EmployeeCurrentCity" Type="varchar" MaxLength="50" />
+          <Property Name="EmployeeCurrentState" Type="varchar" MaxLength="25" />
+          <Property Name="EmployeeCurrentCountry" Type="varchar" MaxLength="25" />
+          <Property Name="EmployeeCurrentPinCode" Type="varchar" MaxLength="20" />
+          <Property Name="EmployeeCurrentPhoneNo" Type="varchar" MaxLength="20" />
+          <Property Name="IsSameAsCurrentAddress" Type="bit" />
+          <Property Name="EmployeePermanentAddress1" Type="varchar" MaxLength="100" />
+          <Property Name="EmployeePermanentAddress2" Type="varchar" MaxLength="100" />
+          <Property Name="EmployeePermanentAddress3" Type="varchar" MaxLength="100" />
+          <Property Name="EmployeePermanentCity" Type="varchar" MaxLength="50" />
+          <Property Name="EmployeePermanentState" Type="varchar" MaxLength="25" />
+          <Property Name="EmployeePermanentCountry" Type="varchar" MaxLength="25" />
+          <Property Name="EmployeePermanentPinCode" Type="varchar" MaxLength="20" />
+          <Property Name="EmployeePermanentPhoneNo" Type="varchar" MaxLength="20" />
+          <Property Name="EmployeeMobileNo" Type="varchar" MaxLength="20" />
+          <Property Name="EmployeeFatherName" Type="varchar" MaxLength="50" />
+          <Property Name="EmployeeDateofBirth" Type="datetime" />
+          <Property Name="EmployeePersonalEmailId" Type="varchar" MaxLength="100" />
+          <Property Name="EmployeeDateOfJoining" Type="datetime" Nullable="false" />
+          <Property Name="EmployeeCorporateEmailId" Type="varchar" MaxLength="100" />
+          <Property Name="EmployeeIM" Type="varchar" MaxLength="50" />
+          <Property Name="LoginUserName" Type="varchar" MaxLength="25" />
+          <Property Name="LoginPassword" Type="varchar" MaxLength="25" />
+          <Property Name="EmployeeBloodGroupId" Type="int" />
+          <Property Name="EmployeePANNo" Type="varchar" MaxLength="25" />
+          <Property Name="EmployeePFNo" Type="varchar" MaxLength="25" />
+          <Property Name="EmployeeESINo" Type="varchar" MaxLength="25" />
+          <Property Name="EmployeeBankName" Type="varchar" MaxLength="50" />
+          <Property Name="EmployeeBankAccountNo" Type="varchar" MaxLength="25" />
+          <Property Name="EmployeeMaritalStatus" Type="char" MaxLength="1" />
+          <Property Name="EmployeePrimarySkill" Type="varchar" MaxLength="50" />
+          <Property Name="EmployeePreviousEmployer" Type="varchar" MaxLength="100" />
+          <Property Name="EmployeePreviousExperienceYears" Type="int" />
+          <Property Name="EmployeePreviousExperienceMonths" Type="int" />
+          <Property Name="EmployeeReference1Remarks" Type="varchar" MaxLength="200" />
+          <Property Name="EmployeeReference2Remarks" Type="varchar" MaxLength="200" />
+          <Property Name="EmployeeBioData" Type="image" />
+          <Property Name="DocumentExtension" Type="char" MaxLength="10" />
+          <Property Name="EmployeePhoto" Type="image" />
+          <Property Name="PhotoExtension" Type="char" MaxLength="10" />
+          <Property Name="EmployeeDateofLeaving" Type="datetime" />
+          <Property Name="EmployeeReasonforLeaving" Type="varchar" MaxLength="200" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="SwipeICode" Type="int" />
+          <Property Name="Location" Type="char" MaxLength="2" />
+          <Property Name="Group_id" Type="tinyint" />
+          <Property Name="shift_id" Type="int" />
+          <Property Name="original_name" Type="varchar" MaxLength="100" />
+          <Property Name="pseudo" Type="bit" />
+          <Property Name="current_technology" Type="int" />
+          <Property Name="picture" Type="image" />
+          <Property Name="primary_skill_stream_id" Type="int" />
+          <Property Name="emp_photo" Type="varchar" MaxLength="2000" />
+          <Property Name="night_shift" Type="bit" />
+        </EntityType>
+        <EntityType Name="MMS_Employee_Master">
+          <Key>
+            <PropertyRef Name="Employee_Id" />
+          </Key>
+          <Property Name="Employee_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Employee_FirstName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Employee_LastName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Employee_DateofBirth" Type="datetime" />
+          <Property Name="Employee_Address" Type="varchar" MaxLength="500" />
+          <Property Name="Employee_Department" Type="varchar" MaxLength="500" />
+          <Property Name="Employee_Qualification" Type="varchar" MaxLength="500" />
+          <Property Name="Employee_DateofJoin" Type="datetime" />
+          <Property Name="Employee_ContactNo" Type="varchar" MaxLength="20" />
+          <Property Name="Employee_Status" Type="bit" Nullable="false" />
+          <Property Name="Employee_ModifyDate" Type="datetime" />
+          <Property Name="Employee_EmailAddress" Type="varchar" MaxLength="500" />
+          <Property Name="profile_employee_id" Type="int" />
+        </EntityType>
+        <EntityType Name="MMS_Meeting_Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MMS_Meeting_Details">
+          <Key>
+            <PropertyRef Name="Task_Id" />
+          </Key>
+          <Property Name="Task_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Meeting_Id" Type="int" />
+          <Property Name="Employee_Id" Type="int" />
+          <Property Name="Chairperson" Type="int" />
+          <Property Name="Participant" Type="int" />
+          <Property Name="Task" Type="varchar" MaxLength="500" />
+          <Property Name="Completion_Date" Type="datetime" />
+          <Property Name="Priority" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Comments" Type="varchar(max)" />
+          <Property Name="Percentage_Completed" Type="numeric" Precision="5" Scale="2" />
+          <Property Name="Category" Type="int" />
+          <Property Name="is_read_notification" Type="varchar" MaxLength="30" />
+          <Property Name="seen" Type="bit" />
+          <Property Name="is_template" Type="bit" />
+          <Property Name="NextReviewDate" Type="datetime" />
+          <Property Name="ReviewFrequencyID" Type="int" />
+          <Property Name="IsDeleted" Type="int" />
+          <Property Name="ChairPersonID" Type="int" />
+          <Property Name="ParticipantID" Type="int" />
+          <Property Name="TemplateID" Type="int" />
+          <Property Name="baz" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MMS_Meeting_Master">
+          <Key>
+            <PropertyRef Name="Meeting_Id" />
+          </Key>
+          <Property Name="Meeting_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Meeting_Objective" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Meeting_Date" Type="datetime" Nullable="false" />
+          <Property Name="Meeting_Time" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Meeting_Venue" Type="varchar" MaxLength="40" />
+          <Property Name="Meeting_Type" Type="varchar" MaxLength="150" />
+          <Property Name="Meeting_Duration" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Meeting_Department" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Meeting_Chairperson" Type="int" />
+          <Property Name="Minutes_Of_Meeting" Type="nvarchar(max)" />
+          <Property Name="Meeting_No_Of_Participants" Type="int" Nullable="false" />
+          <Property Name="istemplate" Type="bit" />
+          <Property Name="TemplateID" Type="int" />
+        </EntityType>
+        <EntityType Name="MMS_Meeting_Participant">
+          <Key>
+            <PropertyRef Name="MeetingParticipantId" />
+          </Key>
+          <Property Name="Meeting_Id" Type="int" />
+          <Property Name="Participant_Id" Type="int" />
+          <Property Name="Participant_Name" Type="varchar" MaxLength="50" />
+          <Property Name="MeetingParticipantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MMS_Meeting_Status">
+          <Key>
+            <PropertyRef Name="MeetingStatusAutoId" />
+          </Key>
+          <Property Name="Meeting_Status_Employee_Id" Type="int" Nullable="false" />
+          <Property Name="Meeting_Status_Task" Type="varchar" MaxLength="250" />
+          <Property Name="Meeting_Status_ResponsiblePerson" Type="int" />
+          <Property Name="Meeting_Status_Date" Type="datetime" />
+          <Property Name="Meeting_Status_Comments" Type="varchar(max)" />
+          <Property Name="Meeting_Status" Type="int" />
+          <Property Name="Meeting_Id" Type="int" />
+          <Property Name="Meeting_Status_Hours" Type="nvarchar" MaxLength="50" />
+          <Property Name="Commented_By" Type="int" />
+          <Property Name="Commented_By_ID" Type="int" />
+          <Property Name="MeetingStatusAutoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Task_Id" Type="int" />
+          <Property Name="Meeting_Date1" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MMS_Meeting_Status_Update">
+          <Key>
+            <PropertyRef Name="MeetingStatusAutoId" />
+          </Key>
+          <Property Name="MeetingId" Type="int" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="Task" Type="varchar" MaxLength="500" />
+          <Property Name="status" Type="int" />
+          <Property Name="MeetingStatusAutoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="int" />
+        </EntityType>
+        <EntityType Name="MMS_Meeting_Template">
+          <Key>
+            <PropertyRef Name="tid" />
+          </Key>
+          <Property Name="tid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="meeting_name" Type="varchar" MaxLength="150" />
+          <Property Name="meeting_time" Type="varchar" MaxLength="40" />
+          <Property Name="meeting_duration" Type="varchar" MaxLength="30" />
+          <Property Name="meeting_venue" Type="varchar" MaxLength="150" />
+          <Property Name="department" Type="varchar" MaxLength="50" />
+          <Property Name="objective" Type="varchar" MaxLength="150" />
+          <Property Name="meeting_chairperson" Type="int" />
+        </EntityType>
+        <EntityType Name="MMS_Notifications">
+          <Key>
+            <PropertyRef Name="notify_id" />
+          </Key>
+          <Property Name="notify_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="meeting_id" Type="int" />
+          <Property Name="is_read" Type="int" />
+          <Property Name="chairperson" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'mmsdev.dbo.MMS_Priority' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MMS_Priority">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Descriptions" Type="nvarchar" MaxLength="100" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="MMS_Review_Frequency">
+          <Key>
+            <PropertyRef Name="Freq_Id" />
+          </Key>
+          <Property Name="Freq_Id" Type="int" Nullable="false" />
+          <Property Name="Freq_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Freq_In_Days" Type="int" />
+          <Property Name="Active_Flag" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="MMS_Track_ReviewTasks">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="int" />
+          <Property Name="NextReviewDate" Type="datetime" />
+          <Property Name="ActualReviewedDate" Type="datetime" />
+          <Property Name="Review_Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="Task_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Descriptions" Type="nvarchar" MaxLength="100" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <Association Name="FK__MMS_Meeti__Meeti__0B91BA14">
+          <End Role="MMS_Meeting_Master" Type="Self.MMS_Meeting_Master" Multiplicity="0..1" />
+          <End Role="MMS_Meeting_Participant" Type="Self.MMS_Meeting_Participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Meeting_Master">
+              <PropertyRef Name="Meeting_Id" />
+            </Principal>
+            <Dependent Role="MMS_Meeting_Participant">
+              <PropertyRef Name="Meeting_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_meet_id">
+          <End Role="MMS_Meeting_Master" Type="Self.MMS_Meeting_Master" Multiplicity="0..1" />
+          <End Role="MMS_Notifications" Type="Self.MMS_Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Meeting_Master">
+              <PropertyRef Name="Meeting_Id" />
+            </Principal>
+            <Dependent Role="MMS_Notifications">
+              <PropertyRef Name="meeting_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fkey_id">
+          <End Role="MMS_Meeting_Master" Type="Self.MMS_Meeting_Master" Multiplicity="0..1" />
+          <End Role="MMS_Meeting_Details" Type="Self.MMS_Meeting_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Meeting_Master">
+              <PropertyRef Name="Meeting_Id" />
+            </Principal>
+            <Dependent Role="MMS_Meeting_Details">
+              <PropertyRef Name="Meeting_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Proc_Get_Review_Tasks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Chairperson" Type="int" Mode="In" />
+          <Parameter Name="Category_id" Type="int" Mode="In" />
+          <Parameter Name="Participant" Type="int" Mode="In" />
+          <Parameter Name="PriorityType" Type="varchar" Mode="In" />
+          <Parameter Name="ReviewFrequency" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_add_mms_notifications" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="meeting_id" Type="int" Mode="In" />
+          <Parameter Name="chairperson" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Sp_get_DepartmentsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_get_EmailId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ParticpanId_In" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_get_Employee_Department" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_get_EmployeeMaster_forJSON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dept" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_insert_Attachment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Mid" Type="int" Mode="In" />
+          <Parameter Name="Fname" Type="varchar" Mode="In" />
+          <Parameter Name="Fextension" Type="varchar" Mode="In" />
+          <Parameter Name="File" Type="image" Mode="In" />
+        </Function>
+        <Function Name="sp_insert_Meeting_Status" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId_In" Type="int" Mode="In" />
+          <Parameter Name="Status_Task_In" Type="varchar" Mode="In" />
+          <Parameter Name="Status_ResponsiblePerson_In" Type="int" Mode="In" />
+          <Parameter Name="Status_Date_In" Type="datetime" Mode="In" />
+          <Parameter Name="Status_Comments_In" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Meeting_status_In" Type="int" Mode="In" />
+          <Parameter Name="Meeting_Status_Hours" Type="varchar" Mode="In" />
+          <Parameter Name="Meeting_Id" Type="int" Mode="In" />
+          <Parameter Name="Commented_By" Type="int" Mode="In" />
+          <Parameter Name="Commented_By_ID" Type="int" Mode="In" />
+          <Parameter Name="Task_Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_insert_meeting_status_24062014_1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId_In" Type="int" Mode="In" />
+          <Parameter Name="Status_Task_In" Type="varchar" Mode="In" />
+          <Parameter Name="Status_ResponsiblePerson_In" Type="varchar" Mode="In" />
+          <Parameter Name="Status_Date_In" Type="varchar" Mode="In" />
+          <Parameter Name="Status_Comments_In" Type="varchar" Mode="In" />
+          <Parameter Name="Meeting_Status_In" Type="int" Mode="In" />
+          <Parameter Name="Meeting_Status_Hours" Type="varchar" Mode="In" />
+          <Parameter Name="Meeting_Id" Type="int" Mode="In" />
+          <Parameter Name="Task_Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_insert_MeetingDetails1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Mid" Type="int" Mode="In" />
+          <Parameter Name="Eid" Type="int" Mode="In" />
+          <Parameter Name="Cperson" Type="int" Mode="In" />
+          <Parameter Name="Participant" Type="int" Mode="In" />
+          <Parameter Name="Task" Type="varchar" Mode="In" />
+          <Parameter Name="Ctime" Type="datetime" Mode="In" />
+          <Parameter Name="Priority" Type="varchar" Mode="In" />
+          <Parameter Name="Status" Type="int" Mode="In" />
+          <Parameter Name="Comments" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Category" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Isread" Type="varchar" Mode="In" />
+          <Parameter Name="seen" Type="bit" Mode="In" />
+          <Parameter Name="istemplate" Type="bit" Mode="In" />
+          <Parameter Name="NextRevDt" Type="datetime" Mode="In" />
+          <Parameter Name="Revfreq" Type="varchar" Mode="In" />
+          <Parameter Name="TemplateID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_insert_MeetingMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Objective_In" Type="varchar" Mode="In" />
+          <Parameter Name="Date_In" Type="datetime" Mode="In" />
+          <Parameter Name="Time_In" Type="varchar" Mode="In" />
+          <Parameter Name="Venue_In" Type="varchar" Mode="In" />
+          <Parameter Name="Type_In" Type="varchar" Mode="In" />
+          <Parameter Name="Duration_In" Type="varchar" Mode="In" />
+          <Parameter Name="Department_In" Type="varchar" Mode="In" />
+          <Parameter Name="Chairperson_In" Type="int" Mode="In" />
+          <Parameter Name="Minutes_Of_Meeting_In" Type="varchar" Mode="In" />
+          <Parameter Name="Participants_In" Type="int" Mode="In" />
+          <Parameter Name="Istemplate" Type="bit" Mode="In" />
+          <Parameter Name="TemplateID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_insert_status_update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MeetingId" Type="int" Mode="In" />
+          <Parameter Name="EmployeeId" Type="int" Mode="In" />
+          <Parameter Name="Task" Type="varchar" Mode="In" />
+          <Parameter Name="Status" Type="int" Mode="In" />
+          <Parameter Name="TaskId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_select_Meeting_Name" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ChairPerson" Type="int" Mode="In" />
+          <Parameter Name="StartDate_In" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate_In" Type="datetime" Mode="In" />
+          <Parameter Name="priority" Type="varchar" Mode="In" />
+          <Parameter Name="status" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_select_meeting_status" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Status_Task_In" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Sp_Update_MMS_Meeting_Details_Change" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="emp_id" Type="int" Mode="In" />
+          <Parameter Name="Task_Id" Type="int" Mode="In" />
+          <Parameter Name="Completion_Date" Type="datetime" Mode="In" />
+          <Parameter Name="Status" Type="int" Mode="In" />
+          <Parameter Name="Category" Type="int" Mode="In" />
+          <Parameter Name="MeetingId" Type="int" Mode="In" />
+          <Parameter Name="Comments" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="NextReviewDate" Type="datetime" Mode="In" />
+          <Parameter Name="ReviewFrequencyID" Type="int" Mode="In" />
+          <Parameter Name="commented_by" Type="int" Mode="In" />
+          <Parameter Name="task" Type="varchar" Mode="In" />
+          <Parameter Name="Priority" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Sp_Update_MMS_Meeting_Details_Change1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MeetingId" Type="int" Mode="In" />
+          <Parameter Name="MeetingObjective" Type="varchar" Mode="In" />
+          <Parameter Name="MeetingDate" Type="datetime" Mode="In" />
+          <Parameter Name="MeetingTime" Type="varchar" Mode="In" />
+          <Parameter Name="MeetingDuration" Type="varchar" Mode="In" />
+          <Parameter Name="MeetingVenue" Type="varchar" Mode="In" />
+          <Parameter Name="MeetingType" Type="varchar" Mode="In" />
+          <Parameter Name="MeetingDepartment" Type="varchar" Mode="In" />
+          <Parameter Name="MeetingChairperson" Type="int" Mode="In" />
+          <Parameter Name="MinutesOfMeeting" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="ReviewTaskDBModelStoreContainer">
+          <EntitySet Name="Employee_Master" EntityType="Self.Employee_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Employee_Master" EntityType="Self.MMS_Employee_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Meeting_Category" EntityType="Self.MMS_Meeting_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Meeting_Details" EntityType="Self.MMS_Meeting_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Meeting_Master" EntityType="Self.MMS_Meeting_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Meeting_Participant" EntityType="Self.MMS_Meeting_Participant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Meeting_Status" EntityType="Self.MMS_Meeting_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Meeting_Status_Update" EntityType="Self.MMS_Meeting_Status_Update" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Meeting_Template" EntityType="Self.MMS_Meeting_Template" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Notifications" EntityType="Self.MMS_Notifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Review_Frequency" EntityType="Self.MMS_Review_Frequency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Track_ReviewTasks" EntityType="Self.MMS_Track_ReviewTasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task_Status" EntityType="Self.Task_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Priority" EntityType="Self.MMS_Priority" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[MMS_Priority].[Id] AS [Id], 
+[MMS_Priority].[Name] AS [Name], 
+[MMS_Priority].[Descriptions] AS [Descriptions], 
+[MMS_Priority].[Active] AS [Active]
+FROM [dbo].[MMS_Priority] AS [MMS_Priority]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__MMS_Meeti__Meeti__0B91BA14" Association="Self.FK__MMS_Meeti__Meeti__0B91BA14">
+            <End Role="MMS_Meeting_Master" EntitySet="MMS_Meeting_Master" />
+            <End Role="MMS_Meeting_Participant" EntitySet="MMS_Meeting_Participant" />
+          </AssociationSet>
+          <AssociationSet Name="fk_meet_id" Association="Self.fk_meet_id">
+            <End Role="MMS_Meeting_Master" EntitySet="MMS_Meeting_Master" />
+            <End Role="MMS_Notifications" EntitySet="MMS_Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="Fkey_id" Association="Self.Fkey_id">
+            <End Role="MMS_Meeting_Master" EntitySet="MMS_Meeting_Master" />
+            <End Role="MMS_Meeting_Details" EntitySet="MMS_Meeting_Details" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ReviewTaskDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee_Master">
+          <Key>
+            <PropertyRef Name="EmployeeICode" />
+          </Key>
+          <Property Name="EmployeeICode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyICode" Type="Int32" Nullable="false" />
+          <Property Name="DepartmentICode" Type="Int32" Nullable="false" />
+          <Property Name="DesignationICode" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="EmployeeFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmployeeLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmployeeDisplayName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeCurrentAddress1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeCurrentAddress2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeCurrentAddress3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeCurrentCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeCurrentState" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeCurrentCountry" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeCurrentPinCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeCurrentPhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IsSameAsCurrentAddress" Type="Boolean" />
+          <Property Name="EmployeePermanentAddress1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeePermanentAddress2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeePermanentAddress3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeePermanentCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeePermanentState" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeePermanentCountry" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeePermanentPinCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeePermanentPhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeMobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeFatherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeDateofBirth" Type="DateTime" Precision="3" />
+          <Property Name="EmployeePersonalEmailId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeDateOfJoining" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EmployeeCorporateEmailId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeIM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LoginUserName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="LoginPassword" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeBloodGroupId" Type="Int32" />
+          <Property Name="EmployeePANNo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeePFNo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeESINo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeBankName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeBankAccountNo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeMaritalStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="EmployeePrimarySkill" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeePreviousEmployer" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeePreviousExperienceYears" Type="Int32" />
+          <Property Name="EmployeePreviousExperienceMonths" Type="Int32" />
+          <Property Name="EmployeeReference1Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeReference2Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeBioData" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DocumentExtension" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="EmployeePhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="PhotoExtension" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="EmployeeDateofLeaving" Type="DateTime" Precision="3" />
+          <Property Name="EmployeeReasonforLeaving" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="SwipeICode" Type="Int32" />
+          <Property Name="Location" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Group_id" Type="Byte" />
+          <Property Name="shift_id" Type="Int32" />
+          <Property Name="original_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pseudo" Type="Boolean" />
+          <Property Name="current_technology" Type="Int32" />
+          <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="primary_skill_stream_id" Type="Int32" />
+          <Property Name="emp_photo" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="night_shift" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="MMS_Employee_Master">
+          <Key>
+            <PropertyRef Name="Employee_Id" />
+          </Key>
+          <Property Name="Employee_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Employee_FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Employee_LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Employee_DateofBirth" Type="DateTime" Precision="3" />
+          <Property Name="Employee_Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Employee_Department" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Employee_Qualification" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Employee_DateofJoin" Type="DateTime" Precision="3" />
+          <Property Name="Employee_ContactNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Employee_Status" Type="Boolean" Nullable="false" />
+          <Property Name="Employee_ModifyDate" Type="DateTime" Precision="3" />
+          <Property Name="Employee_EmailAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="profile_employee_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="MMS_Meeting_Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MMS_Meeting_Details">
+          <Key>
+            <PropertyRef Name="Task_Id" />
+          </Key>
+          <Property Name="Task_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Meeting_Id" Type="Int32" />
+          <Property Name="Employee_Id" Type="Int32" />
+          <Property Name="Chairperson" Type="Int32" />
+          <Property Name="Participant" Type="Int32" />
+          <Property Name="Task" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Completion_Date" Type="DateTime" Precision="3" />
+          <Property Name="Priority" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Percentage_Completed" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Category" Type="Int32" />
+          <Property Name="is_read_notification" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="seen" Type="Boolean" />
+          <Property Name="is_template" Type="Boolean" />
+          <Property Name="NextReviewDate" Type="DateTime" Precision="3" />
+          <Property Name="ReviewFrequencyID" Type="Int32" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="ChairPersonID" Type="Int32" />
+          <Property Name="ParticipantID" Type="Int32" />
+          <Property Name="TemplateID" Type="Int32" />
+          <Property Name="baz" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="MMS_Meeting_Master" Relationship="ReviewTaskDBModel.Fkey_id" FromRole="MMS_Meeting_Details" ToRole="MMS_Meeting_Master" />
+        </EntityType>
+        <EntityType Name="MMS_Meeting_Participant">
+          <Key>
+            <PropertyRef Name="MeetingParticipantId" />
+          </Key>
+          <Property Name="Meeting_Id" Type="Int32" />
+          <Property Name="Participant_Id" Type="Int32" />
+          <Property Name="Participant_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MeetingParticipantId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="MMS_Meeting_Master" Relationship="ReviewTaskDBModel.FK__MMS_Meeti__Meeti__0B91BA14" FromRole="MMS_Meeting_Participant" ToRole="MMS_Meeting_Master" />
+        </EntityType>
+        <EntityType Name="MMS_Meeting_Status">
+          <Key>
+            <PropertyRef Name="MeetingStatusAutoId" />
+          </Key>
+          <Property Name="Meeting_Status_Employee_Id" Type="Int32" Nullable="false" />
+          <Property Name="Meeting_Status_Task" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Meeting_Status_ResponsiblePerson" Type="Int32" />
+          <Property Name="Meeting_Status_Date" Type="DateTime" Precision="3" />
+          <Property Name="Meeting_Status_Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Meeting_Status" Type="Int32" />
+          <Property Name="Meeting_Id" Type="Int32" />
+          <Property Name="Meeting_Status_Hours" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Commented_By" Type="Int32" />
+          <Property Name="Commented_By_ID" Type="Int32" />
+          <Property Name="MeetingStatusAutoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Task_Id" Type="Int32" />
+          <Property Name="Meeting_Date1" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="MMS_Meeting_Status_Update">
+          <Key>
+            <PropertyRef Name="MeetingStatusAutoId" />
+          </Key>
+          <Property Name="MeetingId" Type="Int32" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="Task" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="MeetingStatusAutoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="MMS_Review_Frequency">
+          <Key>
+            <PropertyRef Name="Freq_Id" />
+          </Key>
+          <Property Name="Freq_Id" Type="Int32" Nullable="false" />
+          <Property Name="Freq_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Freq_In_Days" Type="Int32" />
+          <Property Name="Active_Flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MMS_Track_ReviewTasks">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int32" />
+          <Property Name="NextReviewDate" Type="DateTime" Precision="3" />
+          <Property Name="ActualReviewedDate" Type="DateTime" Precision="3" />
+          <Property Name="Review_Status" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Task_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descriptions" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
+        <EntityContainer Name="ReviewTaskDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employee_Master" EntityType="Self.Employee_Master" />
+          <EntitySet Name="MMS_Employee_Master" EntityType="Self.MMS_Employee_Master" />
+          <EntitySet Name="MMS_Meeting_Category" EntityType="Self.MMS_Meeting_Category" />
+          <EntitySet Name="MMS_Meeting_Details" EntityType="Self.MMS_Meeting_Details" />
+          <EntitySet Name="MMS_Meeting_Participant" EntityType="Self.MMS_Meeting_Participant" />
+          <EntitySet Name="MMS_Meeting_Status" EntityType="Self.MMS_Meeting_Status" />
+          <EntitySet Name="MMS_Meeting_Status_Update" EntityType="Self.MMS_Meeting_Status_Update" />
+          <EntitySet Name="MMS_Review_Frequency" EntityType="Self.MMS_Review_Frequency" />
+          <EntitySet Name="MMS_Track_ReviewTasks" EntityType="Self.MMS_Track_ReviewTasks" />
+          <EntitySet Name="Task_Status" EntityType="Self.Task_Status" />
+          <FunctionImport Name="sp_insert_Meeting_Status">
+            <Parameter Name="EmpId_In" Mode="In" Type="Int32" />
+            <Parameter Name="Status_Task_In" Mode="In" Type="String" />
+            <Parameter Name="Status_ResponsiblePerson_In" Mode="In" Type="Int32" />
+            <Parameter Name="Status_Date_In" Mode="In" Type="DateTime" />
+            <Parameter Name="Status_Comments_In" Mode="In" Type="String" />
+            <Parameter Name="Meeting_status_In" Mode="In" Type="Int32" />
+            <Parameter Name="Meeting_Status_Hours" Mode="In" Type="String" />
+            <Parameter Name="Meeting_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Commented_By" Mode="In" Type="Int32" />
+            <Parameter Name="Commented_By_ID" Mode="In" Type="Int32" />
+            <Parameter Name="Task_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_select_meeting_status" ReturnType="Collection(ReviewTaskDBModel.sp_select_meeting_status_Result)">
+          <Parameter Name="Status_Task_In" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_Get_Review_Tasks" ReturnType="Collection(ReviewTaskDBModel.Proc_Get_Review_Tasks_Result)">
+            <Parameter Name="Chairperson" Mode="In" Type="Int32" />
+            <Parameter Name="Category_id" Mode="In" Type="Int32" />
+            <Parameter Name="Participant" Mode="In" Type="Int32" />
+            <Parameter Name="PriorityType" Mode="In" Type="String" />
+            <Parameter Name="ReviewFrequency" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_select_Meeting_Name" ReturnType="Collection(ReviewTaskDBModel.sp_select_Meeting_Name_Result)">
+            <Parameter Name="ChairPerson" Mode="In" Type="Int32" />
+            <Parameter Name="StartDate_In" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate_In" Mode="In" Type="DateTime" />
+            <Parameter Name="priority" Mode="In" Type="String" />
+            <Parameter Name="status" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_Update_MMS_Meeting_Details_Change">
+            <Parameter Name="emp_id" Mode="In" Type="Int32" />
+            <Parameter Name="Task_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Completion_Date" Mode="In" Type="DateTime" />
+            <Parameter Name="Status" Mode="In" Type="Int32" />
+            <Parameter Name="Category" Mode="In" Type="Int32" />
+            <Parameter Name="MeetingId" Mode="In" Type="Int32" />
+            <Parameter Name="Comments" Mode="In" Type="String" />
+            <Parameter Name="NextReviewDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ReviewFrequencyID" Mode="In" Type="Int32" />
+            <Parameter Name="commented_by" Mode="In" Type="Int32" />
+            <Parameter Name="task" Mode="In" Type="String" />
+            <Parameter Name="Priority" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_Update_MMS_Meeting_Details_Change1">
+            <Parameter Name="MeetingId" Mode="In" Type="Int32" />
+            <Parameter Name="MeetingObjective" Mode="In" Type="String" />
+            <Parameter Name="MeetingDate" Mode="In" Type="DateTime" />
+            <Parameter Name="MeetingTime" Mode="In" Type="String" />
+            <Parameter Name="MeetingDuration" Mode="In" Type="String" />
+            <Parameter Name="MeetingVenue" Mode="In" Type="String" />
+            <Parameter Name="MeetingType" Mode="In" Type="String" />
+            <Parameter Name="MeetingDepartment" Mode="In" Type="String" />
+            <Parameter Name="MeetingChairperson" Mode="In" Type="Int32" />
+            <Parameter Name="MinutesOfMeeting" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="MMS_Priority" EntityType="ReviewTaskDBModel.MMS_Priority" />
+          <EntitySet Name="MMS_Meeting_Master" EntityType="ReviewTaskDBModel.MMS_Meeting_Master" />
+          <EntitySet Name="MMS_Meeting_Template" EntityType="ReviewTaskDBModel.MMS_Meeting_Template" />
+          <EntitySet Name="MMS_Notifications" EntityType="ReviewTaskDBModel.MMS_Notifications" />
+          <AssociationSet Name="Fkey_id" Association="ReviewTaskDBModel.Fkey_id">
+            <End Role="MMS_Meeting_Master" EntitySet="MMS_Meeting_Master" />
+            <End Role="MMS_Meeting_Details" EntitySet="MMS_Meeting_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MMS_Meeti__Meeti__0B91BA14" Association="ReviewTaskDBModel.FK__MMS_Meeti__Meeti__0B91BA14">
+            <End Role="MMS_Meeting_Master" EntitySet="MMS_Meeting_Master" />
+            <End Role="MMS_Meeting_Participant" EntitySet="MMS_Meeting_Participant" />
+          </AssociationSet>
+          <AssociationSet Name="fk_meet_id" Association="ReviewTaskDBModel.fk_meet_id">
+            <End Role="MMS_Meeting_Master" EntitySet="MMS_Meeting_Master" />
+            <End Role="MMS_Notifications" EntitySet="MMS_Notifications" />
+          </AssociationSet>
+          <FunctionImport Name="sp_add_mms_notifications">
+            <Parameter Name="meeting_id" Mode="In" Type="Int32" />
+            <Parameter Name="chairperson" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_get_EmailId" ReturnType="Collection(String)">
+          <Parameter Name="ParticpanId_In" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_insert_Attachment">
+            <Parameter Name="Mid" Mode="In" Type="Int32" />
+            <Parameter Name="Fname" Mode="In" Type="String" />
+            <Parameter Name="Fextension" Mode="In" Type="String" />
+            <Parameter Name="File" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_insert_meeting_status_24062014_1">
+            <Parameter Name="EmpId_In" Mode="In" Type="Int32" />
+            <Parameter Name="Status_Task_In" Mode="In" Type="String" />
+            <Parameter Name="Status_ResponsiblePerson_In" Mode="In" Type="String" />
+            <Parameter Name="Status_Date_In" Mode="In" Type="String" />
+            <Parameter Name="Status_Comments_In" Mode="In" Type="String" />
+            <Parameter Name="Meeting_Status_In" Mode="In" Type="Int32" />
+            <Parameter Name="Meeting_Status_Hours" Mode="In" Type="String" />
+            <Parameter Name="Meeting_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Task_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_insert_MeetingDetails1">
+            <Parameter Name="Mid" Mode="In" Type="Int32" />
+            <Parameter Name="Eid" Mode="In" Type="Int32" />
+            <Parameter Name="Cperson" Mode="In" Type="Int32" />
+            <Parameter Name="Participant" Mode="In" Type="Int32" />
+            <Parameter Name="Task" Mode="In" Type="String" />
+            <Parameter Name="Ctime" Mode="In" Type="DateTime" />
+            <Parameter Name="Priority" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="Int32" />
+            <Parameter Name="Comments" Mode="In" Type="String" />
+            <Parameter Name="Category" Mode="In" Type="String" />
+            <Parameter Name="Isread" Mode="In" Type="String" />
+            <Parameter Name="seen" Mode="In" Type="Boolean" />
+            <Parameter Name="istemplate" Mode="In" Type="Boolean" />
+            <Parameter Name="NextRevDt" Mode="In" Type="DateTime" />
+            <Parameter Name="Revfreq" Mode="In" Type="String" />
+            <Parameter Name="TemplateID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_insert_MeetingMaster" ReturnType="Collection(Int32)">
+            <Parameter Name="Objective_In" Mode="In" Type="String" />
+            <Parameter Name="Date_In" Mode="In" Type="DateTime" />
+            <Parameter Name="Time_In" Mode="In" Type="String" />
+            <Parameter Name="Venue_In" Mode="In" Type="String" />
+            <Parameter Name="Type_In" Mode="In" Type="String" />
+            <Parameter Name="Duration_In" Mode="In" Type="String" />
+            <Parameter Name="Department_In" Mode="In" Type="String" />
+            <Parameter Name="Chairperson_In" Mode="In" Type="Int32" />
+            <Parameter Name="Minutes_Of_Meeting_In" Mode="In" Type="String" />
+            <Parameter Name="Participants_In" Mode="In" Type="Int32" />
+            <Parameter Name="Istemplate" Mode="In" Type="Boolean" />
+            <Parameter Name="TemplateID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_insert_status_update">
+            <Parameter Name="MeetingId" Mode="In" Type="Int32" />
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="Task" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="Int32" />
+            <Parameter Name="TaskId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_get_DepartmentsList" ReturnType="Collection(String)" />
+          <FunctionImport Name="sp_get_EmployeeMaster_forJSON" ReturnType="Collection(ReviewTaskDBModel.sp_get_EmployeeMaster_forJSON_Result)">
+          <Parameter Name="dept" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_get_Employee_Department" ReturnType="Collection(ReviewTaskDBModel.sp_get_Employee_Department_Result)" />
+        </EntityContainer>
+        <ComplexType Name="sp_select_meeting_status_Result">
+          <Property Type="Int32" Name="Meeting_Status_Employee_Id" Nullable="false" />
+          <Property Type="String" Name="Meeting_Status_Task" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Meeting_Status_ResponsiblePerson" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Meeting_Status_Date" Nullable="true" MaxLength="29" />
+          <Property Type="String" Name="Meeting_Status_Comments" Nullable="true" />
+          <Property Type="String" Name="Meeting_Status" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Meeting_Id" Nullable="true" />
+          <Property Type="String" Name="Meeting_Status_Hours" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Commented_By" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Commented_By_ID" Nullable="true" />
+          <Property Type="Int32" Name="MeetingStatusAutoId" Nullable="false" />
+          <Property Type="Int32" Name="Task_Id" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Proc_Get_Review_Tasks_Result">
+          <Property Type="Int32" Name="Task_Id" Nullable="false" />
+          <Property Type="Int32" Name="Meeting_Id" Nullable="true" />
+          <Property Type="Int32" Name="Employee_Id" Nullable="true" />
+          <Property Type="String" Name="Chairperson" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Participant" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Task" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Category" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Completion_Date" Nullable="true" MaxLength="11" />
+          <Property Type="String" Name="Priority" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="String" Name="StatusName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Comments" Nullable="true" />
+          <Property Type="String" Name="CommenterName" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Review_Status" Nullable="false" />
+          <Property Type="DateTime" Name="Review_Date" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="Assigned_Date" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Overdue_days" Nullable="true" />
+          <Property Type="Int32" Name="Comments_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_select_Meeting_Name_Result">
+          <Property Type="Int32" Name="meeting_id" Nullable="true" />
+          <Property Type="Int32" Name="employee_id" Nullable="true" />
+          <Property Type="Int32" Name="Task_Id" Nullable="true" />
+          <Property Type="String" Name="Task" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Comments" Nullable="true" />
+          <Property Type="Int32" Name="Category" Nullable="true" />
+          <Property Type="String" Name="Participant" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="meeting_date" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="completion_date" Nullable="true" Precision="23" />
+          <Property Type="String" Name="priority" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="status" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Overdue_Days" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="MMS_Priority">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descriptions" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="MMS_Meeting_Master">
+          <Key>
+            <PropertyRef Name="Meeting_Id" />
+          </Key>
+          <Property Name="Meeting_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Meeting_Objective" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Meeting_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Meeting_Time" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Meeting_Venue" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Meeting_Type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Meeting_Duration" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Meeting_Department" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Meeting_Chairperson" Type="Int32" />
+          <Property Name="Minutes_Of_Meeting" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Meeting_No_Of_Participants" Type="Int32" Nullable="false" />
+          <Property Name="istemplate" Type="Boolean" />
+          <Property Name="TemplateID" Type="Int32" />
+          <NavigationProperty Name="MMS_Meeting_Details" Relationship="ReviewTaskDBModel.Fkey_id" FromRole="MMS_Meeting_Master" ToRole="MMS_Meeting_Details" />
+          <NavigationProperty Name="MMS_Meeting_Participant" Relationship="ReviewTaskDBModel.FK__MMS_Meeti__Meeti__0B91BA14" FromRole="MMS_Meeting_Master" ToRole="MMS_Meeting_Participant" />
+          <NavigationProperty Name="MMS_Notifications" Relationship="ReviewTaskDBModel.fk_meet_id" FromRole="MMS_Meeting_Master" ToRole="MMS_Notifications" />
+        </EntityType>
+        <EntityType Name="MMS_Meeting_Template">
+          <Key>
+            <PropertyRef Name="tid" />
+          </Key>
+          <Property Name="tid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="meeting_name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="meeting_time" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="meeting_duration" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="meeting_venue" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="objective" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="meeting_chairperson" Type="Int32" />
+        </EntityType>
+        <EntityType Name="MMS_Notifications">
+          <Key>
+            <PropertyRef Name="notify_id" />
+          </Key>
+          <Property Name="notify_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="meeting_id" Type="Int32" />
+          <Property Name="is_read" Type="Int32" />
+          <Property Name="chairperson" Type="Int32" />
+          <NavigationProperty Name="MMS_Meeting_Master" Relationship="ReviewTaskDBModel.fk_meet_id" FromRole="MMS_Notifications" ToRole="MMS_Meeting_Master" />
+        </EntityType>
+        <Association Name="Fkey_id">
+          <End Type="ReviewTaskDBModel.MMS_Meeting_Master" Role="MMS_Meeting_Master" Multiplicity="0..1" />
+          <End Type="ReviewTaskDBModel.MMS_Meeting_Details" Role="MMS_Meeting_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Meeting_Master">
+              <PropertyRef Name="Meeting_Id" />
+            </Principal>
+            <Dependent Role="MMS_Meeting_Details">
+              <PropertyRef Name="Meeting_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MMS_Meeti__Meeti__0B91BA14">
+          <End Type="ReviewTaskDBModel.MMS_Meeting_Master" Role="MMS_Meeting_Master" Multiplicity="0..1" />
+          <End Type="ReviewTaskDBModel.MMS_Meeting_Participant" Role="MMS_Meeting_Participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Meeting_Master">
+              <PropertyRef Name="Meeting_Id" />
+            </Principal>
+            <Dependent Role="MMS_Meeting_Participant">
+              <PropertyRef Name="Meeting_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_meet_id">
+          <End Type="ReviewTaskDBModel.MMS_Meeting_Master" Role="MMS_Meeting_Master" Multiplicity="0..1" />
+          <End Type="ReviewTaskDBModel.MMS_Notifications" Role="MMS_Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Meeting_Master">
+              <PropertyRef Name="Meeting_Id" />
+            </Principal>
+            <Dependent Role="MMS_Notifications">
+              <PropertyRef Name="meeting_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_get_EmployeeMaster_forJSON_Result">
+          <Property Type="Int32" Name="Employee_Id" Nullable="false" />
+          <Property Type="String" Name="Employee_Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Employee_LastName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Department_ICode" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_get_Employee_Department_Result">
+          <Property Type="Int32" Name="Employee_Code" Nullable="false" />
+          <Property Type="String" Name="User_name" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Department_Id" Nullable="false" />
+          <Property Type="String" Name="EmailID" Nullable="true" MaxLength="100" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ReviewTaskDBModelStoreContainer" CdmEntityContainer="ReviewTaskDBEntities">
+          <EntitySetMapping Name="Employee_Master">
+            <EntityTypeMapping TypeName="ReviewTaskDBModel.Employee_Master">
+              <MappingFragment StoreEntitySet="Employee_Master">
+                <ScalarProperty Name="EmployeeICode" ColumnName="EmployeeICode" />
+                <ScalarProperty Name="CompanyICode" ColumnName="CompanyICode" />
+                <ScalarProperty Name="DepartmentICode" ColumnName="DepartmentICode" />
+                <ScalarProperty Name="DesignationICode" ColumnName="DesignationICode" />
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+                <ScalarProperty Name="EmployeeFirstName" ColumnName="EmployeeFirstName" />
+                <ScalarProperty Name="EmployeeLastName" ColumnName="EmployeeLastName" />
+                <ScalarProperty Name="EmployeeDisplayName" ColumnName="EmployeeDisplayName" />
+                <ScalarProperty Name="EmployeeCurrentAddress1" ColumnName="EmployeeCurrentAddress1" />
+                <ScalarProperty Name="EmployeeCurrentAddress2" ColumnName="EmployeeCurrentAddress2" />
+                <ScalarProperty Name="EmployeeCurrentAddress3" ColumnName="EmployeeCurrentAddress3" />
+                <ScalarProperty Name="EmployeeCurrentCity" ColumnName="EmployeeCurrentCity" />
+                <ScalarProperty Name="EmployeeCurrentState" ColumnName="EmployeeCurrentState" />
+                <ScalarProperty Name="EmployeeCurrentCountry" ColumnName="EmployeeCurrentCountry" />
+                <ScalarProperty Name="EmployeeCurrentPinCode" ColumnName="EmployeeCurrentPinCode" />
+                <ScalarProperty Name="EmployeeCurrentPhoneNo" ColumnName="EmployeeCurrentPhoneNo" />
+                <ScalarProperty Name="IsSameAsCurrentAddress" ColumnName="IsSameAsCurrentAddress" />
+                <ScalarProperty Name="EmployeePermanentAddress1" ColumnName="EmployeePermanentAddress1" />
+                <ScalarProperty Name="EmployeePermanentAddress2" ColumnName="EmployeePermanentAddress2" />
+                <ScalarProperty Name="EmployeePermanentAddress3" ColumnName="EmployeePermanentAddress3" />
+                <ScalarProperty Name="EmployeePermanentCity" ColumnName="EmployeePermanentCity" />
+                <ScalarProperty Name="EmployeePermanentState" ColumnName="EmployeePermanentState" />
+                <ScalarProperty Name="EmployeePermanentCountry" ColumnName="EmployeePermanentCountry" />
+                <ScalarProperty Name="EmployeePermanentPinCode" ColumnName="EmployeePermanentPinCode" />
+                <ScalarProperty Name="EmployeePermanentPhoneNo" ColumnName="EmployeePermanentPhoneNo" />
+                <ScalarProperty Name="EmployeeMobileNo" ColumnName="EmployeeMobileNo" />
+                <ScalarProperty Name="EmployeeFatherName" ColumnName="EmployeeFatherName" />
+                <ScalarProperty Name="EmployeeDateofBirth" ColumnName="EmployeeDateofBirth" />
+                <ScalarProperty Name="EmployeePersonalEmailId" ColumnName="EmployeePersonalEmailId" />
+                <ScalarProperty Name="EmployeeDateOfJoining" ColumnName="EmployeeDateOfJoining" />
+                <ScalarProperty Name="EmployeeCorporateEmailId" ColumnName="EmployeeCorporateEmailId" />
+                <ScalarProperty Name="EmployeeIM" ColumnName="EmployeeIM" />
+                <ScalarProperty Name="LoginUserName" ColumnName="LoginUserName" />
+                <ScalarProperty Name="LoginPassword" ColumnName="LoginPassword" />
+                <ScalarProperty Name="EmployeeBloodGroupId" ColumnName="EmployeeBloodGroupId" />
+                <ScalarProperty Name="EmployeePANNo" ColumnName="EmployeePANNo" />
+                <ScalarProperty Name="EmployeePFNo" ColumnName="EmployeePFNo" />
+                <ScalarProperty Name="EmployeeESINo" ColumnName="EmployeeESINo" />
+                <ScalarProperty Name="EmployeeBankName" ColumnName="EmployeeBankName" />
+                <ScalarProperty Name="EmployeeBankAccountNo" ColumnName="EmployeeBankAccountNo" />
+                <ScalarProperty Name="EmployeeMaritalStatus" ColumnName="EmployeeMaritalStatus" />
+                <ScalarProperty Name="EmployeePrimarySkill" ColumnName="EmployeePrimarySkill" />
+                <ScalarProperty Name="EmployeePreviousEmployer" ColumnName="EmployeePreviousEmployer" />
+                <ScalarProperty Name="EmployeePreviousExperienceYears" ColumnName="EmployeePreviousExperienceYears" />
+                <ScalarProperty Name="EmployeePreviousExperienceMonths" ColumnName="EmployeePreviousExperienceMonths" />
+                <ScalarProperty Name="EmployeeReference1Remarks" ColumnName="EmployeeReference1Remarks" />
+                <ScalarProperty Name="EmployeeReference2Remarks" ColumnName="EmployeeReference2Remarks" />
+                <ScalarProperty Name="EmployeeBioData" ColumnName="EmployeeBioData" />
+                <ScalarProperty Name="DocumentExtension" ColumnName="DocumentExtension" />
+                <ScalarProperty Name="EmployeePhoto" ColumnName="EmployeePhoto" />
+                <ScalarProperty Name="PhotoExtension" ColumnName="PhotoExtension" />
+                <ScalarProperty Name="EmployeeDateofLeaving" ColumnName="EmployeeDateofLeaving" />
+                <ScalarProperty Name="EmployeeReasonforLeaving" ColumnName="EmployeeReasonforLeaving" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="SwipeICode" ColumnName="SwipeICode" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Group_id" ColumnName="Group_id" />
+                <ScalarProperty Name="shift_id" ColumnName="shift_id" />
+                <ScalarProperty Name="original_name" ColumnName="original_name" />
+                <ScalarProperty Name="pseudo" ColumnName="pseudo" />
+                <ScalarProperty Name="current_technology" ColumnName="current_technology" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+                <ScalarProperty Name="primary_skill_stream_id" ColumnName="primary_skill_stream_id" />
+                <ScalarProperty Name="emp_photo" ColumnName="emp_photo" />
+                <ScalarProperty Name="night_shift" ColumnName="night_shift" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Employee_Master">
+            <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Employee_Master">
+              <MappingFragment StoreEntitySet="MMS_Employee_Master">
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Employee_FirstName" ColumnName="Employee_FirstName" />
+                <ScalarProperty Name="Employee_LastName" ColumnName="Employee_LastName" />
+                <ScalarProperty Name="Employee_DateofBirth" ColumnName="Employee_DateofBirth" />
+                <ScalarProperty Name="Employee_Address" ColumnName="Employee_Address" />
+                <ScalarProperty Name="Employee_Department" ColumnName="Employee_Department" />
+                <ScalarProperty Name="Employee_Qualification" ColumnName="Employee_Qualification" />
+                <ScalarProperty Name="Employee_DateofJoin" ColumnName="Employee_DateofJoin" />
+                <ScalarProperty Name="Employee_ContactNo" ColumnName="Employee_ContactNo" />
+                <ScalarProperty Name="Employee_Status" ColumnName="Employee_Status" />
+                <ScalarProperty Name="Employee_ModifyDate" ColumnName="Employee_ModifyDate" />
+                <ScalarProperty Name="Employee_EmailAddress" ColumnName="Employee_EmailAddress" />
+                <ScalarProperty Name="profile_employee_id" ColumnName="profile_employee_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Meeting_Category">
+            <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Meeting_Category">
+              <MappingFragment StoreEntitySet="MMS_Meeting_Category">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Meeting_Details">
+            <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Meeting_Details">
+              <MappingFragment StoreEntitySet="MMS_Meeting_Details">
+                <ScalarProperty Name="Task_Id" ColumnName="Task_Id" />
+                <ScalarProperty Name="Meeting_Id" ColumnName="Meeting_Id" />
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Chairperson" ColumnName="Chairperson" />
+                <ScalarProperty Name="Participant" ColumnName="Participant" />
+                <ScalarProperty Name="Task" ColumnName="Task" />
+                <ScalarProperty Name="Completion_Date" ColumnName="Completion_Date" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Percentage_Completed" ColumnName="Percentage_Completed" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="is_read_notification" ColumnName="is_read_notification" />
+                <ScalarProperty Name="seen" ColumnName="seen" />
+                <ScalarProperty Name="is_template" ColumnName="is_template" />
+                <ScalarProperty Name="NextReviewDate" ColumnName="NextReviewDate" />
+                <ScalarProperty Name="ReviewFrequencyID" ColumnName="ReviewFrequencyID" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ChairPersonID" ColumnName="ChairPersonID" />
+                <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
+                <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
+                <ScalarProperty Name="baz" ColumnName="baz" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Meeting_Participant">
+            <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Meeting_Participant">
+              <MappingFragment StoreEntitySet="MMS_Meeting_Participant">
+                <ScalarProperty Name="Meeting_Id" ColumnName="Meeting_Id" />
+                <ScalarProperty Name="Participant_Id" ColumnName="Participant_Id" />
+                <ScalarProperty Name="Participant_Name" ColumnName="Participant_Name" />
+                <ScalarProperty Name="MeetingParticipantId" ColumnName="MeetingParticipantId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Meeting_Status">
+            <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Meeting_Status">
+              <MappingFragment StoreEntitySet="MMS_Meeting_Status">
+                <ScalarProperty Name="Meeting_Status_Employee_Id" ColumnName="Meeting_Status_Employee_Id" />
+                <ScalarProperty Name="Meeting_Status_Task" ColumnName="Meeting_Status_Task" />
+                <ScalarProperty Name="Meeting_Status_ResponsiblePerson" ColumnName="Meeting_Status_ResponsiblePerson" />
+                <ScalarProperty Name="Meeting_Status_Date" ColumnName="Meeting_Status_Date" />
+                <ScalarProperty Name="Meeting_Status_Comments" ColumnName="Meeting_Status_Comments" />
+                <ScalarProperty Name="Meeting_Status" ColumnName="Meeting_Status" />
+                <ScalarProperty Name="Meeting_Id" ColumnName="Meeting_Id" />
+                <ScalarProperty Name="Meeting_Status_Hours" ColumnName="Meeting_Status_Hours" />
+                <ScalarProperty Name="Commented_By" ColumnName="Commented_By" />
+                <ScalarProperty Name="Commented_By_ID" ColumnName="Commented_By_ID" />
+                <ScalarProperty Name="MeetingStatusAutoId" ColumnName="MeetingStatusAutoId" />
+                <ScalarProperty Name="Task_Id" ColumnName="Task_Id" />
+                <ScalarProperty Name="Meeting_Date1" ColumnName="Meeting_Date1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Meeting_Status_Update">
+            <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Meeting_Status_Update">
+              <MappingFragment StoreEntitySet="MMS_Meeting_Status_Update">
+                <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Task" ColumnName="Task" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="MeetingStatusAutoId" ColumnName="MeetingStatusAutoId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Review_Frequency">
+            <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Review_Frequency">
+              <MappingFragment StoreEntitySet="MMS_Review_Frequency">
+                <ScalarProperty Name="Freq_Id" ColumnName="Freq_Id" />
+                <ScalarProperty Name="Freq_Name" ColumnName="Freq_Name" />
+                <ScalarProperty Name="Freq_In_Days" ColumnName="Freq_In_Days" />
+                <ScalarProperty Name="Active_Flag" ColumnName="Active_Flag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Track_ReviewTasks">
+            <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Track_ReviewTasks">
+              <MappingFragment StoreEntitySet="MMS_Track_ReviewTasks">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="NextReviewDate" ColumnName="NextReviewDate" />
+                <ScalarProperty Name="ActualReviewedDate" ColumnName="ActualReviewedDate" />
+                <ScalarProperty Name="Review_Status" ColumnName="Review_Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Task_Status">
+            <EntityTypeMapping TypeName="ReviewTaskDBModel.Task_Status">
+              <MappingFragment StoreEntitySet="Task_Status">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Descriptions" ColumnName="Descriptions" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_insert_Meeting_Status" FunctionName="ReviewTaskDBModel.Store.sp_insert_Meeting_Status" />
+          <FunctionImportMapping FunctionImportName="sp_select_meeting_status" FunctionName="ReviewTaskDBModel.Store.sp_select_meeting_status">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewTaskDBModel.sp_select_meeting_status_Result">
+                <ScalarProperty Name="Meeting_Status_Employee_Id" ColumnName="Meeting_Status_Employee_Id" />
+                <ScalarProperty Name="Meeting_Status_Task" ColumnName="Meeting_Status_Task" />
+                <ScalarProperty Name="Meeting_Status_ResponsiblePerson" ColumnName="Meeting_Status_ResponsiblePerson" />
+                <ScalarProperty Name="Meeting_Status_Date" ColumnName="Meeting_Status_Date" />
+                <ScalarProperty Name="Meeting_Status_Comments" ColumnName="Meeting_Status_Comments" />
+                <ScalarProperty Name="Meeting_Status" ColumnName="Meeting_Status" />
+                <ScalarProperty Name="Meeting_Id" ColumnName="Meeting_Id" />
+                <ScalarProperty Name="Meeting_Status_Hours" ColumnName="Meeting_Status_Hours" />
+                <ScalarProperty Name="Commented_By" ColumnName="Commented_By" />
+                <ScalarProperty Name="Commented_By_ID" ColumnName="Commented_By_ID" />
+                <ScalarProperty Name="MeetingStatusAutoId" ColumnName="MeetingStatusAutoId" />
+                <ScalarProperty Name="Task_Id" ColumnName="Task_Id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proc_Get_Review_Tasks" FunctionName="ReviewTaskDBModel.Store.Proc_Get_Review_Tasks">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewTaskDBModel.Proc_Get_Review_Tasks_Result">
+                <ScalarProperty Name="Task_Id" ColumnName="Task_Id" />
+                <ScalarProperty Name="Meeting_Id" ColumnName="Meeting_Id" />
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Chairperson" ColumnName="Chairperson" />
+                <ScalarProperty Name="Participant" ColumnName="Participant" />
+                <ScalarProperty Name="Task" ColumnName="Task" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Completion_Date" ColumnName="Completion_Date" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CommenterName" ColumnName="CommenterName" />
+                <ScalarProperty Name="Review_Status" ColumnName="Review_Status" />
+                <ScalarProperty Name="Review_Date" ColumnName="Review_Date" />
+                <ScalarProperty Name="Assigned_Date" ColumnName="Assigned_Date" />
+                <ScalarProperty Name="Overdue_days" ColumnName="Overdue_days" />
+                <ScalarProperty Name="Comments_count" ColumnName="Comments_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_select_Meeting_Name" FunctionName="ReviewTaskDBModel.Store.sp_select_Meeting_Name">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewTaskDBModel.sp_select_Meeting_Name_Result">
+                <ScalarProperty Name="meeting_id" ColumnName="meeting_id" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="Task_Id" ColumnName="Task_Id" />
+                <ScalarProperty Name="Task" ColumnName="Task" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Participant" ColumnName="Participant" />
+                <ScalarProperty Name="meeting_date" ColumnName="meeting_date" />
+                <ScalarProperty Name="completion_date" ColumnName="completion_date" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="Overdue_Days" ColumnName="Overdue_Days" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Sp_Update_MMS_Meeting_Details_Change" FunctionName="ReviewTaskDBModel.Store.Sp_Update_MMS_Meeting_Details_Change" />
+          <FunctionImportMapping FunctionImportName="Sp_Update_MMS_Meeting_Details_Change1" FunctionName="ReviewTaskDBModel.Store.Sp_Update_MMS_Meeting_Details_Change1" />
+          <EntitySetMapping Name="MMS_Priority">
+            <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Priority">
+              <MappingFragment StoreEntitySet="MMS_Priority">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Descriptions" ColumnName="Descriptions" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Meeting_Master">
+            <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Meeting_Master">
+              <MappingFragment StoreEntitySet="MMS_Meeting_Master">
+                <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
+                <ScalarProperty Name="istemplate" ColumnName="istemplate" />
+                <ScalarProperty Name="Meeting_No_Of_Participants" ColumnName="Meeting_No_Of_Participants" />
+                <ScalarProperty Name="Minutes_Of_Meeting" ColumnName="Minutes_Of_Meeting" />
+                <ScalarProperty Name="Meeting_Chairperson" ColumnName="Meeting_Chairperson" />
+                <ScalarProperty Name="Meeting_Department" ColumnName="Meeting_Department" />
+                <ScalarProperty Name="Meeting_Duration" ColumnName="Meeting_Duration" />
+                <ScalarProperty Name="Meeting_Type" ColumnName="Meeting_Type" />
+                <ScalarProperty Name="Meeting_Venue" ColumnName="Meeting_Venue" />
+                <ScalarProperty Name="Meeting_Time" ColumnName="Meeting_Time" />
+                <ScalarProperty Name="Meeting_Date" ColumnName="Meeting_Date" />
+                <ScalarProperty Name="Meeting_Objective" ColumnName="Meeting_Objective" />
+                <ScalarProperty Name="Meeting_Id" ColumnName="Meeting_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Meeting_Template">
+            <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Meeting_Template">
+              <MappingFragment StoreEntitySet="MMS_Meeting_Template">
+                <ScalarProperty Name="meeting_chairperson" ColumnName="meeting_chairperson" />
+                <ScalarProperty Name="objective" ColumnName="objective" />
+                <ScalarProperty Name="department" ColumnName="department" />
+                <ScalarProperty Name="meeting_venue" ColumnName="meeting_venue" />
+                <ScalarProperty Name="meeting_duration" ColumnName="meeting_duration" />
+                <ScalarProperty Name="meeting_time" ColumnName="meeting_time" />
+                <ScalarProperty Name="meeting_name" ColumnName="meeting_name" />
+                <ScalarProperty Name="tid" ColumnName="tid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Notifications">
+            <EntityTypeMapping TypeName="ReviewTaskDBModel.MMS_Notifications">
+              <MappingFragment StoreEntitySet="MMS_Notifications">
+                <ScalarProperty Name="chairperson" ColumnName="chairperson" />
+                <ScalarProperty Name="is_read" ColumnName="is_read" />
+                <ScalarProperty Name="meeting_id" ColumnName="meeting_id" />
+                <ScalarProperty Name="notify_id" ColumnName="notify_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_add_mms_notifications" FunctionName="ReviewTaskDBModel.Store.sp_add_mms_notifications" />
+          <FunctionImportMapping FunctionImportName="sp_get_EmailId" FunctionName="ReviewTaskDBModel.Store.sp_get_EmailId" />
+          <FunctionImportMapping FunctionImportName="sp_insert_Attachment" FunctionName="ReviewTaskDBModel.Store.sp_insert_Attachment" />
+          <FunctionImportMapping FunctionImportName="sp_insert_meeting_status_24062014_1" FunctionName="ReviewTaskDBModel.Store.sp_insert_meeting_status_24062014_1" />
+          <FunctionImportMapping FunctionImportName="sp_insert_MeetingDetails1" FunctionName="ReviewTaskDBModel.Store.sp_insert_MeetingDetails1" />
+          <FunctionImportMapping FunctionImportName="sp_insert_MeetingMaster" FunctionName="ReviewTaskDBModel.Store.sp_insert_MeetingMaster" />
+          <FunctionImportMapping FunctionImportName="sp_insert_status_update" FunctionName="ReviewTaskDBModel.Store.sp_insert_status_update" />
+          <FunctionImportMapping FunctionImportName="Sp_get_DepartmentsList" FunctionName="ReviewTaskDBModel.Store.Sp_get_DepartmentsList" />
+          <FunctionImportMapping FunctionImportName="sp_get_EmployeeMaster_forJSON" FunctionName="ReviewTaskDBModel.Store.sp_get_EmployeeMaster_forJSON">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewTaskDBModel.sp_get_EmployeeMaster_forJSON_Result">
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Employee_Name" ColumnName="Employee_Name" />
+                <ScalarProperty Name="Employee_LastName" ColumnName="Employee_LastName" />
+                <ScalarProperty Name="Department_ICode" ColumnName="Department_ICode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_get_Employee_Department" FunctionName="ReviewTaskDBModel.Store.sp_get_Employee_Department">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewTaskDBModel.sp_get_Employee_Department_Result">
+                <ScalarProperty Name="Employee_Code" ColumnName="Employee_Code" />
+                <ScalarProperty Name="User_name" ColumnName="User_name" />
+                <ScalarProperty Name="Department_Id" ColumnName="Department_Id" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,27 @@
+﻿@model MMS.Models.MMS_Meeting_Category
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-header" id="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <b>Create New Category</b>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="modal-body">
+
+                @Html.ValidationSummary(true)
+                <div class="form-inline">
+                    Category Name :
+                    @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" value="Create" />
+    </div>
+}

@@ -1,0 +1,511 @@
+﻿@model MMS.Models.EmpPersonalViewDetails
+
+@{
+    ViewBag.Title = "Create Employee";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";    
+}
+
+<style>
+    #EmpBloodGroupId{        
+        max-width:270px;
+    }
+    
+    </style>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Create Employee Personal Details
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("Index", "CreateEmployee", FormMethod.Post, htmlAttributes: new { @class = "Employee-form", @id = "CreateEmployeePage1", @enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary(true, "fill the errors", new { @class = "text-danger" })
+
+            <input type="hidden" class="files" name="files" />
+
+            <div class="form-horizontal">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            @Html.Label("Employee First Name", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeFirstName, new { htmlAttributes = new { @class = "form-control required", @id = "EmpFirstName", @maxlength = "150", @required = "required", @minlength = "3" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.Label("Employee Last Name", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeLastName, new { htmlAttributes = new { @class = "form-control required", @id = "EmpLastName", @maxlength = "150", @required = "required", @minlength = "3" } })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            @Html.Label("Employee Display Name", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeDisplayName, new { htmlAttributes = new { @class = "form-control", @id = "EmpDisplayName", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.Label("Employee Father Name", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeFatherName, new { htmlAttributes = new { @class = "form-control", @id = "EmpFatherName", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-row">
+                        <div class="form-group col-md-6 form-inline alert alert-warning" style="padding: 8px;">
+                            @Html.Label("Employee Current Address", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.CheckBoxFor(model => model.IsSameAsCurrentAddress, new { htmlAttributes = new { @class = "form-control", @id = "IsSameAsCurrentAddress", @maxlength = "150" } })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6 form-inline alert alert-warning" style="padding: 8px;">
+                            @Html.Label("Employee Permanent Address", htmlAttributes: new { @class = "control-label col-lg-5 col-md-5" })
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            @Html.Label("Current Address1", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeCurrentAddress1, new { htmlAttributes = new { @class = "form-control required", @id = "EmpCurrentAdd1", @maxlength = "150", @required = "required" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.Label("Permanent Address1", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7 EmpPermanentAdd1">
+                                @Html.EditorFor(model => model.EmployeePermanentAddress1, new { htmlAttributes = new { @class = "form-control", @id = "EmpPermanentAdd1", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            @Html.Label("Current Address2", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeCurrentAddress2, new { htmlAttributes = new { @class = "form-control", @id = "EmpCurrentAdd2", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.Label("Permanent Address2", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeePermanentAddress2, new { htmlAttributes = new { @class = "form-control", @id = "EmpPermanentAdd2", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            @Html.Label("Current City", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeCurrentCity, new { htmlAttributes = new { @class = "form-control required", @id = "EmpCurrentCity", @maxlength = "150", @required = "required" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.Label("Permanent City", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeePermanentCity, new { htmlAttributes = new { @class = "form-control", @id = "EmpPermanentCity", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            @Html.Label("Current State", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.EmployeeCurrentState, new { htmlAttributes = new { @class = "form-control required", @id = "EmpCurrentState", @maxlength = "150", @required = "required" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.Label("Permanent State", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.EmployeePermanentState, new { htmlAttributes = new { @class = "form-control", @id = "EmpPermanentState", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6">
+                            @Html.Label("Current Country and Pin Code", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.EmployeeCurrentCountry, new { htmlAttributes = new { @class = "form-control required", @id = "EmpCurrentCountry", @maxlength = "150", @required = "required" } })
+
+                            </div>
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.EmployeeCurrentPinCode, new { htmlAttributes = new { @class = "form-control required", @id = "EmpCurrentPinCode", @maxlength = "150", @required = "required" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.Label("Permanent Country and Pin Code", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 " })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.EmployeePermanentCountry, new { htmlAttributes = new { @class = "form-control", @id = "EmpPermanentCountry", @maxlength = "150"} })
+
+                            </div>
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.EmployeePermanentPinCode, new { htmlAttributes = new { @class = "form-control", @id = "EmpPermanentPinCode", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            @Html.Label("Current Phone Number", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeCurrentPhoneNo, new { htmlAttributes = new { @class = "form-control", @id = "EmpCurrentPhoneNo", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.Label("Permanent Phone Number", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeePermanentPhoneNo, new { htmlAttributes = new { @class = "form-control", @id = "EmpPermanentPhoneNo", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-inline alert alert-warning" style="padding: 8px;">
+
+                        <label>
+                            Employee Others Details
+                        </label>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            @Html.Label("Mobile Number", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeMobileNo, new { htmlAttributes = new { @class = "form-control", @id = "EmpMobileNo", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Date of Birth", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeeDateofBirth, new { htmlAttributes = new { @class = "form-control datepicker", @id = "EmpDateOfBirth", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Personal EmailId", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.EmployeePersonalEmailId, new { htmlAttributes = new { @class = "form-control", @id = "EmpEmailId", @maxlength = "150" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">                       
+                        <div class="form-group col-md-4">
+                            @Html.Label("Employee Location", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @*@Html.DropDownListFor(model => model.Location, new SelectList(ViewBag.EmpLocation, "Vales", "Name"), "--Select Your Location--", new { @class = "form-control", @id = "EmpLocation" })*@
+                                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", @id = "EmpLocation", @maxlength = "150" } })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Blood Group Name", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-7">
+                                @*@Html.DropDownListFor(model => model.EmployeeBloodGroupId, new SelectList(ViewBag.EmpBloodName, "Vales", "Descriptions"), "--Select Your Blood Group--", new { @class = "form-control", @id = "EmpBloodGroupId" })*@
+                                @Html.EditorFor(model => model.EmployeeBloodGroupId, new { htmlAttributes = new { @class = "form-control", @id = "EmpBloodGroupId", @maxlength = "150" } })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("Marital Status", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="control-label col-md-8">
+                                @Html.RadioButtonFor(model => model.EmployeeMaritalStatus, true, new { id = "married-true", @value = "Married", @maxlength = "150" }) Married &nbsp;
+                                @Html.RadioButtonFor(model => model.EmployeeMaritalStatus, false, new { id = "married-false", @value = "Single", @maxlength = "150" }) Single
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="pull-right">
+                <input type="button" value="Save & Next" class="btn" id="CreateNewEmployee" />
+                
+            </div>
+        }
+    </div>    
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/customValScript")
+}
+
+
+<script>
+
+    
+    $(document).ready(function () {
+
+        IsSameAsCurrentAddress();
+        MaritalStatus_changed();               
+        var i = 0;
+        var j = 0;
+
+        $('#EmpMobileNo').keypress(function () {           
+            i = i + 1;
+            var length = i;
+            if (length > 10)
+                return false;
+        });
+
+        $('#EmpCurrentPinCode').keypress(function () {
+            
+            j = j + 1;
+            var length = j;
+            if (length > 6)
+                return false;
+        });
+
+        $(".datepicker").datepicker({
+            dateFormat: "dd - mm - yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1960:2000",
+
+        });
+
+        $("input[name=EmployeeMaritalStatus]").click(function () {
+
+            var chkCurrVal = $(this).prop('checked');
+            if (chkCurrVal == true) {
+                var group = "input:checkbox[name='" + $(this).attr("name") + "']";
+                $(group).attr("checked", false);
+                $(this).prop('checked', true)
+            }
+        });
+
+        function MaritalStatus_changed() {            
+            if ($('input[value="check-box-1"]').attr('checked'))
+                $('input[value="check-box-2"]').attr('checked', false);
+            else
+                $('input[value="check-box-2"]').attr('checked', true);
+        }
+
+        $("input[name=IsSameAsCurrentAddress]").click(function () {
+            IsSameAsCurrentAddress();
+        });
+
+        $("#EmpCurrentPinCode").keypress(function (e) {
+            var keyCode = e.which;
+            if ((keyCode != 8 || keyCode == 32) && (keyCode < 48 || keyCode > 57)) {
+                return false;
+            }
+        });
+
+        $("#EmpPermanentPinCode").keypress(function (e) {
+            var keyCode = e.which;
+            if ((keyCode != 8 || keyCode == 32) && (keyCode < 48 || keyCode > 57)) {
+                return false;
+            }
+        });
+
+        $("#EmpCurrentPhoneNo").keypress(function (e) {
+            
+            var keyCode = e.which;
+            if (keyCode != 45) {
+                if ((keyCode != 8 || keyCode == 32) && (keyCode < 48 || keyCode > 57)) {
+                    return false;
+                }
+            }
+        });
+
+        $("#EmpPermanentPhoneNo").keypress(function (e) {
+            var keyCode = e.which;
+            if ((keyCode != 8 || keyCode == 32) && (keyCode < 48 || keyCode > 57)) {
+                return false;
+            }
+        });
+
+        $("#EmpMobileNo").keypress(function (e) {
+            var keyCode = e.which;
+            if ((keyCode != 8 || keyCode == 32) && (keyCode < 48 || keyCode > 57)) {
+                return false;
+            }
+        });
+
+        $('#CreateNewEmployee').on('click', function (e) {
+            
+            var PinCode = $('#EmpCurrentPinCode').val();
+            if (PinCode != "") {
+                if (checkZip(PinCode)) {
+                }
+                else {
+                    $("#EmpCurrentPinCode").css('border-color', 'red');
+                    return false;
+                }
+            }
+
+            MobileNumber_checking();
+            $("#CreateEmployeePage1").submit();
+            //submitform(true);
+            
+            FindoutDupliEmpPage1();
+            //var CurrentPhoneNo = $('#EmpCurrentPhoneNo').val();
+            //if (CurrentPhoneNo != "") {
+            //    if (CurrentPhoneNo.match(/^\(?([0-9]{4})\)?[-]?([0-9]{7})$/)) {
+            //        MobileNumber_checking();
+            //    }
+            //    else {
+            //        alert("Employee Current Phone Not in Correct Format");
+            //        $("#EmpCurrentPhoneNo").html('<font color="Red"></font>');
+            //        $("#EmpCurrentPhoneNo").css("border-color", "Red");
+            //        return false;
+            //    }
+            //}
+            //else {
+            //    MobileNumber_checking();
+            //}
+        });
+
+        function MobileNumber_checking() {
+            var result = true;
+            var MobileNolength = $('#EmpMobileNo').val().length;
+
+            if (MobileNolength > 0) {
+                if (MobileNolength < 10 || MobileNolength > 10) {
+                    alert("Employee Mobile Number Must be 10 digit");
+                    $("#EmpMobileNo").html('<font color="Red"></font>');
+                    $("#EmpMobileNo").css('border-color', 'red');
+                    result = false;
+                    //submitform(result);
+                }
+                else {
+                    FindoutDupliEmpPage1();
+                }
+            }
+            else {
+                submitform(result);
+            }
+            //FindoutDupliEmpPage1();
+        }
+
+        function FindoutDupliEmpPage1() {
+            var restag = true;            
+            $.ajax({
+                url: "@Url.Action("FindoutDupliEmpPage1", "CreateEmployee")",
+                content: "application/json; charset=utf-8",
+                dataType: "json",
+                type: "Post",
+                data: {    
+                    EmployeeICode: 0,
+                    EmpDisplayName: $("#EmpDisplayName").val(),
+                    EmpMobileNumber: $("#EmpMobileNo").val()
+                },
+                success: function (response) {
+                    //alert(response);
+                    if (response == 2) {
+                        alert("Employee Display Name Already Exist");
+                        $("#EmpDisplayName").html('<font color="Red"></font>');
+                        $("#EmpDisplayName").css("border-color", "Red");
+                        restag = false;
+                        submitform(restag);
+                    }
+                    else if (response == 1) {                                               
+                        alert("Employee Mobile Number Already Exist");
+                        $("#EmpMobileNo").html('<font color="Red"></font>');
+                        $("#EmpMobileNo").css("border-color", "Red");
+                        restag = false;
+                        submitform(restag);
+                    }
+                    else {                        
+                        restag = true;
+                        submitform(restag);
+                    }
+                }
+            });
+        }
+        
+        function submitform(res) {
+            if (res) {              
+                $("#CreateEmployeePage1").submit();
+            }
+        }
+
+        
+        function checkZip(value) {
+            return (/(^\d{6}$)|(^\d{6}-\d{4}$)/).test(value);
+        };
+
+        function IsSameAsCurrentAddress() {
+            var chkAddrs = $("input[name=IsSameAsCurrentAddress]").prop('checked');
+
+            if (chkAddrs == true) {
+
+                $("#EmpPermanentAdd1").val($("input[name=EmployeeCurrentAddress1]").val());
+                $("#EmpPermanentAdd2").val($("input[name=EmployeeCurrentAddress2]").val());
+                $("#EmpPermanentCity").val($("input[name=EmployeeCurrentCity]").val());
+                $("#EmpPermanentState").val($("input[name=EmployeeCurrentState]").val());
+                $("#EmpPermanentCountry").val($("input[name=EmployeeCurrentCountry]").val());
+                $("#EmpPermanentPinCode").val($("input[name=EmployeeCurrentPinCode]").val());
+                $("#EmpPermanentPhoneNo").val($("input[name=EmployeeCurrentPhoneNo]").val());
+
+                $("input[name=EmployeePermanentAddress1]").prop('disabled', true);
+                $("input[name=EmployeePermanentAddress2]").prop('disabled', true);
+                $("input[name=EmployeePermanentCity]").prop('disabled', true);
+                $("input[name=EmployeePermanentState]").prop('disabled', true);
+                $("input[name=EmployeePermanentCountry]").prop('disabled', true);
+                $("input[name=EmployeePermanentPinCode]").prop('disabled', true);
+                $("input[name=EmployeePermanentPhoneNo]").prop('disabled', true);
+
+            }
+            else {
+
+                $("#EmpPermanentAdd1").val('');
+                $("#EmpPermanentAdd2").val('');
+                $("#EmpPermanentCity").val('');
+                $("#EmpPermanentState").val('');
+                $("#EmpPermanentCountry").val('');
+                $("#EmpPermanentPinCode").val('');
+                $("#EmpPermanentPhoneNo").val('');
+
+                $("input[name=EmployeePermanentAddress1]").prop('disabled', false);
+                $("input[name=EmployeePermanentAddress2]").prop('disabled', false);
+                $("input[name=EmployeePermanentCity]").prop('disabled', false);
+                $("input[name=EmployeePermanentState]").prop('disabled', false);
+                $("input[name=EmployeePermanentCountry]").prop('disabled', false);
+                $("input[name=EmployeePermanentPinCode]").prop('disabled', false);
+                $("input[name=EmployeePermanentPhoneNo]").prop('disabled', false);
+            }
+        }
+
+    });
+
+</script>
+

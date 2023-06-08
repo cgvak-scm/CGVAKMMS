@@ -1,0 +1,692 @@
+﻿
+@model MMS.Models.ViewUpdateMeetingDetails
+
+<style>
+    .modal {
+        overflow-y: auto;
+    }
+</style>
+<div class="modal" id="Inner-modal">
+    <div class="modal-dialog modal-md" style="background-color:lightskyblue">
+        <div class="modal-body">
+            <div class="form-inline">
+
+                Upload  File:
+                <input type="file" id="UploadImg" class="btn-sm" required />
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <p id="resMsg" style="color:forestgreen;"></p>
+            <button type="button" id="Inner-close" class="btn btn-default">Close</button>
+            <input type="button" class="btn btn-primary btnSave" value="Save" id="_save" />
+        </div>
+    </div>
+</div>
+
+<form id="MeetingEditFrm" name="MeetingEditFrm">
+
+    <div class="modal-header" id="modal-header">
+        <button type="button" class="btn_close close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <b>Edit Meeting</b>
+    </div>
+    <div class="modal-body" id="EditMeetingModal">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="panel">
+                    <div class="panel-body">
+                        <input type="hidden" class="files" name="files" />
+                        <div class="form-horizontal">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-inline alert alert-warning" style="padding: 8px;">
+                                    <label>
+                                        Edit Meeting Details Of -"@Html.Label(Model.meetingObjective)"
+                                        <a href="@Url.Action("Index", "CreateMeeting", new { MeetingID = @ViewBag.Templateid })"> Create Related Meeting</a><br />
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label("Meeting Name", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                                        <div class="col-md-7">
+                                            @Html.EditorFor(model => model.meetingObjective, new { htmlAttributes = new { @class = "form-control required", @id = "meetingObj" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label("Date & Time", htmlAttributes: new { @class = "control-label col-md-4 required" })
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.meetingDate, new { htmlAttributes = new { @class = "main_datepicker form-control input-sm ", @id = "meetingDate", @readonly = "true" } })
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div style="display:none">
+                                                Current  @Html.Label(Model.meetingTime, new { id = "lblmeetingTime" });
+                                            </div>                                            
+                                            @Html.EditorFor(model => model.meetingTime, new { htmlattributes = new { @class = " form-control meeting_hours required", @id = "meetingHours", @required = "required" } })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label("Meeting Venue", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                                        <div class="col-md-7">
+
+                                            @Html.EditorFor(model => model.meetingVenue, new { htmlAttributes = new { @class = "form-control required", @id = "meetingVenue" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label("Meeting Duration", htmlAttributes: new { @class = "control-label col-md-4 required" })
+                                        <div class="col-lg-4 col-md-8">
+                                            <div style="display:none">
+                                                Current  @Html.Label(Model.meetingDuration, new { id = "lblmeetingDuration" });
+                                            </div>
+                                            @Html.EditorFor(model => model.meetingDuration, new { htmlattributes = new { @class = " form-control Meeting_duration required", @id = "meetingDuration" } })                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group" id="FileUploaded">
+                                        @Html.Label("Attachments if any", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                                        <div class="col-md-4">
+
+                                            <button type="button" id="upload-modal" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#Inner-modal">Upload file</button>
+                                            <input type="hidden" id="hid_txt" />
+                                        </div>
+                                    </div>
+                                    <div id='dynContent' class="hide"> </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-horizontal">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-inline alert alert-warning" style="padding: 8px;">
+                                    <label>
+                                        Participant Details
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-4 required" })
+                                        <div class="col-md-7">
+                                            @Html.DropDownListFor(model => model.meetingDepartment, new SelectList(ViewBag.Departments, "DepartmentName", "DepartmentName"), "--SELECT---", htmlAttributes: new { @class = "form-control meetingDepartment required", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        @Html.Label("If others specify", htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-lg-4 col-md-8">
+                                            @Html.Editor("Meeting_other_dept", new { htmlattributes = new { @class = "form-control Meeting_other_dept" } })
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-10 col-md-offset-2">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="wait"><img src='../Content/Images/wait.gif' width='100' /></div>
+                                            @Html.ListBox("Participants", new SelectList(""), htmlAttributes: new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-2">
+                                        <div class="form-group" style="margin-left: 0px; margin-right: 0px;">
+                                            <input type="button" class="form-control btn-default" value=">>" name="move_next" id="move_nxt" />
+                                            <br />
+                                            <input type="button" class="form-control btn-default" value="<<" name="move_prev" id="move_prv" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="participant_wait"><img src='../Content/Images/wait.gif' width='100' /></div>                                            
+                                            @Html.ListBox("Added_Participants", new SelectList(ViewBag.participantList, "ParticipantID", "Participant_Name"), htmlAttributes: new { @class = "form-control Added_Participants" })
+                                            @Html.Hidden("hidden_participants")
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label("Objective", htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-7">
+                                            @Html.EditorFor(model => model.meetingType, new { htmlAttributes = new { @class = "form-control", @id = "meeting_type", @readonly = "readonly" } })
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label("Meeting Chairperson", htmlAttributes: new { @class = "control-label col-md-4 required" })
+                                        <div class="col-lg-4 col-md-8">
+                                            @*@html.dropdownlistfor(model => model.chairperson, new selectlist(viewbag.participantlist, "text", "text"), "--select--", htmlattributes: new { @class = "form-control meeting_chairperson required ", @id = "chairperson", @name = "chairperson" })*@
+                                            @Html.DropDownListFor(model => model.Chairperson, new SelectList(ViewBag.participantlist, "Participant_Name", "Participant_Name"), "--select--", htmlAttributes: new { @class = "form-control meeting_chairperson required ", @id = "chairperson", @name = "chairperson" })
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="form-horizontal">
+                            <div class="col-md-12">
+                                <div class="form-group">
+
+                                    @Html.Label("Minutes of Meeting", htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                    <div class="col-lg-8 col-md-10 col-sm-12">
+                                        @Html.EditorFor(model => model.minutesOfMeeting, new { htmlattributes = new { @class = "form-control required tinymce", @id = "minutesOfMeeting" } })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-horizontal">
+                            <div class="col-md-12 col-sm-12">
+
+                                <div class="form-inline alert alert-warning" style="padding: 8px;">
+                                    <label>
+                                        Tasks/Actions for the Meeting
+                                    </label>
+                                </div>
+                                <div class="responsive-table">
+                                    <table class="table table-hover table-condensed" id="createTable">
+                                        <tr class="tbl_header">
+                                            <th>Sno</th>
+                                            <th>Tasks/Projects Discussed</th>
+                                            <th>Responsible Person</th>
+                                            <th>Priority</th>
+                                            <th>Completion Date</th>
+                                            <th>Comments</th>
+                                            <th>Category</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                @{ var MeetingId = Model.meetingId; }
+                                <input type="hidden" value="@MeetingId" id="meeting_id" />
+
+
+                                <div class="pull-right">
+
+                                    <input type="submit" value="Save" class="btn" name="command" id="save_meeting" />
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript" src="~/Scripts/tinymce/js/tinymce/tinymce.min.js"></script>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/customValScript")
+}
+
+<script>
+        var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        //july 20
+        $(document).ready(function () {
+
+            
+            LoadUpdatedFiles();
+            LoadTasks();
+            var mTime = $("#lblmeetingTime").text();
+
+            if (mTime === "00") {
+                $('#meetingTime').attr("selected", true);
+            }
+            else {
+                $('#meetingTime').val(mTime);
+            }
+
+            var mDuration = $("#lblmeetingDuration").text();
+
+            if (mDuration === "00") {
+
+                $('#meetingDuration').attr("selected", true);
+            }
+            else {
+                $('#meetingDuration').val(mDuration);
+            }
+
+            function GetAlreadyAddedParticipants() {
+                var items;
+                $("#Added_Participants option").each(function () {
+                    items += "<option value='" + $(this).val() + "'>" + $(this).text() + "</option>";
+                });
+                return items;
+            }
+            
+            //old CODE--------->
+            var d = new Date();
+
+            var month = d.getMonth() + 1;
+            var day = d.getDate();
+
+            var output = (month < 10 ? '0' : '') + month + '/' +
+                (day < 10 ? '0' : '') + day + '/' +
+                d.getFullYear();
+
+
+
+            var formarDATE = (day < 10 ? '0' : '') + day + '/' +
+                 (month < 10 ? '0' : '') + month + '/' +
+                  d.getFullYear();
+            //new CODE july 13 edit
+            $(".main_datepicker").datepicker({
+
+                startDate: formarDATE, autoclose: true, minDate: 0, changeMonth: true, changeYear: true, dateFormat: 'dd/M/yy',
+            });
+
+
+            $('.main_datepicker').keydown(function () { return false; }); // Charles S / 09-Jun-2017 - Keyboard input not to allow
+            ////-----
+
+            $("body").addClass("active");
+
+
+            if ($("html").hasClass("attach-active")) {
+                $(this).remove();
+            }
+
+            $("#meetingObj").change(function () {
+
+                var data = 'meetingName=' + $(this).val();
+
+                $.post('@Url.Action("CheckMeetingName", "Search")', data).success(function (res) {
+                    if (res > 0) {
+                        alert("Meeting Name already exist!..");
+                        $("#meetingObj").val("");
+                    }
+
+                });
+            });
+            DisableButtons();
+
+            function InitializeDate() {
+                var getDate = new Date();
+                getDate.setDate(getDate.getDate());
+
+                $(".dyn_datepicker").datepicker({ startDate: $("#meetingDate").val(), autoclose: true, minDate: 0, changeMonth: true, changeYear: true, dateFormat: "dd/M/yy", });
+
+                $('.dyn_datepicker').keydown(function () { return false; }); // Charles S / 09-Jun-2017 - Keyboard input not to allow
+            }
+
+            function GetSelectedOptions() {
+                var items;
+                $("#Added_Participants option").each(function () {
+                    items += "<option value='" + $(this).val() + "'>" + $(this).text() + "</option>";
+                });
+                return items;
+            }
+            function DisableButtons() {
+
+                var tableRow = document.getElementById("createTable");
+                if (tableRow.rows.length < 2) {
+                    $("#save_meeting").attr('disabled', true);
+                    $("#save_template_meeting").attr('disabled', true);
+                }
+            }
+
+            $("#searchMeeting").on('input', function () {
+                if ($(this).val() == "") {
+                    $("#meetingObj,#meetingDate,#meetingHours,#meetingVenue,#meetingDuration,#meeting_type").val("");
+
+                }
+            });
+
+            $("#save_meeting").click(function () {
+                
+                var RCount=2;
+                var tableRow = document.getElementById("createTable");
+                var viewandsave = @ViewBag.viewandsave;
+                var fileList = $(".files").val();
+                
+                if (fileList != "") {
+                    fileList = fileList + ",";
+                }
+
+                var files = [];
+                if (fileList != "") {
+                    files = fileList.split(',');
+                }
+                var updatviewmodel = [];
+                for (var i = 0; i < files.length; i++) {
+                    var updatefiles = [];
+                    updatefiles = {
+                        files: files[i]
+                    };
+                    updatviewmodel.push(updatefiles);
+                }
+
+                var taskviewmodel = [];
+                for (var i = 0; i < tableRow.rows.length - 1; i++) {
+                    var taskdetails = [];
+                    taskdetails = {
+                        MeetingTask: $("#mms_meeting_details_Task" + RCount).val(),
+                        MeetingParticipant: $("#mms_meeting_details_Participant" + RCount).val(),
+                        MeetingPriority: $("#Priority" + RCount).val(),
+                        MeetingCompletionDate: $("#mms_meeting_details_Completion_Date" + RCount).val(),
+                        MeetingComments: $("#mms_meeting_details_Comments" + RCount).val(),
+                        MeetingCategory: $("#category" + RCount).val()
+                    };
+
+                    RCount++;
+                    taskviewmodel.push(taskdetails);
+                }
+
+
+                var MinutesOfMeetingres = (tinyMCE.editors[$('#minutesOfMeeting').attr('id')].getContent());
+
+                var meetingviewmodel = {
+                    MeetingId: $("#meeting_id").val(),
+                    MeetingName: $("#meetingObj").val(),
+                    MeetingDate: $("#meetingDate").val(),
+                    MeetingTime: $("#meetingHours").val(),
+                    MeetingVenue: $("#meetingVenue").val(),
+                    MeetingDuration: $("#meetingDuration").val(),
+                    MeetingDepartment: $(".meetingDepartment option:selected").val(),
+                    MeetingOtherDept: $(".Meeting_other_dept").val(),
+                    Participants: $(".Participants option").prop("selected", "selected").val(),
+                    AddedParticipants: $(".Added_Participants option").prop("selected", "selected").length,
+                    MeetingType: $("#meeting_type").val(),
+                    MeetingChairperson: $(".meeting_chairperson option:selected").val(),
+                    MinutesOfMeeting: MinutesOfMeetingres
+                };
+
+                    $.ajax({
+                        url: "@Url.Action("UpdateMainMeetingDetails","MeetingDetails")",
+                        data: JSON.stringify({ meetingdetails: meetingviewmodel, taskdetails: taskviewmodel, updateddetails: updatviewmodel}),
+                        type: 'POST',
+                        dataType: 'JSON',
+                        contentType: 'application/json;charset=utf-8',
+                        success: function (data) {
+
+                            if (!$(".notifyEdit").hasClass("active")) {
+                                $("#meetingSearch").click();
+                            } else {
+                                window.location.reload();
+                            }
+                        }
+                    });
+            });
+
+            var selectedDept = $('#meetingDepartment :selected').text();
+
+            dynamicParticipantsListEntry(selectedDept);
+            
+            function dynamicParticipantsListEntry(selectedDept) {
+                $("#Participants option").each(function () {
+                    $(this).remove();
+                });
+                $.ajax({
+                    url: '@Url.Action("GetParticipants","Search")',
+                    data: JSON.stringify({ 'deptName': selectedDept }),
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json;charset=utf-8',
+                    beforeSend: function () {
+                        $(".wait").show();
+                    },
+                    success: function (data) {
+
+                        $(".wait").hide();
+
+                        var listItems = [];
+                        $.each(data, function (item, val) {
+                            listItems.push('<option value="' + val.Employee_Id + '">' + val.Employee_Name + '</option>');
+                        });
+                        $("#Participants").append(listItems.join(''));
+                    },
+                    error: function (data, textStatus, jqXHR) {
+                        alert(data.error);
+                    }
+                });
+            };
+
+            var dynamicAddedParticipantsEntry = function (tid) {
+
+                $("#Added_Participants option").each(function () {
+                    $(this).remove();
+                });
+
+                $.ajax({
+                    url: '@Url.Action("GetSelectedParticipantId", "Search")',
+                    data: JSON.stringify({ 'tid': tid }),
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json;charset=utf-8',
+                    beforeSend: function () {
+                        $(".participant_wait").show();
+                    },
+                    success: function (data) {
+                        $(".participant_wait").hide();
+                        var listItems = [];
+                        $.each(data, function (item, val) {
+                            console.log(val);                            
+                            listItems.push('<option value="' + val.EmployeeICode + '">' + val.participants + '</option>');
+                        });
+                        $("#Added_Participants").append(listItems.join(''));
+
+                        $(".resp option").each(function () { // Charles S / 19-Jun-2017
+                            $(this).remove();
+                        });
+                        $(".resp").append(listItems.join('')); // Charles S / 19-Jun-2017
+                    },
+                    error: function (data, textStatus, jqXHR) {
+                        alert(data.error);
+                    }
+                });
+            };
+
+        });
+
+
+        tinymce.init({
+            selector: ".tinymce",
+            theme: "modern",
+            menubar: false,
+            resize: false,
+            statusbar: false,
+            plugins: ["preview hr anchor",
+                "nonbreaking contextmenu directionality paste"],
+            toolbar2: "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
+        });
+
+        function InitializeDate() {
+            var getDate = new Date();
+            getDate.setDate(getDate.getDate());
+
+            $(".dyn_datepicker").datepicker({ startDate: $("#meetingDate").val(), autoclose: true, minDate: 0, changeMonth: true, changeYear: true, dateFormat: "dd/M/yy", });
+
+            $('.dyn_datepicker').keydown(function () { return false; }); // Charles S / 09-Jun-2017 - Keyboard input not to allow
+        }
+
+        function GetSelectedOptions() {
+            var items;
+            $("#Added_Participants option").each(function () {
+                items += "<option value='" + $(this).val() + "'>" + $(this).text() + "</option>";
+            });
+            return items;
+        }
+        function DisableButtons() {
+
+            var tableRow = document.getElementById("createTable");
+            if (tableRow.rows.length < 2) {
+                $("#save_meeting").attr('disabled', true);
+                $("#save_template_meeting").attr('disabled', true);
+            }
+        }
+
+    //Load Updated Files
+    function LoadUpdatedFiles() {
+
+        var FileList = @Html.Raw(Json.Encode(@ViewBag.AttachFiles));
+        var startIndex = 0;
+        var UploadImgRow = document.getElementById("UploadImg");
+
+        if (FileList != null && FileList != " ") {
+            for (var i = 0; i < FileList.length; i++) {
+                var filename = FileList[i].FileName;
+
+                var attachedfiles = $("<div class='files'><h5><b>The files are:</b></h5>" + filename + "</div>");
+                $("#dynContent").removeClass("hide");
+                $("#dynContent").addClass("show");
+                $("#dynContent").append(attachedfiles);
+            }
+        }
+    }
+        //Load data for Edit
+    function LoadTasks() {
+            var TaskList = @Html.Raw(Json.Encode(@ViewBag.Task));
+            var startIndex = 0;
+            var tableRow = document.getElementById("createTable");
+
+
+            var d = new Date();
+
+            var month = d.getMonth() + 1;
+            var day = d.getDate();
+
+            var output = (month < 10 ? '0' : '') + month + '/' +
+                (day < 10 ? '0' : '') + day + '/' +
+                d.getFullYear();
+
+            var count = tableRow.rows.length;
+
+            for (var i = 0; i < TaskList.length ; i++) {
+
+
+                var dateString = TaskList[i].CompletionDate.substr(6);
+                var currentTime = new Date(parseInt(dateString ));
+                var month = currentTime.getMonth() + 1;
+                var day = currentTime.getDate();
+                var year = currentTime.getFullYear();
+                var CompDate = day + "/" + month + "/" + year;
+
+                var tableString = '<tr class=newGen" id="newGen"><td id="newId">' + count++ + '</td>';
+                tableString += '<td><textarea class="form-control task text-box single-line" id="mms_meeting_details_Task' + count + '" required name="task"  type="text" >'+TaskList[i].Task+' </textarea></td>';
+
+
+                var selectedOptions = GetSelectedOptions();
+                if (count > 1 && selectedOptions != "undefined")
+                {                    
+                    for (xyz = 1; xyz < count; xyz++) {
+                        $('.Participant').attr('name', 'Participant' + xyz).append(selectedOptions);
+                    }
+                }
+
+                tableString += '<td><select class="form-control resp" id="mms_meeting_details_Participant' + count + '" required  name="Participant"><option value="' + TaskList[i].ResPerson + '">' + TaskList[i].EmpName + '</option></select></td>';
+
+                var PrioritylistItems = [];
+                PrioritylistItems.push("<select class='form-control priority' id='Priority" + count + "' required name='Priority'><option value=''></option>");
+
+                var Priority =  @Html.Raw(Json.Encode(ViewBag.Priority))
+
+                    $.each(Priority, function (key, val) {
+
+                        PrioritylistItems.push('<option value="' + val.Name + '">' + val.Name + '</option>');
+
+                    });
+                PrioritylistItems.push("</select>");
+
+                tableString += "<td>" + PrioritylistItems + "</td>";
+
+                tableString += '<td><input class="dyn_datepicker form-control" required id="mms_meeting_details_Completion_Date' + count + '" min="' + output + '" name="Completion_Date" type="datetime" autocomplete="off" value='+  CompDate +'></td>';
+
+                tableString += '<td><textarea class=" form-control comments text-box single-line"  id="mms_meeting_details_Comments' + count + '" name="Comments" type="text" >'+TaskList[i].Comments+' </textarea></td>';
+
+                var listItems = [];
+                listItems.push("<select  class='form-control' id='category" + count + "' required name='Category' ><option value=''></option>");
+
+                var category =  @Html.Raw(Json.Encode(ViewBag.Categories))
+
+                $.each(category, function (key, val) {
+
+                    listItems.push('<option value="' + val.ID + '">' + val.CategoryName + '</option>');
+
+                });
+
+                listItems.push("</select>");
+
+                tableString += "<td>" + listItems + "</td>";
+
+                tableString += "</tr>";
+                $("#createTable").append(tableString);
+
+                InitializeDate();
+
+                $("#Priority"+ count).val(TaskList[i].Priority);
+                $("#category"+ count).val(TaskList[i].Category);
+
+
+            }
+
+            $("#save_meeting").attr("disabled", false);
+            $("#save_template_meeting").attr("disabled", false);
+        }
+
+
+</script>
+<script>
+
+    $(document).ready(function () {
+        $("#Inner-close").click(function () {
+            $("#Inner-modal").modal('hide');
+        });
+    });
+
+    $("#_save").click(function () {
+        
+        var fileUpload = $("#UploadImg").get(0);
+
+        var files = fileUpload.files;
+        var fileList = $(".files").val();
+        if (fileList != "") {
+            fileList = fileList + ",";
+        }
+
+        var fileData = new FormData();
+
+        for (var i = 0; i < files.length; i++) {
+            fileData.append("file", files[i]);
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', "@Url.Action("UploadFile", "Upload")");
+        xhr.send(fileData);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var jsonResult = JSON.parse(xhr.responseText);
+                var FileNames = jsonResult.FileNames;
+                $(".files").val(fileList + FileNames);
+                $.each(FileNames, function (TotalNo, TotalFileNames) {
+
+                    $("<div><h5><b>The files are:</b></h5>" + TotalFileNames + " <button type='button' class='close', data-dismiss='modal', aria-label='Close'><span aria-hidden='true'> &times;</span></button></div>").insertAfter("#FileUploaded");
+
+                    $("#Inner-modal").modal('hide');
+
+                });
+            }
+        }
+    });
+</script>
+
+
+
+

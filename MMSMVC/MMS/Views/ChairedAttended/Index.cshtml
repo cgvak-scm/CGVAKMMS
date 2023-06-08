@@ -1,0 +1,416 @@
+﻿@{
+    ViewBag.Title = "Chaired/Attended";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Chaired/Attended
+    </div>
+    <div class="panel-body">
+        <div class="alert alert-warning">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="input-group">
+                        <div class="input-group-addon input-md">Start Date</div>
+
+                        @Html.Editor("assign_start_date", new { htmlattributes = new { @class = "datepick form-control input-sm fromDate", @readonly = "true", @style = "background-color:white;", @width = "100px;" } })
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="input-group">
+                        <div class="input-group-addon input-md">End Date</div>
+
+
+                        @Html.Editor("assign_end_date", new { htmlattributes = new { @class = "form-control input-sm toDate", @readonly = "true", @style = "background-color:white;" } })
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-sm-4">
+                    <div class="input-group">
+                        <input type="radio" name="chaired" value="1" id="chaired" checked="checked" /> Chaired
+                        <input type="radio" name="chaired" value="2" id="Attended" /> Attended
+                    </div>
+                </div>
+
+                <div class="col-lg-1 col-md-2 col-sm-2">
+                    <div class="input-group ">
+                        <button type="button" id="view_task" class="btn btn-primary btn-sm">Go</button>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-4">
+                    <div class="input-group">
+                        <div class="input-group-addon input-md">Meeting Name</div>
+                        @Html.DropDownList("meeting_name", new SelectList(""), "--SELECT--", new { @class = "form-control input-sm readonly" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="print_window">
+            <a id="print" onclick="PrintPage();" class="pull-right"><img id='print_icon' class='pull-right' src='../Content/Images/PrintImage.jpg' /></a>
+
+            <div id="res_print">
+                <table class="table table-custom" style="text-align:center;">
+                    <tbody>
+                        <tr>
+                            <td style="width:5%"><img src="~/Content/Images/fav.png" style="width: 40px; height: 44px"></td>
+                            <td style="width:90%">
+                                <strong>
+                                    <span style="text-decoration: underline">
+                                        Minutes of the Meeting<br>
+                                    </span>
+                                </strong><span style="font-size: 9pt">
+                                    <em>
+                                        REF. No.: CG-VAK-F-0504, ISSUE No.: 2, VER. No.: 1.0, DATE: 22.08.01
+                                    </em>
+                                </span>
+                            </td>
+                            <td style="width:5%"></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div id="alertbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h5 class="modal-title text-center" id="mySmallModalLabel">Please enter all the fields </h5>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/customVal")
+}
+
+<script type="text/javascript">
+
+    var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    var start = new Date();
+    start.setFullYear(start.getFullYear() - 70);
+    var end = new Date();
+    end.setFullYear(end.getFullYear() + 1);
+
+
+    function getCustomDay(dayStr) {
+        var day = parseInt(dayStr);
+        if (day < 10)
+            return '0' + dayStr;
+        else
+            return dayStr;
+    }
+
+
+
+    $(document).ready(function () {
+        $("#res_print,#print_window").hide();
+
+        $(".toDate").datepicker({
+            autoclose: true, changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/M/yy',
+            beforeShowDay: function (date) {
+                var day = date.getDay();
+                return [(day != 0), ''];
+            },
+
+            yearRange: 2017 + ':' + end.getFullYear(),
+        });
+
+        $(".fromDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            //minDate: '1/1/1990',
+            //maxDate: end,
+            minDate: new Date('3/1/2017'),
+            yearRange: 2017 + ':' + end.getFullYear(),
+            autoclose: true,
+            disabled: false,
+            dateFormat: 'dd/M/yy',
+            beforeShowDay: function (date) {
+                var day = date.getDay();
+                return [(day != 0), ''];
+            },
+            onSelect: function (selected) {
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate() + 1);
+                $(".toDate").datepicker("option", "minDate", dt);
+
+            }
+        });
+
+
+
+        //$(".fromDate").datepicker({
+        //    changeMonth: true,
+        //    changeYear: true,
+        //    dateFormat: 'dd/M/yy',
+
+        //    beforeShowDay: function (date) {
+        //        var day = date.getDay();
+        //        return [(day != 0), ''];
+        //    },
+        //    yearRange: 1990 + ':' + end.getFullYear(),
+        //    autoclose: true,
+        //    onSelect: function (selected) {
+        //        var dt = new Date(selected);
+        //        dt.setDate(dt.getDate() + 1);
+        //        $(".toDate").datepicker("option", "minDate", dt);
+        //    }
+        //});
+
+        $("body").on("click","#view_task",function () {
+
+
+            $('#meeting_name').children('option:not(:first)').remove();
+            $("#print_window").hide();
+
+            var SelectedVal = $("input[type='radio']:checked").val();
+
+            var _assign_start_dt = $("#assign_start_date").val();
+            var _assign_end_dt = $("#assign_end_date").val();
+
+            if (SelectedVal==null || _assign_start_dt == "" ||   _assign_end_dt == "" ) {
+               // alert("Please fill the fields");
+                $('#alertbox').modal('show');
+            }
+
+            else {
+
+                $.ajax({
+                    url:"@Url.Action("MeetingTask","ChairedAttended")",
+                    type: 'post',
+                  data: JSON.stringify({ "startDate": _assign_start_dt, "endDate": _assign_end_dt,"selectedVal":SelectedVal }),
+                    dataType: 'JSON',
+                contentType: 'Application/JSON;charset=utf-8',
+                success: function (data) {
+
+                    console.log(data);
+
+                    if (data != null || data != "")
+                    {
+
+                        var _listofdates = [];
+
+                        $.each(data, function (key, val) {
+                            _listofdates.push("<option value='" + val.Meeting_Id + "'>" + val.Meeting_Id + " " + val.Meeting_Objective + "</option>");
+                        });
+
+                        $("#meeting_name").append(_listofdates);
+                    }
+                },
+                error: function (Data, txtStatus, jqXHR) {
+                    alert(txtStatus);
+                }
+            });
+        }
+
+        });
+
+
+        var category = $("#meeting_name option:selected").val();
+
+        //assign_end_date
+        if ($('#assign_end-date').val() != null)
+            window.onload = function () {
+                var selItem = sessionStorage.getItem("SelItem");
+                $('#assign_end_date').val(selItem);
+            }
+        $('#assign_end_date').change(function () {
+            var selVal = $(this).val();
+            sessionStorage.setItem("SelItem", selVal);
+        });
+
+        //assign_start_date
+        if ($('#assign_start_date-date').val() != null)
+            window.onload = function () {
+                var selItem = sessionStorage.getItem("SelItems");
+                $('#assign_start_date').val(selItem);
+            }
+        $('#assign_start_date').change(function () {
+            var selVal = $(this).val();
+            sessionStorage.setItem("SelItems", selVal);
+        });
+
+        $("#meeting_name").on('change', function () {
+            window.sessionStorage.setItem("Category", this.value);
+        });
+
+        $(document).ready(function () {
+            $("#meeting_name").val(window.sessionStorage.getItem("Category"));
+        });
+
+
+
+
+
+
+
+
+
+
+    $("body").on("change","#meeting_name",function () {
+
+        $("#res_print,#print_window").show();
+        $("#resTable,#parTable,#MeetTable").remove();
+
+        var MeetingId = $("#meeting_name option:selected").val();
+
+        if (MeetingId != "")
+        {
+            $.ajax({
+
+                type: 'post',
+                url:"@Url.Action("GetMeetingDetails","ChairedAttended")",
+                data: JSON.stringify({ "meetingId": MeetingId }),
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            beforeSend: function () {
+
+                $("#res_print").append("<img id='wait' style='margin:5% 40%;'  src='../Content/Images/wait.gif'/>");
+
+            },
+            success: function (resData) {
+                $("#wait").remove();
+
+                console.log(resData);
+                var MeetingViewRes = "<table id='resTable' class='table table-responsive table-custom tbl_cus'>";
+                var ParticipantViewRes = "<table id='parTable' class='table table-responsive tbl_cus'>";
+                var MeetingRes = "<table id='MeetTable' class='table table-responsive table-custom tbl_cus'>";
+
+                $.each(resData, function (key, value) {
+
+                    if (key == "MeetingViewResult") {
+                        $.each(value, function (i, meetingVal) {
+
+                            var MeetingDate = new Date(parseInt(meetingVal.Meeting_Date.substr(6)));
+                            var Jsdate = new Date(MeetingDate);
+                            var Jsgetdate = getCustomDay(Jsdate.getDate());
+                            var Jsnmonth = month[Jsdate.getMonth()];
+                            var Jyear = Jsdate.getFullYear();
+                            var JsMeetingDate = Jsgetdate + "/" + Jsnmonth + "/" + Jyear;
+
+                            MeetingViewRes += "<tr><td><label>Meeting Type:</label></td><td>" + meetingVal.Meeting_Type + "</td><td><label>Date:<label/></td><td>" + JsMeetingDate + "</td><tr>";
+
+                            MeetingViewRes += "<tr><td><label>Department:</label></td><td>" + meetingVal.Meeting_Department + "</td><td><label>ChairPerson:</label></td><td>" + meetingVal.Meeting_Chairperson + "</td><td><tr>";
+
+                            MeetingViewRes += "<tr><td><label>Objective of the Meeting:</label></td><td>" + meetingVal.Meeting_Objective + "</td><td><label>Duration:</label></td><td>" + meetingVal.Meeting_Duration + "</td></tr>";
+
+                            MeetingViewRes += "<tr><td><label>Minutes of the Meeting:</label></td><td>" + meetingVal.Minutes_Of_Meeting + "</td><td><label>Venue:</label></td><td>" + meetingVal.Meeting_Venue + "</td></tr>";
+
+                        });
+
+                        $("#res_print").append(MeetingViewRes);
+
+                    }
+                    else if (key == "ParticipantViewResult") {
+                        ParticipantViewRes += "<tr><td><label>Participant Names:</label></td></tr>";
+
+                        $.each(value, function (i, partVal) {
+
+                            ParticipantViewRes += "<tr><td>" + partVal.EmployeeDisplayName + "<td></tr>";
+
+                        })
+
+                        $("#res_print").append(ParticipantViewRes);
+
+                    }
+
+                    else if (key == "MeetingDetails") {
+
+
+                        var rowCnt = 0;
+
+                        MeetingRes += "<tr><td><label>Tasks/Action Details:</label></td></tr>";
+
+                        MeetingRes += "<tr><td>";
+
+                        MeetingRes += "<table class='table table-reponsive'><td><b>Sno</b></td><td><b>Points Discussed/Decision Made</b></td><td><b>Responsibility</b></td><td><b>Completion Date</b></td><td><b>Remarks/Comments</b></td>";
+
+
+                        $.each(value, function (i, MeetVal) {
+
+
+                            var CompletionDate = new Date(parseInt(MeetVal.Completion_Date.substr(6)));
+                            var Jsdate = new Date(CompletionDate);
+                            var Jsgetdate = getCustomDay(Jsdate.getDate());
+                            var Jsnmonth = month[Jsdate.getMonth()];
+                            var Jyear = Jsdate.getFullYear();
+                            var JsCompletionDate = Jsgetdate + "/" + Jsnmonth + "/" + Jyear;
+
+                            rowCnt++;
+
+                            MeetingRes += "<tr><td>" + rowCnt + "</td>";
+
+                            MeetingRes += "<td >" + MeetVal.Task + "</td><td>" + MeetVal.Participant + "</td><td>" + JsCompletionDate + "</td><td>" + MeetVal.Comments + "</td></tr>";
+
+                            MeetingRes += "</td></tr>";
+
+                        })
+
+                        $("#res_print").append(MeetingRes);
+
+                    }
+                });
+            }
+        });
+    }
+    });
+    });
+
+    function PrintPage() {
+
+        var divId = document.getElementById("res_print").innerHTML;
+
+        var signID="List of Absentees & the action initiated to notify the points discussed/ decision made during the meeting:";
+        signID += "<br/><br/>Signature of the Members:";
+
+        var BodyContent = document.body.innerHTML;
+        document.body.innerHTML = divId + signID;
+        window.print();
+
+
+        document.body.innerHTML = BodyContent;
+
+
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("active");
+        });
+        $('#sub-menu').popover({ html: true });
+
+        $("#sub-menu").click(function (e) {
+            e.preventDefault();
+            $('.popover-title').remove();
+        });
+        $("#left-sub-menu").popover({ html: true });
+        $("#left-sub-menu").click(function (e) {
+            e.preventDefault();
+            $('.popover-title').remove();
+        });
+
+    }
+</script>

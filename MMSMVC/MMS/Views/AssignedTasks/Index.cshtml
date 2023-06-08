@@ -1,0 +1,361 @@
+﻿
+@{
+    ViewBag.Title = "Track/Close Assigned Tasks";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    string startDateStr = ViewBag.StartDate;
+    //string endDateStr = ViewBag.EndDate;
+    string endDateStr = Convert.ToDateTime(ViewBag.EndDate).ToString("dd/MMM/yyyy");
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Track/Close Assigned Tasks
+    </div>
+
+    <div class="panel-body">
+
+        @using (Html.BeginForm())
+        {
+            <div class="alert alert-warning">
+                <div class="row">
+                    <div class="form-group">
+
+                        <div class="col-md-3 col-sm-4">
+                            <div class="input-group">
+                                <div class="input-group-addon input-md">Start Date</div>
+                                @Html.TextBox("assign_start_date", startDateStr, new { @class = "datepick form-control input-sm fromDate", @style = "background-color:white;", @readonly = "true" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-4">
+                            <div class="input-group">
+                                <div class="input-group-addon input-md">End Date</div>
+                                @Html.TextBox("assign_end_date", endDateStr, new { @class = "form-control input-sm toDate", @style = "background-color:white;", @readonly = "true" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-4">
+                            <div class="input-group">
+                                <div class="input-group-addon input-md">Priority</div>
+
+
+                                @Html.DropDownList("Priority", new List<SelectListItem>{
+                                                    new SelectListItem { Text="High",Value="2" },
+                                                   new SelectListItem { Text="Medium",Value="1" },
+                                                   new SelectListItem { Text="Low",Value="0" }
+                                                   }, "All", new { @class = "form-control input-sm" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-4">
+                            <div class="input-group">
+                                <div class="input-group-addon input-md">Status</div>
+
+                                @*@Html.DropDownList("status", new List<SelectListItem> {
+
+                                    new SelectListItem { Text="TASK ASSIGNED",Value="1" },
+
+                                    new SelectListItem { Text="IN-PROGRESS",Value="2" },
+
+                                    new SelectListItem { Text="COMPLETED",Value="3" },
+
+                                    new SelectListItem { Text="CLOSED",Value="4" }
+
+
+                                }, "ALL", new { @class = "form-control input-sm" })*@
+
+
+
+                                @Html.DropDownList("status", new SelectList(ViewBag.Status, "ID", "Name"), "All", new { @class = "form-control input-sm status" })
+
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 pull-right">
+                        <div class="input-group pull-right">
+                            <button id="btn_view_tasks" type="button" class="btn btn-primary btn-sm">View Tasks</button>
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="space" style="margin:10px 0px;"></div>
+
+                <div class="row">
+
+                    <div class="space" style="margin:4% 0px;"></div>
+
+                    <div class="responsive-table">
+                        <div id="grid-show-result" class="col-md-12">
+
+                            <!--dynamic results fetched here-->
+                        </div>
+                    </div>
+
+                </div>
+
+                }
+
+            </div>
+        </div>
+
+
+
+<style type="text/css">
+    #modal-content .navbar, #modal-content .mms-footer-bar {
+        display: none;
+    }
+</style>
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/bundles/customVal")*@
+    @Scripts.Render("~/bundles/customValScript")
+}
+
+<script>
+
+
+    var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    var start = new Date();
+    start.setFullYear(start.getFullYear() - 70);
+    var end = new Date();
+    end.setFullYear(end.getFullYear() + 1);
+
+    function getCustomDay(dayStr) {
+        var day = parseInt(dayStr);
+        if (day < 10)
+            return '0' + dayStr;
+        else
+            return dayStr;
+    }
+
+
+    //Priority
+    $("#Priority").on('change', function () {
+        window.sessionStorage.setItem("Priority", this.value);
+    });
+
+    $(document).ready(function () {
+        window.sessionStorage.clear();
+
+        // $("#Priority").val(window.sessionStorage.getItem("Priority"));
+      
+    });
+
+
+    //Status
+    //status
+    $("#status").on('change', function () {
+        window.sessionStorage.setItem("status", this.value);
+    });
+
+    $(document).ready(function () {
+
+        window.sessionStorage.clear();
+
+      //  $("#status").val(window.sessionStorage.getItem("status"));
+    
+    });
+
+
+
+    $(document).ready(function () {
+
+        //$(".toDate").datepicker({ autoclose: true });
+
+      
+
+        $(".fromDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            minDate: new Date('3/1/2017'),
+            //minDate: '1/1/1990',
+            //maxDate: end,
+            yearRange: 2017 + ':' + end.getFullYear(),
+            dateFormat: 'dd/M/yy',
+            constrainInput: false,
+            autoclose: true,
+            onSelect: function (selected) {
+                //console.log(selected);
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate() + 1);
+                $(".toDate").datepicker("option", "minDate", dt);
+            }
+        });
+
+
+        var d = new Date();
+        var curr_date = d.getDate();
+        var curr_month = d.getMonth() + 1;
+        var curr_year = d.getFullYear();
+
+        $(".toDate").datepicker({
+            autoclose: true, changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/M/yy',
+            constrainInput: false,
+            minDate: '@startDateStr',
+            //  maxDate: end,
+            yearRange: 2017 + ':' + end.getFullYear(),
+            beforeShowDay: function (date) {
+                var day = date.getDay();
+                return [(day != 0), ''];
+            },
+
+            onSelect: function (selected) {
+                //var dt = new Date(selected);
+                //dt.setDate(dt.getDate() + 1);
+                //$(".toDate").datepicker("option", "minDate", dt);
+
+
+                var selectEndD = $('.toDate').val();
+
+                $.get('@Url.Action("Index", "AssignedTasks")', { selectEndD: selectEndD });
+
+            }
+
+
+
+        });
+
+
+        getMeetingName();
+
+
+        $("#btn_view_tasks").click(function () {
+            getMeetingName();
+        });
+
+
+        function GetBlinkImg() {
+            return "<img src='/Content/Images/blink_square.gif'/>";
+        }
+
+        function InitializePaging() {
+            var jslink = $("<script src='@Url.Content("~/Scripts/jquery.simplePagination.js")' type='text/javascript'/>");
+            $('head').append(jslink);
+            $(".assigned").simplePagination();
+        }
+
+
+        function getMeetingName() {
+
+            $('#tasks_meeting_name').children('option:not(:first)').remove();
+            var _assign_start_dt = $("#assign_start_date").val();
+            var _assign_end_dt = $("#assign_end_date").val();
+            var _status = $("#status option:selected").val();
+            var _priority = $("#Priority option:selected").text();
+
+            if (_status == "")
+            {
+                _status = 0;
+            }
+
+
+            if ((_assign_start_dt == "" || _assign_end_dt == "")) {
+                alert("Please fill the details");
+
+
+
+            }            
+            else {
+                
+                $.ajax({                    
+                    url: '@Url.Action("MeetingTask", "AssignedTasks")',                    
+                    type: 'GET',
+                    data: "startDate=" + _assign_start_dt + "&endDate=" + _assign_end_dt + "&priority=" + _priority + "&status=" + _status,
+                    dataType: 'JSON',
+                    contentType: 'Application/JSON;charset=utf-8',
+                    success: function (data) {
+                        
+                        var grid = $("#grid-show-result");
+
+                        var TableStr = '<table id="Assigned" class="table table-bordered assigned col-md-12 col-sm-12 "><thead><tr>' +
+                                      '<th><center>Task</center> </th>' +
+                                     ' <th><center>Responsible Person</center></th>' +
+                                     '<th><center>Start Date</center></th>' +
+                                      '<th><center>Completion Date</center></th>' +
+                                      '<th><center>Priority</center></th>' +
+                                      '<th><center>Status</center></th>' +
+                                       '<th><center>Overdue Days</center></th></tr></thead>';
+
+                        if (data == null || data == "") {
+                            TableStr += "<tr><td colspan='8'>No records found</td></tr>";
+                        }
+                        else {
+                            $.each(data, function (taskkey, taskval) {
+                                
+                                
+                                var AllocatedDate = new Date(parseInt(taskval.meeting_date.substr(6)));
+
+                                var Jsdate = new Date(AllocatedDate);
+                                var Jsgetdate = getCustomDay(Jsdate.getDate());
+                                //var Jsnmonth = Jsdate.getMonth() ;
+                                var Jsnmonth = month[Jsdate.getMonth()];
+                                var Jyear = Jsdate.getFullYear();
+
+                                var JsAllocatedDate = (Jsgetdate < 10 ? '' : '') + Jsgetdate + '-' + (Jsnmonth < 10 ? '0' : '') + Jsnmonth + '-' +
+                                Jyear;
+
+                                var CompletedDate = new Date(parseInt(taskval.completion_date.substr(6)));
+
+                                console.log(taskval);
+
+
+                                var JsComplDate = new Date(CompletedDate);
+                                var JsComlGetDate = getCustomDay(JsComplDate.getDate());
+                                //var JsComlMonth = JsComplDate.getMonth() ;
+                                 var JsComlMonth = month[JsComplDate.getMonth()];
+                                var JsComlYear = JsComplDate.getFullYear();;
+
+                                var JsCompletedDate = (JsComlGetDate < 10 ? '' : '') + JsComlGetDate + '-' + (JsComlMonth < 10 ? '0' : '')
+                                    + JsComlMonth + '-' +
+                            
+                                  JsComlYear;
+
+                                var MeetingId = taskval.meeting_id;
+                                var EmpId = taskval.employee_id;
+                                //var Task = (taskval.Task);
+                                var taskId = taskval.Task_Id;
+                                if (taskval.Overdue_Days <= 0) {
+                                    TableStr += "<tr class='alert-info' >" +
+                                        '<td><a style="color:blue;" href="@(Url.Action("EditTaskDetails", "AssignedTasks"))?meetingId=' + MeetingId + '&empId=' + EmpId + '&taskId=' + taskId + '" class="modal-link btn btn-sm" data-placement="top" >' + taskval.Task + '</a></td>' +
+                                                     "<td style='color:black;'>" + taskval.Participant + "</td>" +
+                                                     "<td style='color:black;'><center>" + JsAllocatedDate + "</center></td>" +
+                                                     "<td style='color:black;'><center>" + JsCompletedDate + "</center></td>" +
+                                                     "<td style='color:black;'>" + taskval.priority + "</td>" +
+                                                     "<td style='color:black;'>" + taskval.status + "</td>" +
+                                                      "<td>0</td>"
+                                    "</tr>";
+                                }
+                                else {
+                                    TableStr += "<tr class='alert-danger'>" +
+                                        '<td><a style="color:blue;" href="@(Url.Action("EditTaskDetails", "AssignedTasks"))?meetingId=' + MeetingId + '&empId=' + EmpId + '&TaskId=' + taskId + '" class="modal-link btn btn-sm  " data-placement="top" >' + taskval.Task + '</a></td>' +
+                                                     "<td style='color:black;'>" + taskval.Participant + "</td>" +
+                                                     "<td style='color:black;'><center>" + JsAllocatedDate + "</center></td>" +
+                                                     "<td style='color:black;'><center>" + JsCompletedDate + "</center></td>" +
+                                                     "<td style='color:black;'>" + taskval.priority + "</td>" +
+                                                     "<td style='color:black;'>" + taskval.status + "</td>" +
+                                                     "<td style='color:black;'>" + taskval.Overdue_Days + "</td>"
+                                    "</tr>";
+                                }
+                            });
+                        }
+
+                        TableStr += "</table>";
+                        grid.html(TableStr);
+                        InitializePaging();
+                    }
+                });
+            }
+        }
+    });
+
+</script>

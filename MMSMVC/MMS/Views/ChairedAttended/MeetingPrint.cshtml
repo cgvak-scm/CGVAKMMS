@@ -1,0 +1,151 @@
+﻿@model dynamic
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        .table-custom {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width" />
+    <title>MeetingPrint</title>
+</head>
+<body>
+
+    <button id="print" onclick="PrintPage();" class="btn btn-default pull-right">Print</button>
+
+    <div id="res_print">
+
+        <table class="table" style="text-align:center;">
+            <tbody>
+                <tr>
+                    <td style="width:5%"><img src="~/Content/Images/fav.png" style="width: 40px; height: 44px"></td>
+                    <td style="width:90%">
+                        <strong>
+                            <span style="text-decoration: underline">
+                                Minutes of the Meeting<br>
+                            </span>
+                        </strong><span style="font-size: 9pt">
+                            <em>
+                                REF. No.: CG-VAK-F-0504, ISSUE No.: 2, VER. No.: 1.0, DATE: 22.08.01
+                            </em>
+                        </span>
+                    </td>
+                    <td style="width:5%"></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        @foreach (var item in ViewBag.MeetingRes)
+        {
+
+            <table id='resTable' class='table-custom table table-responsive '>
+                <tr>
+                    <td><label>Meeting Type:</label></td>
+                    <td>@item.Meeting_Type</td>
+
+                    <td><label>Date:<label /></td>
+                    <td>@item.Meeting_Date</td>
+
+
+                </tr>
+                <tr>
+                    <td><label>Department:</label></td>
+                    <td>@item.Meeting_Department</td>
+
+                    <td><label>ChairPerson:</label></td>
+                    <td>@item.Meeting_Chairperson</td>
+
+
+                </tr>
+
+                <tr>
+                    <td><label>Objective of the Meeting:</label></td>
+                    <td>@item.Meeting_Objective</td>
+                    <td><label>Duration:</label></td>
+                    <td>@item.Meeting_Duration</td>
+                </tr>
+                <tr>
+                    <td><label>Minutes of the Meeting:</label></td>
+                    <td>@item.Minutes_Of_Meeting</td>
+                    <td><label>Venue:</label></td>
+                    <td>@item.Meeting_Venue</td>
+                </tr>
+            </table>
+
+        }
+        @{ var Part_count = 0;}
+        @if (ViewBag.ParticipantRes != null)
+        {
+            <table id='parTable' class='table table-responsive'>
+
+                <tr><td><label>Participant Names:</label></td></tr>
+                <tr>
+                    @foreach (var parItem in ViewBag.ParticipantRes)
+                    {
+                        <td>@parItem.Participant_Name </td>
+
+                    }
+                </tr>
+            </table>
+
+        }
+
+        @{ var count = 0;}
+        @if (ViewBag.MeetingDetails != null)
+        {
+            <b>  Tasks/Action Details:</b>
+            <table id='MeetTable' class='table table-responsive table-custom'>
+
+                <tr>
+                    <td>Sno</td>
+                    <td>Points Discussed/Decision Made</td>
+                    <td>Responsibility</td>
+                    <td>Completion Date</td>
+                    <td>Remarks/Comments</td>
+                </tr>
+                @foreach (var meetItem in ViewBag.MeetingDetails)
+                {
+                    <tr>
+                        @{ count += 1;}
+                        <td>@count</td>
+                        <td>@meetItem.Task</td>
+                        <td>@meetItem.Participant</td>
+                        <td>@meetItem.Completion_Date</td>
+                        <td>@meetItem.Comments</td>
+                    </tr>
+                            }
+            </table>
+
+                            }
+    </div>
+</body>
+</html>
+
+@*<script>
+
+
+
+            function PrintPage() {
+
+                var divId = document.getElementById("res_print").innerHTML;
+
+                var BodyContent = document.body.innerHTML;
+
+                document.body.innerHTML = divId;
+
+                window.print();
+
+                document.body.innerHTML = BodyContent;
+
+            }
+
+
+    </script>*@

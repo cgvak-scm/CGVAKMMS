@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[MMS_Meeting_Details] (
+    [Task_Id]              INT            IDENTITY (1, 1) NOT NULL,
+    [Meeting_Id]           INT            NULL,
+    [Employee_Id]          INT            NULL,
+    [Chairperson]          INT            NULL,
+    [Participant]          INT            NULL,
+    [Task]                 VARCHAR (500)  NULL,
+    [Completion_Date]      DATETIME       NULL,
+    [Priority]             VARCHAR (50)   NULL,
+    [Status]               INT            NULL,
+    [Comments]             VARCHAR (MAX)  NULL,
+    [Percentage_Completed] NUMERIC (5, 2) CONSTRAINT [DF__MMS_Meeti__Perce__1DE57479] DEFAULT ((0)) NULL,
+    [Category]             INT            NULL,
+    [is_read_notification] VARCHAR (30)   CONSTRAINT [read_ky] DEFAULT ((0)) NULL,
+    [seen]                 BIT            CONSTRAINT [seenCK] DEFAULT ((1)) NULL,
+    [is_template]          BIT            NULL,
+    [NextReviewDate]       DATETIME       NULL,
+    [ReviewFrequencyID]    INT            NULL,
+    [IsDeleted]            INT            CONSTRAINT [DF__MMS_Meeti__IsDel__20C1E124] DEFAULT ((0)) NULL,
+    [ChairPersonID]        INT            NULL,
+    [ParticipantID]        INT            NULL,
+    [TemplateID]           INT            NULL,
+    [baz]                  BIT            CONSTRAINT [DF__MMS_Meeting__baz__21B6055D] DEFAULT ((0)) NOT NULL,
+    CONSTRAINT [PK_MMS_Meeting_Details] PRIMARY KEY CLUSTERED ([Task_Id] ASC),
+    CONSTRAINT [Fkey_id] FOREIGN KEY ([Meeting_Id]) REFERENCES [dbo].[MMS_Meeting_Master] ([Meeting_Id])
+);
+

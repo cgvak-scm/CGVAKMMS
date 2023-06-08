@@ -1,0 +1,401 @@
+﻿@*@model IEnumerable<MMS.Models.Proc_Get_meeting_status_Result>*@
+@model IEnumerable<MMS.Models.GetTaskComments_Result>
+@{
+    var selectedStatus = ViewBag.Status_Selected.ToString().ToUpper();
+}
+<input type="hidden" id="hdnAddCmtMeetingID" value="@ViewBag.MeetingID" />
+<input type="hidden" id="hdnAddCmtTaskID" value="@ViewBag.TaskID" />
+<div class="modal-header" id="modal-header">
+    <button type="button" class="close btn_close mymodal-close" id="comment_close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <b>Show Comments</b>
+</div>
+<div class="modal-body">
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Label("Comments", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextArea("txtComment", new { @class = "form-control", @rows = "5", @cols = "95", @style = "resize: none;", @required = "required" })
+                        <span class='prod_error' style='color:red;'></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.Label("Total Hours", new { @class = "control-label col-md-2" })
+                        <div class="form-inline col-md-10">
+                            <div class="form-group col-md-4">
+                                <div class="input-group number-spinner col-md-8">
+                                    <span class="input-group-btn data-dwn">
+                                        <button class="btn btn-default" data-dir="dwn" onclick="AddTotalHours(-1)"><span class="glyphicon glyphicon-minus"></span></button>
+                                    </span>
+
+                                    <input type="text" value="0" min="0" class="form-control" id="txtHrs" onkeypress="return IsValidNumber(event, '', this)" />
+                                    <span class="input-group-btn data-up">
+                                        <button class="btn btn-default" data-dir="up" onclick="AddTotalHours(1)"><span class="glyphicon glyphicon-plus"></span></button>
+                                    </span>
+
+                                </div>
+
+                                <label>Hrs</label>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-group number-spinner col-md-8">
+                                    <span class="input-group-btn data-dwn">
+                                        <button class="btn btn-default" data-dir="dwn" onclick="AddMinutes(-1)"><span class="glyphicon glyphicon-minus"></span></button>
+                                    </span>
+                                    <input type="text" min="0" value="0" max="59" class="form-control" id="txtMins" onkeypress="return IsValidNumber(event, '59', this)" />
+                                    <span class="input-group-btn data-up">
+                                        <button class="btn btn-default" data-dir="up" onclick="AddMinutes(1)"><span class="glyphicon glyphicon-plus"></span></button>
+                                    </span>
+                                </div>
+                                <label>Mins</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.Label("Task Status", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="form-inline  col-md-10">
+                            <div class="form-group col-md-4">
+                                @*@Html.DropDownList("ddlStatus", new SelectList(ViewBag.Status, "Text", "Value"), new { @class="form-control"})*@
+                                @Html.DropDownList("ddlStatus", new SelectList(ViewBag.Status, "Value", "Text", selectedStatus), new { @class = "form-control TaskStatus", required = "true" })
+
+                            </div>
+
+
+                            @*<div class="col-md-3 col-sm-4">
+                                <div class="input-group">
+                                    <div class="input-group-addon input-sm">REVIEW</div>
+
+
+                                    @Html.DropDownList("ReviewTask", new List<SelectListItem>{
+                                                new SelectListItem { Text="YES",Value="0" },
+                                               new SelectListItem { Text="NO",Value="1" },
+
+                                               }, new { @class = "form-control input-sm" })
+                                </div>*@
+
+                            <div class="col-md-3 col-sm-3 hidden">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 col-lg-6">Reviewed
+                                        </label>
+                                        <select class="form-control TaskStatus" name="review" id="review_id">
+                                            <option value="No">No</option>
+                                            <option value="yes">Yes</option>
+                                 </select>
+
+                                    </div>
+                                </div>
+                            <div class="form-group col-md-8 ">
+                                <label class="control-label col-md-4 col-lg-6 required">
+                                    % Completed
+                                </label>
+                                @Html.Editor("txtPercent", new {htmlattributes = new{  @class = "form-control control-label col-md-4 col-lg-6", onkeypress = "return IsValidPercentage(event)",max = "100", @required= "required" } })
+                                <span class='prod_error' style='color:red;'></span>
+                            </div>
+
+
+
+                            <br /> <br /><br />
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <input type="button" class="btn btn-primary" id="bdnAddComment" value="Save Comment" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="modal-body">
+                <div class="form-inline" style="height:150px; overflow-y:auto;">
+
+
+                    @{
+                        foreach (var res in Model)
+                        {
+
+                            if (string.Equals(res.Commented_by, Session["LoggedEmployeeName"].ToString()))
+                            {
+                                <div class="text-left bs-callout bs-callout-left">
+                                    <p>
+                                        @res.Comments
+                                    </p>
+
+                                </div>
+                                <div class="footer text-left">
+                                    @res.Commented_by<small class="text-muted">
+                                        <span class="glyphicon glyphicon-time"></span> @Convert.ToDateTime(res.StatusDate)
+                                    </small>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="text-right bs-callout bs-callout-right">
+                                    <p>
+                                        @res.Comments
+                                    </p>
+
+                                </div>
+
+
+                                @*<div class="footer text-right">
+
+                                        @{
+                                            int person = @res.Commented_by;
+                                            MMS.Models.MMSCGVAKDBEntities db = new MMS.Models.MMSCGVAKDBEntities();
+                                            string display = db.Employee_Master.Where(x => x.EmployeeICode == person).Select(x => x.EmployeeDisplayName).FirstOrDefault();
+                                            //display =Convert.ToString(@res.Commented_by );
+                                        }
+
+                                        @display<small class="text-muted">
+                                            <span class="glyphicon glyphicon-time"></span> @Convert.ToDateTime(res.StatusDate)
+                                        </small>
+                                    </div>*@
+
+                                <div class="footer text-right">
+
+                                    @{
+                                        int person = Convert.ToInt16(@res.Commented_by);
+                                        MMS.Models.MMSCGVAKDBEntities db = new MMS.Models.MMSCGVAKDBEntities();
+                                        string display = db.Employee_Master.Where(x => x.EmployeeICode == person).Select(x => x.EmployeeDisplayName).FirstOrDefault();
+                                        //display =Convert.ToString(@res.Commented_by );
+                                    }
+
+                                    @display<small class="text-muted">
+                                        <span class="glyphicon glyphicon-time"></span> @Convert.ToDateTime(res.StatusDate)
+                                    </small>
+                                </div>
+                                            }
+
+
+                                        }
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="review-success" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h5 class="modal-title" id="mySmallModalLabel">Comment added Successfully.</h5>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#comment_close").click(function () {
+        $(".btn_close").click();
+        window.location.reload();
+    });
+
+</script>
+
+
+<script type="text/javascript">
+
+
+    //$(function () {
+    //    $("#ReviewTask").change(function () {
+    //        alert($('option:selected', this).text());
+    //    });
+    //});
+
+
+    $("#ReviewTask").change(function () {
+        // var category = $('select[name=company]').val() // Here we can get the value of selected item
+        //var category = $('option:selected', this).text();
+
+        //if (category == 'YES')
+        //{
+        //     alert("Hi");
+
+        //}
+
+
+
+        //alert(category)
+
+    });
+
+
+
+
+    //var textToFind = 'NO';
+
+    //var dd = document.getElementById('ReviewTask');
+    //for (var i = 0; i < dd.options.length; i++) {
+    //    if (dd.options[i].text == textToFind) {
+    //        dd.selectedIndex = i;
+    //        alert("HI...");
+    //        break;
+    //    }
+    //}
+
+
+
+
+
+
+    var txtHrsObj = $("#txtHrs");
+    var txtMinsObj = $("#txtMins");
+    $(function () {
+        
+        $("#bdnAddComment").click(function () {
+          //   alert($("#review_id").val());           
+            if (IsCommentValid()) {
+                $("#bdnAddComment").attr('disabled', 'disabled');
+                $.ajax({
+                    url: '@Url.Action("AddComment", "MyTasks")',
+                    data: {
+                        
+                        comment: $("#txtComment").val(),
+                        status: $("#ddlStatus").val(),
+                        meetingId: $("#hdnAddCmtMeetingID").val(),
+                        hours: $(txtHrsObj).val(),
+                        minutes: $(txtMinsObj).val(),
+                        reviewsId: $("#review_id").val(),
+                        taskId: $("#hdnAddCmtTaskID").val(),
+                        percentage: $("#txtPercent").val()
+
+                    },
+             
+                    type: 'POST',
+                    success: function () {
+                        $("#bdnAddComment").removeAttr('disabled');
+                       // alert("Comment added successfully");
+                        $('#review-success').modal('show');
+                        $('.mymodal-close').trigger('click');
+                       // $('#review-success').modal('show');
+
+                        window.location.reload();
+                    },
+                    error: function () {                       
+                        $("#bdnAddComment").removeAttr('disabled');
+                        console.log(error);
+                        alert("Please try again");
+                    }
+                });
+                
+                //window.location.reload();
+            }
+            else {
+                //$("<span class='prod_error' style='color:red;'>Please enter the comment.</span>").insertAfter("#txtComment");
+                $(".prod_error").html("Please enter this field.");
+
+            }
+            
+        });
+    });
+
+    function IsCommentValid() {
+        return $("#ddlStatus").val() != '' && $("#txtComment").val() != '';
+    }
+
+    function IsValidNumber(evt, max, obj) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        else if (max != "" && max != undefined) {
+            var oldValue = $(obj).val();
+            var enteredValue = String.fromCharCode(charCode);
+            var newValue = oldValue + enteredValue;
+
+            if (parseInt(newValue) > parseInt(max))
+                return false;
+        }
+        return true;
+    }
+
+    function AddTotalHours(value) {
+        AddValueToObj(txtHrsObj, value, 0, '');
+    }
+    function AddMinutes(value) {
+        var maxValue = $(txtMinsObj).attr("max");
+        AddValueToObj(txtMinsObj, value, 0, maxValue);
+    }
+    function AddValueToObj(obj, value, minValue, maxValue) {
+        
+        var oldValue = $(obj).val();
+        if (oldValue == '')
+            oldValue = '0';
+        var sum = parseInt(oldValue) + parseInt(value);
+        var isValid = true;
+        if (maxValue != '') {
+            if (sum > parseInt(maxValue))
+                isValid = false;
+
+        }
+        //alert(sum < parseInt(minValue));
+        if (minValue != undefined) {
+            if (sum < parseInt(minValue))
+                isValid = false;
+        }
+        if (isValid)
+            $(obj).val(sum);
+
+    }
+
+
+    $(document).on("click", ".ReviewClick", function () {
+        var meetingid = $(this).attr("meetingid");
+        var taskid = $(this).attr("taskid");
+        $("#myyes").attr("meetingid", meetingid);
+        $("#myyes").attr("taskid", taskid);
+    });
+
+    $(document).on("click", "#myyes", function () {
+        var meetingid = $(this).attr("meetingid");
+        var taskid = $(this).attr("taskid");
+        myFunction(meetingid, taskid);
+    });
+
+
+    function IsValidPercentage(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        else {
+            var oldPercentage = $("#txtPercent").val();
+            var enteredValue = String.fromCharCode(charCode);
+            var newValue = oldPercentage + enteredValue;
+
+            if (parseInt(newValue) > 100)
+                return false;
+        }
+        return true;
+    }
+
+
+</script>

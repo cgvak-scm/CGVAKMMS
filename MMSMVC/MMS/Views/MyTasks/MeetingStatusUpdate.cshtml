@@ -1,0 +1,362 @@
+﻿@model MMS.Models.MeetingEditDetails
+<style>
+    .pull-right {
+        float: right;
+    }
+</style>
+
+<form id="MeetingUpdateFrm" name="MeetingUpdateFrm">
+
+    <div class="modal-header" id="modal-header">
+        <button type="button" class="btn-close close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <b>Update Task123</b>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        @Html.Label("Responsible Person", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.ResponsiblePerson, new { @class = "form-control", @disabled = "disabled" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Priority", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @*@Html.DisplayFor(model => model.Priority, new { htmlattributes = new { @class = "form-control" } })*@
+                            @Html.DropDownListFor(model => model.Priority, new SelectList(ViewBag.Priorities, "Value", "Text", Model.Priority), new { @class = "form-control", @id = "ddlPriority" })
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Task", htmlAttributes: new { @class = "control-label col-md-2" })
+
+
+                        @*<p><strong>Task</strong></p>*@
+                        @*<div class="task">*@
+                        <div class="col-md-10">
+
+                            @Html.TextAreaFor(model => model.Task, new { @class = "form-control", @id = "txtUpdTask", @rows = 4, style = "resize:none;width:95%;", @readonly = true })
+                        </div>
+                        @*</div>*@
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label("Completion Date", htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.CompletionDate, new { htmlattributes = new { @class = "form-control txtCompletionDate" } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                <div class="col-md-6">
+                                    @Html.DropDownList("Status", (IEnumerable<SelectListItem>)ViewBag.SelectedStatus, new { @class = "form-control ddlUpdStatus" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="Comment_Update">
+
+                    <div class="row" style="margin-right:-9px;margin-left:-9px">
+                        <div class="modal-header" id="modal-header">
+                            <b>Comments Update</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("Comments", htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-5">
+                                        @*original*@
+                                        @*@Html.TextArea("txtComments", new { @class = "form-control", @rows = "3" })*@
+                                        @Html.TextArea("Comments", new { @class = "form -control", @rows = "3", @cols = "60", @style = "resize: none;" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <input type="hidden" id="resp" value="@Model.RespPerson" />
+                <input type="hidden" id="task" value="@Model.Task" />
+                @Html.HiddenFor(model => model.empId)
+                @Html.HiddenFor(model => model.meetingId, new { @id = "hdnUpdMeetingID" })
+                @Html.HiddenFor(model => model.TaskID, new { @id = "hdnUpdTaskID" })
+
+
+                @*<div class="row">
+
+                        <div class="modal-header" id="modal-header">
+                            <b>Status Update</b>
+                        </div>
+                    </div>*@
+
+                @*<div class="row">
+
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label("Comments", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextArea("txtComments",  new { @class = "form-control",@rows="3"  })
+                            </div>
+                        </div>*@
+
+                @*<div class="row">
+
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-4" })
+
+                                        <div class="col-md-8">
+
+                                            @Html.DropDownList("Status", (IEnumerable<SelectListItem>)ViewBag.SelectedStatus, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label("TotalHours", htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-4">
+                                            <select id="HrsDrpdwn" name="HrsDrpdwn" class="form-control drpdwn" required>
+                                                <option value="">Hrs</option>
+                                                <option value="00">00</option>
+                                                <option value="01">01</option>
+                                                <option value="02">02</option>
+                                                <option value="03">03</option>
+                                                <option value="04">04</option>
+                                                <option value="05">05</option>
+                                                <option value="06">06</option>
+                                                <option value="07">07</option>
+                                                <option value="08">08</option>
+                                                <option value="09">09</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select id="TimeDrpdwn" class="form-control drpdwn" required>
+                                                <option value="">Mins</option>
+                                                <option value="00">00</option>
+                                                <option value="05">05</option>
+                                                <option value="10">10</option>
+                                                <option value="15">15</option>
+                                                <option value="20">20</option>
+                                                <option value="25">25</option>
+                                                <option value="30">30</option>
+                                                <option value="35">35</option>
+                                                <option value="40">40</option>
+                                                <option value="45">45</option>
+                                                <option value="50">50</option>
+                                                <option value="55">55</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @{ var MeetingId = Model.meetingId; }
+                        <input type="hidden" value="@MeetingId" id="meeting_id" />
+                    </div>*@
+
+
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10" style="padding-left:0px;padding-right:0px">
+
+                        <div class="modal-footer">
+                            <p id="resMsg" style="color:forestgreen;"></p>
+                            <input type="button" id="update_task" class="btn btn-primary" value="Update" />
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div style="overflow-y:auto;height:10px">
+                @{
+                    if (ViewBag.CommentsList != null) {
+                        foreach (var res in ViewBag.CommentsList)
+                        {
+
+                            if (string.Equals(res.Commented_by, Session["LoggedEmployeeName"].ToString()))
+                            {
+                            <div class="text-left bs-callout bs-callout-left">
+                                <p>
+                                    @res.Comments
+                                </p>
+
+                            </div>
+                            <div class="footer text-left">
+                                @res.Commented_by<small class="text-muted">
+                                    <span class="glyphicon glyphicon-time"></span> @Convert.ToDateTime(res.StatusDate)
+                                </small>
+                            </div>
+
+                            }
+                            else
+                            {
+
+                            <div class="text-right bs-callout bs-callout-right">
+                                <p>
+                                    @res.Comments
+                                </p>
+
+                            </div>
+                            <div class="footer text-right">
+
+                                @{
+                                    int? person = @res.Commented_by;
+                                    MMS.Models.MMSCGVAKDBEntities db = new MMS.Models.MMSCGVAKDBEntities();
+                                    string display = db.Employee_Master.Where(x => x.EmployeeICode == person).Select(x => x.EmployeeDisplayName).FirstOrDefault();
+                                    //display =Convert.ToString(@res.Commented_by );
+                                }
+
+                                @display<small class="text-muted">
+                                    <span class="glyphicon glyphicon-time"></span> @Convert.ToDateTime(res.StatusDate)
+                                </small>
+                            </div>
+
+                                                }
+
+
+                                            }
+
+                                        }
+                                    }
+
+            </div>
+        </div>
+    </div>
+
+</form>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/customVal")
+}
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#Comment_Update").hide();
+        var date = new Date();
+
+        date.setDate(date.getDate());
+        $("#bindTaskComments").hide();
+
+        var getDate = new Date();
+        getDate.setDate(getDate.getDate());
+
+        $(".txtCompletionDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd/M/yy", minDate: 0,
+
+            startDate: getDate, autoclose: true
+        });
+
+        $("#Status").change(function () {
+            var newstat = $(".ddlUpdStatus").val();
+            if (newstat == "COMPLETED") {
+                $("#Comment_Update").show();
+            }
+            else {
+                $("#Comment_Update").hide();
+            }
+
+        });
+
+
+        $("#update_task").click(function () {
+
+            var EmpId = $("#empId").val();
+            var CompletionDate = $(".txtCompletionDate").val();
+            var Task = $("#txtUpdTask").val();
+            var Status = $(".ddlUpdStatus").val();
+            if ($("#Comments").val() != "") {
+                var Comments = $("#Comments").val();
+            }
+            else {
+                var Comments = $("#txtComments").val();
+            }
+            var RespPerson = $("#resp").val();
+
+            var CommentedBy = $("#resp").val();
+            var CommentedById = $("#empId").val();
+            var Hours = $("#HrsDrpdwn option:selected").text() + ":" + $("#TimeDrpdwn option:selected").text();
+
+            var MeetingId = $("#hdnUpdMeetingID").val();
+
+            var taskId = $("#hdnUpdTaskID").val();
+            var priority = $("#ddlPriority").val();
+            console.log(CommentedBy, CompletionDate);
+
+            if (CompletionDate != "" && Status != "" && Task != "" && priority != "") {
+
+                $.ajax({
+
+                    url: "@Url.Action("UpdateMeetingDetails", "MyTasks")",
+                    data: JSON.stringify({
+                        "empId": EmpId, "task": Task, "status": Status, "comments": Comments, "completionDate": CompletionDate, "respPerson": RespPerson, "meetingId": MeetingId, "commentedBy": CommentedBy
+                        , "commentedById": CommentedById, "hours": Hours, taskId: taskId, priority: priority
+                    }),
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: 'application/json;charset=utf-8',
+                    success: function (resData) {
+                        alert(resData);
+                        $(".btn-close").click();
+                        $("#view_task").click();
+
+                    }
+                });
+            }
+            else {
+                alert("Please fill the fields");
+            }
+
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+

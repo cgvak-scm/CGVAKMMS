@@ -1,0 +1,96 @@
+﻿@*@model IEnumerable<MMS.Models.MMS_Meeting_Category>*@
+@model PagedList.IPagedList<MMS.Models.MMS_Meeting_Category>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Category Master";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+@using (Html.BeginForm("Index", "CategoryMaster", FormMethod.Get))
+{
+    if (TempData["AlreadyExisted"] != null)
+    {
+        <div id="errorMessage" class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            @TempData["AlreadyExisted"]
+        </div>
+    }
+    if (TempData["Error"] != null)
+    {
+        <div id="errorMessage" class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            @TempData["Error"]
+        </div>
+    }
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Category for Create Task
+        </div>
+        <div class="panel-body">
+            <div class="form-inline alert alert-warning" style="padding: 8px;">
+                <div class="form-group">
+                    <label>
+                        Search :
+                    </label>
+                </div>
+                <div class="form-group">
+                    @Html.TextBox("search", ViewBag.CurrentFilter as string, new { @class = "form-control input-sm" })
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm" data-placement="right" data-toggle="tooltip" data-original-title="Search by category name"><span aria-hidden="true" class="glyphicon glyphicon-search"></span></button>
+                <a href="@Url.Action("Create", "CategoryMaster")" class="modal-link btn btn-success btn-sm pull-right" data-placement="left" data-toggle="tooltip" data-original-title="Create new category">
+                    <span aria-hidden="true" class="glyphicon glyphicon-pencil"></span>&nbsp;Create
+                </a>
+            </div>
+            <table class="table table-hover table-condensed" id="categoryMasterTbl">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.ActionLink("Category Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryName)
+                        </td>
+                        <td>
+                            <div class="pull-right">
+                                <a href="@Url.Action("Edit", "CategoryMaster", new { id = item.ID })" class="modal-link btn btn-default btn-sm" data-placement="top" data-toggle="tooltip" data-original-title="Edit category">
+                                    <span aria-hidden="true" class="glyphicon glyphicon-edit"></span>
+                                </a>&nbsp;
+                                <a href="@Url.Action("Delete", "CategoryMaster", new { id = item.ID })" class="modal-link btn btn-default btn-sm" data-placement="top" data-toggle="tooltip" data-original-title="Delete category">
+                                    <span aria-hidden="true" class="glyphicon glyphicon-trash"></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+        </div>
+    </div>
+}
+<script>
+    $("#search").on('change', function () {
+
+        $("#categoryMasterTbl tbody").remove();
+
+        var data = { "searchText": $(this).val() };
+
+        $.post('/CategoryMaster/Search', data).success(function (res) {
+
+            $.each(res, function (item, val) {
+
+                $("#categoryMasterTbl").append('<tr>'+
+                        '<td>'+val.CategoryName+'</td><td>'+
+                            '<div class="pull-right"><a href="/CategoryMaster/Edit/' + val.ID + '" class="modal-link btn btn-default btn-sm" data-placement="top" data-toggle="tooltip" data-original-title="Edit category"><span aria-hidden="true" class="glyphicon glyphicon-edit"></span></a>&nbsp;<a href="/CategoryMaster/Delete/' + val.ID + '" class="modal-link btn btn-default btn-sm" data-placement="top" data-toggle="tooltip" data-original-title="Delete category"><span aria-hidden="true" class="glyphicon glyphicon-trash"></span></a></div></td></tr>');
+            });
+        });
+    });
+</script>

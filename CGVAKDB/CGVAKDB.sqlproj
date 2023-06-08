@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>CGVAKDB</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{60ad0301-64c2-4029-8659-fe61be23e9c3}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>CGVAKDB</RootNamespace>
+    <AssemblyName>CGVAKDB</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="dbo\Stored Procedures\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Designation_Master.sql" />
+    <Build Include="dbo\Tables\Employee_Master.sql" />
+    <Build Include="dbo\Tables\MMS_Attachment.sql" />
+    <Build Include="dbo\Tables\MMS_Employee_Master.sql" />
+    <Build Include="dbo\Tables\MMS_Login_Master.sql" />
+    <Build Include="dbo\Tables\MMS_Meeting_Details.sql" />
+    <Build Include="dbo\Tables\MMS_Meeting_Master.sql" />
+    <Build Include="dbo\Tables\MMS_Meeting_Participant.sql" />
+    <Build Include="dbo\Tables\MMS_Meeting_Status.sql" />
+    <Build Include="dbo\Tables\MMS_Meeting_Status_Update.sql" />
+    <Build Include="dbo\Tables\MMS_Meeting_Template.sql" />
+    <Build Include="dbo\Tables\MMS_Blood_Details.sql" />
+    <Build Include="dbo\Tables\MMS_Meeting_Template_Users.sql" />
+    <Build Include="dbo\Tables\MMS_Notifications.sql" />
+    <Build Include="dbo\Tables\MMS_Employee_Location.sql" />
+    <Build Include="dbo\Tables\MMS_Track_ReviewTasks.sql" />
+    <Build Include="dbo\Tables\MMS_Employee_Attachment.sql" />
+    <Build Include="dbo\Tables\Task_Status.sql" />
+    <Build Include="dbo\Tables\MMS_Priority.sql" />
+    <Build Include="dbo\Tables\MMS_Review_Frequency.sql" />
+    <Build Include="dbo\Tables\MMS_Meeting_Category.sql" />
+    <Build Include="dbo\Tables\Department_Master.sql" />
+    <Build Include="dbo\Tables\Employee_Department.sql" />
+    <Build Include="dbo\Views\vw_get_Employees.sql" />
+    <Build Include="dbo\Views\vw_get_EmployeesTech.sql" />
+    <Build Include="dbo\Views\MailDetail_TaskNotCompleted.sql" />
+    <Build Include="dbo\Views\vw_get_EmployeeDepartment.sql" />
+    <Build Include="dbo\Views\vw_get_Designations.sql" />
+    <Build Include="dbo\Views\vw_get_EmployeeDepartments.sql" />
+    <Build Include="dbo\Stored Procedures\sp_insert_EmployeeMaster.sql" />
+    <Build Include="dbo\Stored Procedures\Sp_Update_EmployeeMaster.sql" />
+    <Build Include="dbo\Stored Procedures\sp_insert_EmployeeAttachments.sql" />
+    <Build Include="dbo\Stored Procedures\Sp_Update_EmployeeAttachments.sql" />
+    <Build Include="dbo\Stored Procedures\getmeetingdetailsNew.sql" />
+    <Build Include="dbo\Stored Procedures\GetTaskComments.sql" />
+    <Build Include="dbo\Stored Procedures\Proc_Get_meeting_status.sql" />
+    <Build Include="dbo\Stored Procedures\Proc_Get_Review_Tasks.sql" />
+    <Build Include="dbo\Stored Procedures\Proc_MyTask.sql" />
+    <Build Include="dbo\Stored Procedures\sp_add_Employee_Department.sql" />
+    <Build Include="dbo\Stored Procedures\sp_add_mms_notifications.sql" />
+    <Build Include="dbo\Stored Procedures\sp_Check_Login_Details.sql" />
+    <Build Include="dbo\Stored Procedures\sp_get_EmailId.sql" />
+    <Build Include="dbo\Stored Procedures\sp_Get_Employee_By_Email.sql" />
+    <Build Include="dbo\Stored Procedures\sp_get_Employee_Department.sql" />
+    <Build Include="dbo\Stored Procedures\sp_get_EmployeeMaster_forJSON.sql" />
+    <Build Include="dbo\Stored Procedures\getmeetingsummarydetailsNew.sql" />
+    <Build Include="dbo\Stored Procedures\sp_get_meeting_details.sql" />
+    <Build Include="dbo\Stored Procedures\sp_get_meeting_details_Advanced.sql" />
+    <Build Include="dbo\Stored Procedures\sp_get_MeetingSearch_Summary_01102019.sql" />
+    <Build Include="dbo\Stored Procedures\sp_get_meeting_id.sql" />
+    <Build Include="dbo\Stored Procedures\sp_get_meeting_master_viewByDept.sql" />
+    <Build Include="dbo\Stored Procedures\sp_get_MeetingSearch_Summary_13072018.sql" />
+    <Build Include="dbo\Stored Procedures\sp_get_mms_notification.sql" />
+    <Build Include="dbo\Stored Procedures\sp_get_notification_summary.sql" />
+    <Build Include="dbo\Stored Procedures\sp_get_Participants.sql" />
+    <Build Include="dbo\Stored Procedures\sp_getCompletionEffectivenessReport.sql" />
+    <Build Include="dbo\Stored Procedures\sp_getCompReport_2442018.sql" />
+    <Build Include="dbo\Stored Procedures\sp_getname_EmployeeMaster.sql" />
+    <Build Include="dbo\Stored Procedures\sp_insert_Attachment.sql" />
+    <Build Include="dbo\Stored Procedures\sp_insert_Meeting_Participant.sql" />
+    <Build Include="dbo\Stored Procedures\sp_insert_Meeting_Status.sql" />
+    <Build Include="dbo\Stored Procedures\sp_insert_meeting_status_24062014_1.sql" />
+    <Build Include="dbo\Stored Procedures\sp_insert_MeetingDetails.sql" />
+    <Build Include="dbo\Stored Procedures\sp_insert_MeetingDetails1.sql" />
+    <Build Include="dbo\Stored Procedures\sp_insert_MeetingMaster.sql" />
+    <Build Include="dbo\Stored Procedures\sp_insert_status_update.sql" />
+    <Build Include="dbo\Stored Procedures\sp_notification_count_message.sql" />
+    <Build Include="dbo\Stored Procedures\sp_select_AttendedMeeting_Name.sql" />
+    <Build Include="dbo\Stored Procedures\sp_select_Meeting_Id.sql" />
+    <Build Include="dbo\Stored Procedures\sp_select_Meeting_Name.sql" />
+    <Build Include="dbo\Stored Procedures\sp_select_Meeting_Participant.sql" />
+    <Build Include="dbo\Stored Procedures\sp_select_meeting_status.sql" />
+    <Build Include="dbo\Stored Procedures\sp_select_mms_meeting_details.sql" />
+    <Build Include="dbo\Stored Procedures\sp_select_mms_meeting_master.sql" />
+    <Build Include="dbo\Stored Procedures\Sp_Update_Attachment.sql" />
+    <Build Include="dbo\Stored Procedures\sp_update_meeting_Percent.sql" />
+    <Build Include="dbo\Stored Procedures\Sp_Update_MMS_Meeting_Details_Change.sql" />
+    <Build Include="dbo\Stored Procedures\Sp_Update_MMS_Meeting_Details_Change1.sql" />
+    <Build Include="dbo\Stored Procedures\sp_update_read_notification.sql" />
+  </ItemGroup>
+</Project>

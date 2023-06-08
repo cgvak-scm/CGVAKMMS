@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Team Plan-Meeting Management System</title>
+    <link href="~/Content/Images/fav.png" rel="shortcut icon" type="image/x-icon" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @{
+        string version = Session["AppVersion"].ToString();
+
+    }
+  
+</head>
+<body class="body">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="~/">
+                    <img src="~/Content/Images/fav.png" sizes="25px" />
+                </a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Team Plan-Meeting Management System", "Login", "Account", new { area = "" }, new { @class = "navbar-brand" })
+                @*<a class="navbar-brand" href="/">Team Plan-Meeting Management System <span style="font-weight: bold; font-size: 10px;">Version @version</span></a>*@
+                @*<span class="navbar-brand" style="font-weight: bold; font-size: 10px;">Version 1.0.2</span>*@
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    <div class="mms-footer-bar">
+        <footer class="footer-content">
+            <center>Copyright © @DateTime.Now.Year <a href="https://www.cgvakindia.com//">CG-VAK Softwares Exports Ltd</a>. All rights reserved.</center>
+            <p align="right">Version 1.0.3</p>
+        </footer>       
+    </div>
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*<script src="~/Scripts/sidebar_menu.js"></script>*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
