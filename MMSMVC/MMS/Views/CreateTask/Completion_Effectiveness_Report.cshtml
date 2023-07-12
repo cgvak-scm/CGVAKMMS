@@ -49,8 +49,6 @@
                                     <div class="input-group">
                                         <button type="button" id="btnExport" class="btn btn-primary btn-sm">Export to Excel</button>
                                     </div>
-
-
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="input-group">
@@ -74,49 +72,48 @@
                     <div id="task-show-result">
 
                         @{
-                            @*if (ViewBag.MeetingParticipants != null)
-                                {
-                                    <h4 class='task-title alert-warning'>Time Taken For Completion</h4>
+                        @*if (ViewBag.MeetingParticipants != null)
+                        {
+                        <h4 class='task-title alert-warning'>Time Taken For Completion</h4>
 
-                                    <table id="cn_Task_res" class="table table-bordered  col-md-12 col-sm-12 tblTaskPaging ">
-                                        <tr>
-                                            <th>Task Priority</th>
-                                            <th>Total Tasks Assigned </th>
-                                            <th>Total Completed or Exceeded Target Date</th>
-                                            <th>Ontime (No of tasks)</th>
-                                            <th>Delayed (No of Tasks)</th>
-                                            <th>% Ontime</th>
-                                        </tr>
+                        <table id="cn_Task_res" class="table table-bordered  col-md-12 col-sm-12 tblTaskPaging ">
+                            <tr>
+                                <th>Task Priority</th>
+                                <th>Total Tasks Assigned </th>
+                                <th>Total Completed or Exceeded Target Date</th>
+                                <th>Ontime (No of tasks)</th>
+                                <th>Delayed (No of Tasks)</th>
+                                <th>% Ontime</th>
+                            </tr>
 
-                                        @{
-                                            foreach (var items in ViewBag.MeetingParticipants)
-                                            {
+                            @{
+                            foreach (var items in ViewBag.MeetingParticipants)
+                            {
+                            <tr>
+                                <td>
+                                    @items.Participant
+                                </td>
+                                <td>
+                                    @items.Total
+                                </td>
+                                <td>
+                                    @items.Completed
+                                </td>
+                                <td>
+                                    @items.OnTime
+                                </td>
+                                <td>
+                                    @items.Delayed
+                                </td>
+                                <td>
+                                    @items.OnTime%
+                                </td>
+                            </tr>
 
-                                                <tr>
-                                                    <td>
-                                                        @items.Participant
-                                                    </td>
-                                                    <td>
-                                                        @items.Total
-                                                    </td>
-                                                    <td>
-                                                        @items.Completed
-                                                    </td>
-                                                    <td>
-                                                        @items.OnTime
-                                                    </td>
-                                                    <td>
-                                                        @items.Delayed
-                                                    </td>
-                                                    <td>
-                                                        @items.OnTime%
-                                                    </td>
-                                                </tr>
-
-                                            }
-                                        }
-                                    </table>
-                                            }*@
+                            }
+                            }
+                        </table>
+                        }*@
                         }
                     </div>
                 </div>
@@ -132,10 +129,10 @@
 @section Scripts
 {
     @Scripts.Render("~/bundles/multiselect")
-    <script src="~/Scripts/moment.min.js"></script>
-    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
-    <script src="~/Scripts/jquery.table2excel.min.js"></script>
-    <link href="~/Scripts/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<script src="~/Scripts/jquery.table2excel.min.js"></script>
+<link href="~/Scripts/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 }
 
 <script type="text/javascript">
@@ -194,10 +191,6 @@
                 var dt = new Date(selected);
                 dt.setDate(dt.getDate() + 1);
                 $(".toDate").datepicker("option", "minDate", dt);
-
-
-
-
             }
         });
 
@@ -215,11 +208,9 @@
                 //dt.setDate(dt.getDate() + 1);
                 //$(".toDate").datepicker("option", "minDate", dt);
 
-
                var end = $('.toDate').val();
 
                 $.get('@Url.Action("Completion_Effectiveness_Report", "CreateTask")', { end: end });
-
             }
         });
     });
@@ -240,7 +231,6 @@
         var curr_month = month[d.getMonth()];
         var curr_year = d.getFullYear();
 
-
         $(".toDate").datepicker({
             autoclose: true, changeMonth: true,
             changeYear: true,
@@ -256,7 +246,6 @@
                 //var dt = new Date(selected);
                 //dt.setDate(dt.getDate() + 1);
                 //$(".toDate").datepicker("option", "minDate", dt);
-
 
                  var end = $('.toDate').val();
 
@@ -277,11 +266,8 @@
     $(document).ready(function () {
         window.sessionStorage.clear();
         $("#Participants").val(window.sessionStorage.getItem("Participants"));
- 
+
     });
-
-
-
 
     function fncOpen() {
         $("#divAddComment").modal({ 'backdrop': 'static', 'keyboard': false });
@@ -338,9 +324,7 @@
             var _start_date = $("#assign_start_date").val();
             var _end_date = $("#assign_end_date").val();
 
-
             var participants = $("#Participants option:selected").val();
-
 
             if (participants == "") {
                 participants = 0;
@@ -401,7 +385,6 @@
     });
 
 
-
     function RedAlert(status, completion_date) {
 
         if (status != "Closed") // && status=="In Progress" || status=="Re-opened"
@@ -439,7 +422,6 @@
         }
     };
 
-
     function dividecalculate(a, b, c, d, e, f) {
         var x = parseInt(a + b + c);
         var y = parseInt(a + b + c + d + e + f);
@@ -471,7 +453,12 @@
                 console.log(resultData);
                 $("#wait").remove();
                 var cn_TaskItems = "<h4 class='task-title'>Completion Effectiveness report</h4>";
-                cn_TaskItems += '<table id="cn_Task_res" class="table table-bordered  col-md-12 col-sm-12  ">' +
+
+				let width = screen.width;
+
+				//for general users
+                if (width > '600') {
+				cn_TaskItems += '<table id="cn_Task_res" class="table table-bordered  col-md-12 col-sm-12  ">' +
                          '<th><center>Task Priority</center></th>' +
                         ' <th><center>Total Tasks Assigned</center></th>' +
                          '<th><center>Total Completed or Exceeded Target Date</center></th>' +
@@ -526,10 +513,7 @@
 
                           //"<td>" + '(' + (parseInt(parseInt(percentagecalculation(resultData.LowCompleted, resultData.LowDelay)) + parseInt(percentagecalculation(resultData.MediumCompleted, resultData.MediumDelay)) + parseInt(percentagecalculation(resultData.HighCompleted, resultData.HighDelay))) / 3).toFixed(2) + '%' + ')' + "</td>" +
 
-
-
-
-                          "<td><center>" + '(' + dividecalculate(resultData.HighCompleted, resultData.MediumCompleted, resultData.LowCompleted, resultData.HighDelay, resultData.MediumDelay, resultData.LowDelay) + '%' + ')' + "</center></td>" +
+                            "<td><center>" + '(' + dividecalculate(resultData.HighCompleted, resultData.MediumCompleted, resultData.LowCompleted, resultData.HighDelay, resultData.MediumDelay, resultData.LowDelay) + '%' + ')' + "</center></td>" +
 
                           "</tr>"
                     }
@@ -539,6 +523,70 @@
                 }
                 cn_TaskItems += "</table>";
                 //cn_Task_res
+				}
+
+				//For Mobile Users
+				else{
+				cn_TaskItems += '<table id="cn_Task_res" class="table table-bordered  col-md-12 col-sm-12  ">'
+
+                //$.each(resultData, function (key, val) {
+                var TaskCnt = 0;
+                if (resultData != null) {
+
+                    if (resultData == null) {
+                    }
+                    else {
+
+                        cn_TaskItems += "<tr>" +
+                                "<th>Task Priority</th>" +
+                                "<td>HIGH</td>" +
+                                "<td>MEDIUM</td>" +
+                                "<td>LOW</td>" +
+                                "<td>Total</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                "<th>Total Tasks Assigned</th>"+
+                                "<td>" + parseInt(resultData.HighTotal) + "</td>" +
+                                "<td>" + parseInt(resultData.MediumTotal) + "</td>" +
+                                "<td>" + parseInt(resultData.LowTotal) + "</td>" +
+                                "<td>" + parseInt(resultData.HighTotal + resultData.MediumTotal + resultData.LowTotal) + "</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                "<th>Total Completed or Exceeded Target Date</th>" +
+                                "<td id='comparexceedtargetdate'>" + parseInt(resultData.HighCompleted + resultData.HighDelay) + "</td>" +
+                                "<td id='comparexceedtargetdate'>" + parseInt(resultData.MediumCompleted + resultData.MediumDelay) + "</td>" +
+                                "<td id='comparexceedtargetdate'>" + parseInt(resultData.LowCompleted + resultData.LowDelay) + "</td>" +
+                                "<td>" + parseInt(resultData.HighCompleted + resultData.HighDelay + resultData.MediumCompleted + resultData.MediumDelay + resultData.LowCompleted + resultData.LowDelay) + "</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                "<th>Ontime (No of tasks)</th>" +
+                                "<td id='ontime'>" + parseInt(resultData.HighCompleted) + "</td>" +
+                                "<td id='ontime'>" + parseInt(resultData.MediumCompleted) + "</td>" +
+                                "<td id='ontime'>" + parseInt(resultData.LowCompleted) + "</td>" +
+                                "<td>" + parseInt(resultData.HighCompleted + resultData.MediumCompleted + resultData.LowCompleted) + "</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                "<th>Delayed (No of Tasks)</th>"+
+                                "<td id='delay'>" + parseInt(resultData.HighDelay) + "</td>" +
+                                "<td id='delay'>" + parseInt(resultData.MediumDelay) + "</td>" +
+                                "<td id='delay'>" + parseInt(resultData.LowDelay) + "</td>" +
+                                "<td>" + parseInt(resultData.HighDelay + resultData.MediumDelay + resultData.LowDelay) + "</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                "<th>% Ontime</th>" +
+                                "<td id='%delay'>" + '(' + percentagecalculation(resultData.HighCompleted, resultData.HighDelay) + '%' + ')' + "</td>" +
+                                "<td id='%delay'>" + '(' + percentagecalculation(resultData.MediumCompleted, resultData.MediumDelay) + '%' + ')' + "</td>" +
+                                "<td id='%delay'>" + '(' + percentagecalculation(resultData.LowCompleted, resultData.LowDelay) + '%' + ')' + "</td>" +
+                                "<td>" + '(' + dividecalculate(resultData.HighCompleted, resultData.MediumCompleted, resultData.LowCompleted, resultData.HighDelay, resultData.MediumDelay, resultData.LowDelay) + '%' + ')' + "</td>" +
+                                "</tr>"
+                    }
+                }
+                else {
+                    cn_TaskItems += "<tr><td colspan='9'>No records found</td></tr>";
+                }
+                cn_TaskItems += "</table>";
+                //cn_Task_res
+				}
 
                 if (back == null) {
                     $("#task-show-result").append(cn_TaskItems);
@@ -551,7 +599,8 @@
 
                 //});
             },
-            error: function (xhr, errorType, exception) {
+            error: function (xhr, errorType, exception)
+            {
                 var responseText = jQuery.parseJSON(xhr.responseText);
 
                 console.log(responseText.ExceptionType);
@@ -559,6 +608,5 @@
                 console.log(responseText.Message);
             }
         });
-
     }
 </script>

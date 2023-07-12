@@ -9,275 +9,246 @@
     <div class="panel-heading">
         Create Meeting
     </div>
-        <div class="panel-body">
-            @using (Html.BeginForm("Index", "CreateMeeting", FormMethod.Post, htmlAttributes: new { @class = "meeting-form", @enctype = "multipart/form-data" }))
-            {
+    <div class="panel-body">
+        @using (Html.BeginForm("Index", "CreateMeeting", FormMethod.Post, htmlAttributes: new { @class = "meeting-form", @enctype = "multipart/form-data" }))
+        {
 
-                @Html.ValidationSummary(true, "fill the errors", new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "fill the errors", new { @class = "text-danger" })
 
-                <input type="hidden" class="files" name="files" />
+            <input type="hidden" class="files" name="files" />
 
-                <div class="form-horizontal">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="col-md-6">
+            <div class="form-horizontal">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label("Use Template", htmlAttributes: new { @class = "control-label col-md-4 col-md-5" })
+                            <div class="col-md-6 col-lg-4">
+                                @Html.DropDownList("Template", new SelectList(ViewBag.Template, "meeting_name", "meeting_name"), "--SELECT---", htmlAttributes: new { @class = "form-control template" })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-inline alert alert-warning" style="padding: 8px;">
+
+                        <label>
+                            Meeting Details
+                        </label>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label("Meeting Name", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.mmsMeetingMaster.Meeting_Objective, new { htmlAttributes = new { @class = "form-control required", @id = "meetingObj", @maxlength = "150", @required = "required" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label("Date", htmlAttributes: new { @class = "control-label col-md-2 required" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.mmsMeetingMaster.Meeting_Date, new { htmlAttributes = new { @class = "main_datepicker form-control input-sm ", @id = "meetingDate", @style = "background-color:white;", @required = "required" } })
+
+
+                            </div>
+                            @Html.Label("Time", htmlAttributes: new { @class = "control-label col-md-2 required" })
+
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.mmsMeetingMaster.Meeting_Time, endDateStr, new { htmlattributes = new { @class = " form-control meeting_hours required", @id = "meetingHours", @readonly = "readonly", @required = "required" } })
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label("Meeting Venue", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.mmsMeetingMaster.Meeting_Venue, new { htmlAttributes = new { @class = "form-control required", @id = "meetingVenue", @maxlength = "150", @required = "required" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label("Duration", htmlAttributes: new { @class = "control-label col-md-2 required" })
+                            <div class="col-lg-4 col-md-8">
+                                @Html.EditorFor(model => model.mmsMeetingMaster.Meeting_Duration, new { htmlattributes = new { @class = " form-control Meeting_duration required", @id = "meetingDuration", @readonly = "readonly", @required = "required" } })
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group" id="FileUploaded">
+                            @Html.Label("Attachments if any", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
+                            <div class="col-md-4">
+
+                                <a href="@Url.Action("Index", "Upload")" class="modal-link btn btn-default btn-sm" data-placement="top" data-toggle="tooltip" data-original-title="Upload File">
+                                    Upload file
+                                </a>
+                                <input type="hidden" id="hid_txt" />
+                            </div>
+                        </div>
+                        <div id='dynContent' class="hide">
+                            <h5><b>The files are:</b></h5>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+
+                <div class="col-md-12 col-sm-12">
+
+                    <div class="form-inline alert alert-warning" style="padding: 8px;">
+                        <label>
+                            Participant Details
+                        </label>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-4 required" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(model => model.mmsMeetingMaster.Meeting_Department, new SelectList(ViewBag.Departments, "DepartmentName", "DepartmentName"), "--SELECT---", htmlAttributes: new { @class = "form-control Meeting_Department required" })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.Label("If others specify", htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-lg-4 col-md-8">
+                                @Html.Editor("Meeting_other_dept", new { htmlattributes = new { @class = "form-control Meeting_other_dept" } })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-10 col-md-offset-2">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                @Html.Label("Use Template", htmlAttributes: new { @class = "control-label col-md-4 col-md-5" })
-                                <div class="col-md-6 col-lg-4">
-                                    @Html.DropDownList("Template", new SelectList(ViewBag.Template, "meeting_name", "meeting_name"), "--SELECT---", htmlAttributes: new { @class = "form-control template" })
-
-                                </div>
-                            </div>
-                        </div>                    
-                    </div>
-                </div>
-
-                <div class="form-horizontal">
-
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-inline alert alert-warning" style="padding: 8px;">
-
-                                <label>
-                                    Meeting Details
-                                </label>
-
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.Label("Meeting Name", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
-                                    <div class="col-md-7">
-                                        @Html.EditorFor(model => model.mmsMeetingMaster.Meeting_Objective, new { htmlAttributes = new { @class = "form-control required", @id = "meetingObj", @maxlength = "150", @required = "required" } })
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.Label("Date", htmlAttributes: new { @class = "control-label col-md-2 required" })
-                                    <div class="col-md-4">
-                                        @Html.EditorFor(model => model.mmsMeetingMaster.Meeting_Date, new { htmlAttributes = new { @class = "main_datepicker form-control input-sm ", @id = "meetingDate", @style = "background-color:white;", @required = "required" } })
-
-
-                                    </div>
-                                    @Html.Label("Time", htmlAttributes: new { @class = "control-label col-md-2 required" })
-
-                                    <div class="col-md-4">
-                                        @Html.EditorFor(model => model.mmsMeetingMaster.Meeting_Time, endDateStr, new { htmlattributes = new { @class = " form-control meeting_hours required", @id = "meetingHours", @readonly = "readonly", @required = "required" } })
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.Label("Meeting Venue", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5 required" })
-                                    <div class="col-md-7">
-                                        @Html.EditorFor(model => model.mmsMeetingMaster.Meeting_Venue, new { htmlAttributes = new { @class = "form-control required", @id = "meetingVenue", @maxlength = "150", @required = "required" } })
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.Label("Duration", htmlAttributes: new { @class = "control-label col-md-2 required" })
-                                    <div class="col-lg-4 col-md-8">
-                                        @Html.EditorFor(model => model.mmsMeetingMaster.Meeting_Duration, new { htmlattributes = new { @class = " form-control Meeting_duration required", @id = "meetingDuration", @readonly = "readonly", @required = "required" } })
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-6">
-
-                                <div class="form-group" id="FileUploaded">
-                                    @Html.Label("Attachments if any", htmlAttributes: new { @class = "control-label col-lg-4 col-md-5" })
-                                    <div class="col-md-4">
-
-                                        <a href="@Url.Action("Index", "Upload")" class="modal-link btn btn-default btn-sm" data-placement="top" data-toggle="tooltip" data-original-title="Upload File">
-                                            Upload file
-                                        </a>
-                                        <input type="hidden" id="hid_txt" />
-                                    </div>
-                                </div>
-                                <div id='dynContent' class="hide">
-                                    <h5><b>The files are:</b></h5>
-
-                                </div>
+                                <div class="wait"><img src='../Content/Images/wait.gif' width='100' /></div>
+                                @Html.ListBox("Participants", new SelectList(""), htmlAttributes: new { @class = "form-control " })
                             </div>
                         </div>
 
-
-                    </div>
-
-                <div class="form-horizontal">
-
-                        <div class="col-md-12 col-sm-12">
-
-                            <div class="form-inline alert alert-warning" style="padding: 8px;">
-                                <label>
-                                    Participant Details
-                                </label>
+                        <div class="col-md-4 col-lg-2 col-xs-5">
+                            <div class="form-group" style="margin-left: 0px; margin-right: 0px;">
+                                <input type="button" class="form-control btn-default" value=">>" name="move_next" id="move_nxt" />
+                                <br />
+                                <input type="button" class="form-control btn-default" value="<<" name="move_prev" id="move_prv" />
                             </div>
-
-
-                            <div class="col-md-6">
-
-                                <div class="form-group">
-                                    @Html.Label("Department", htmlAttributes: new { @class = "control-label col-md-4 required" })
-                                    <div class="col-md-7">
-                                        @Html.DropDownListFor(model => model.mmsMeetingMaster.Meeting_Department, new SelectList(ViewBag.Departments, "DepartmentName", "DepartmentName"), "--SELECT---", htmlAttributes: new { @class = "form-control Meeting_Department required" })
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-
-                                <div class="form-group">
-                                    @Html.Label("If others specify", htmlAttributes: new { @class = "control-label col-md-4" })
-                                    <div class="col-lg-4 col-md-8">
-                                        @Html.Editor("Meeting_other_dept", new { htmlattributes = new { @class = "form-control Meeting_other_dept" } })
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-10 col-md-offset-2">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <div class="wait"><img src='../Content/Images/wait.gif' width='100' /></div>
-                                        @Html.ListBox("Participants", new SelectList(""), htmlAttributes: new { @class = "form-control " })
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 col-lg-2 col-xs-5">
-                                    <div class="form-group" style="margin-left: 0px; margin-right: 0px;">
-                                        <input type="button" class="form-control btn-default" value=">>" name="move_next" id="move_nxt" />
-                                        <br />
-                                        <input type="button" class="form-control btn-default" value="<<" name="move_prev" id="move_prv" />
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <div class="participant_wait"><img src='../Content/Images/wait.gif' width='100' /></div>
-                                        @Html.ListBox("Added_Participants", new SelectList(""), htmlAttributes: new { @class = "form-control" })
-                                        @Html.Hidden("hidden_participants")
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.Label("Objective", htmlAttributes: new { @class = "control-label col-md-4" })
-                                    <div class="col-md-7">
-                                        @Html.EditorFor(model => model.mmsMeetingMaster.Meeting_Type, new { htmlAttributes = new { @class = "form-control", @id = "meeting_type", @maxlength = "150", @required = "required" } })
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.Label("Meeting Chairperson", htmlAttributes: new { @class = "control-label col-md-4 required" })
-                                    <div class="col-lg-4 col-md-8">
-                                        @*ViewBag.emp = emp*@
-                                        @*Meetmaster*@
-                                        @*@Html.DropDownListFor(model => model.mmsMeetingMaster.Meeting_Chairperson, new SelectList(""), "--SELECT--", htmlAttributes: new { @class = "form-control meeting_chairperson required ", @id = "chairperson", @name = "chairperson" })*@
-
-                                        @Html.DropDownListFor(model => model.Meetmaster, new SelectList(""), "--SELECT--", htmlAttributes: new { @class = "form-control meeting_chairperson required ", @id = "chairperson", @name = "chairperson" })
-
-
-
-                                        @*@Html.DropDownList("ChairPerson", new SelectList("ViewBag.emp", "", ""), "--SELECT--", htmlAttributes: new { @class = "form-control meeting_chairperson required ", @id = "chairperson", @name = "chairperson" })*@
-
-
-
-                                    </div>
-                                </div>
-                            </div>
-
-
                         </div>
-                    </div>
-
-                <div class="form-horizontal">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="col-md-12">
+                        <div class="col-md-4">
                             <div class="form-group">
-
-                                @Html.Label("Minutes of Meeting", htmlAttributes: new { @class = "control-label col-md-2" })
-
-                                <div class="col-lg-8 col-md-10 col-sm-12">
-                                    @Html.EditorFor(model => model.mmsMeetingMaster.Minutes_Of_Meeting, new { htmlattributes = new { @class = "form-control required tinymce", @id = "minutesOfMeeting" } })
-
-                                </div>
+                                <div class="participant_wait"><img src='../Content/Images/wait.gif' width='100' /></div>
+                                @Html.ListBox("Added_Participants", new SelectList(""), htmlAttributes: new { @class = "form-control" })
+                                @Html.Hidden("hidden_participants")
                             </div>
-                        </div>
-
-                     </div>
-
-                </div>
-
-                    <div class="form-horizontal">
-                        <div class="col-md-12 col-sm-12">
-
-                            <div class="form-inline alert alert-warning" style="padding: 8px;">
-                                <label>
-                                    Tasks/Actions for the Meeting
-                                </label>
-                            </div>
-                            <div class="responsive-table">
-                                <table class="table table-hover table-condensed" id="createTable">
-                                    <tr class="tbl_header">
-                                        <th>Sno</th>
-                                        <th>Tasks/Projects Discussed</th>
-                                        <th>Responsible Person</th>
-                                        <th>Priority</th>
-                                        <th>Completion Date</th>
-                                        <th>Comments</th>
-                                        <th>Category</th>
-                                    </tr>
-                                </table>
-                            </div>
-
-                            <input type="button" value="Add" class="btn" name="add_meeting" id="add_meeting" />
-
-                            <input type="button" value="Delete" class="btn" name="delete_meeting" id="delete_meeting" />
-
-                            <div class="pull-right">
-
-                                @*<input type="submit" value="Create Template & Save" class="btn" name="command" id="save_template_meeting" />*@
-
-                                <input type="submit" value="Save" class="btn" name="command" id="save_meeting" />
-
-                            </div>
-
                         </div>
                     </div>
 
-                    <div id="alertbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-                        <div class="modal-dialog modal-sm" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                    <h5 class="modal-title text-center" id="mySmallModalLabel">Please enter all the fields </h5>
-                                </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label("Objective", htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.mmsMeetingMaster.Meeting_Type, new { htmlAttributes = new { @class = "form-control", @id = "meeting_type", @maxlength = "150", @required = "required" } })
 
                             </div>
                         </div>
                     </div>
-                    }
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label("Meeting Chairperson", htmlAttributes: new { @class = "control-label col-md-4 required" })
+                            <div class="col-lg-4 col-md-8">
+                                @*ViewBag.emp = emp*@
+                                @*Meetmaster*@
+                                @*@Html.DropDownListFor(model => model.mmsMeetingMaster.Meeting_Chairperson, new SelectList(""), "--SELECT--", htmlAttributes: new { @class = "form-control meeting_chairperson required ", @id = "chairperson", @name = "chairperson" })*@
+
+                                @Html.DropDownListFor(model => model.Meetmaster, new SelectList(""), "--SELECT--", htmlAttributes: new { @class = "form-control meeting_chairperson required ", @id = "chairperson", @name = "chairperson" })
+
+                                @*@Html.DropDownList("ChairPerson", new SelectList("ViewBag.emp", "", ""), "--SELECT--", htmlAttributes: new { @class = "form-control meeting_chairperson required ", @id = "chairperson", @name = "chairperson" })*@
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12">
+                        <div class="form-group">
+
+                            @Html.Label("Minutes of Meeting", htmlAttributes: new { @class = "control-label col-md-2" })
+
+                            <div class="col-lg-8 col-md-10 col-sm-12">
+                                @Html.EditorFor(model => model.mmsMeetingMaster.Minutes_Of_Meeting, new { htmlattributes = new { @class = "form-control required tinymce", @id = "minutesOfMeeting" } })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-inline alert alert-warning" style="padding: 8px;">
+                        <label>
+                            Tasks/Actions for the Meeting
+                        </label>
+                    </div>
+                    <div class="responsive-table">
+                        <table class="table table-hover table-condensed" id="createTable">
+                            <tr class="tbl_header">
+                            </tr>
+                        </table>
+                    </div>
+                    <input type="button" value="Add" class="btn" name="add_meeting" id="add_meeting" />
+                    <input type="button" value="Delete" class="btn" name="delete_meeting" id="delete_meeting" />
+                    <div class="pull-right">
+                        @*<input type="submit" value="Create Template & Save" class="btn" name="command" id="save_template_meeting" />*@
+
+                        <input type="submit" value="Save" class="btn" name="command" id="save_meeting" />
+                    </div>
+                </div>
+            </div>
+
+            <div id="alertbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h5 class="modal-title text-center" id="mySmallModalLabel">Please enter all the fields </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
 
 
@@ -290,7 +261,6 @@
 }
 
 
-
 <script>
 
     function getCustomDay(dayStr) {
@@ -301,11 +271,11 @@
             return dayStr;
     }
 
+    var currentIndex = 0;
+    var Table = document.getElementById("createTable");
+
     $(document).ready(function () {
 
-      
-            
-      
         //added for DatePicker to  PREVENT set Meeting date for past Dates
 
         //old CODE--------->
@@ -314,15 +284,12 @@
         var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         var day = d.getDate();
 
-
         var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         var start = new Date();
         start.setFullYear(start.getFullYear() - 70);
         var end = new Date();
         end.setFullYear(end.getFullYear() + 1);
-
-
 
         $('.date').datepicker({ dateFormat: 'dd/M/yy' });
         //var output = (month < 10 ? '0' : '') + month + '/' +
@@ -333,8 +300,6 @@
 
         //original--->
         //$(".datepicker").datepicker({ dateFormat: 'mm-dd-yy', startDate: output, autoclose: true, minDate: 0 });
-
-
 
         //var formarDATE = (day < 10 ? '0' : '') + day + '/' +
              //(month < 10 ? '0' : '') + month + '/' +
@@ -359,13 +324,12 @@
 
         $("body").addClass("active");
 
-
         if ($("html").hasClass("attach-active")) {
             $(this).remove();
         }
 
         $("#meetingObj").change(function () {
-            
+
             var data = 'meetingName=' + $(this).val();
 
             $.post('@Url.Action("CheckMeetingName","Search")', data).success(function (res) {
@@ -378,11 +342,11 @@
         });
         DisableButtons();
 
-        function InitializeDate() {           
+        function InitializeDate() {
             var getDate = new Date();
             getDate.setDate(getDate.getDate());
-         
-            $(".dyn_datepicker").datepicker({                
+
+            $(".dyn_datepicker").datepicker({
                 startDate: $("#meetingDate").val(),
                 changeMonth: true,
                 changeYear: true,
@@ -391,7 +355,6 @@
                 yearRange: 1990 + ':' + end.getFullYear(),
                 //autoclose: true, minDate: 0, dateFormat: "dd/MM/yyyy"
             });
-
 
             $('.dyn_datepicker').keydown(function () { return false; }); // Charles S / 09-Jun-2017 - Keyboard input not to allow
         }
@@ -413,17 +376,17 @@
             }
         }
 
-
         $("#searchMeeting").on('input', function () {
             if ($(this).val() == "") {
                 $("#meetingObj,#meetingDate,#meetingHours,#meetingVenue,#meetingDuration,#meeting_type").val("");
 
             }
-
         });
+
 
         $("#add_meeting").click(function () {
 
+            currentIndex++;
             var startIndex = 0;
             var tableRow = document.getElementById("createTable");
 
@@ -438,67 +401,132 @@
 
             var output = month + '/' + day + '/' + d.getFullYear();
 
-
             var count = tableRow.rows.length;
+            let width = screen.width;
+            var tableString = "";
 
-            for (var i = 1; i <= 1 ; i++) {
-                //original
-                //var tableString = '<tr class=newGen" id="newGen"><td id="newId">' + count + '</td>';
-                //tableString += '<td><textarea class="form-control task text-box single-line" id="mms_meeting_details_Task' + count + '" required name="task' + count + '"  type="text"></textarea></td>';
-                var tableString = '<tr class=newGen" id="newGen"><td id="newId">' + count + '</td>';
-                tableString += '<td><textarea class="form-control task text-box single-line" id="mms_meeting_details_Task' + count + '" required name="task"  type="text" required></textarea></td>';
-
-
-                var selectedOptions = GetSelectedOptions();
-                if (count > 1 && selectedOptions != "undefined") // If add row clicked without Meeting template initially , later selected the same or Chair person selected case - Charles S / 17-Jun-2017
-                {
-                    // selectedOptions = selectedOptions.replace("undefined", "");
-                    for (xyz = 1; xyz < count; xyz++) {
-                        $('.Participant').attr('name', 'Participant' + xyz).append(selectedOptions);
+            //For Desktop Screen
+            if (width > '600')
+            {
+                    if (currentIndex <= 1)
+                    {
+                        tableString = "<tr><th>Sno</th><th>Tasks/Projects Discussed</th><th>Responsible Person</th><th>Priority</th><th>Completion Date</th><th>Comments</th><th>Category</th></tr>";
                     }
-                }
-                //original Commented not able get this value in controller method
-                //tableString += '<td><select class="form-control resp" id="mms_meeting_details_Participant' + count + '" required  name="Participant' + count + '"><option value="">---SELECT---</option>' + selectedOptions + '</select></td>';
+                    else
+                    {
+                        tableString = "";
+                        count = count - 1;
+                    }
+                    //original
+                    //var tableString = '<tr class=newGen" id="newGen"><td id="newId">' + count + '</td>';
+                    //tableString += '<td><textarea class="form-control task text-box single-line" id="mms_meeting_details_Task' + count + '" required name="task' + count + '"  type="text"></textarea></td>';
+                    tableString += '<tr class=newGen" id="newGen"><td id="newId">' + count + '</td>';
+                    tableString += '<td><textarea class="form-control task text-box single-line" id="mms_meeting_details_Task' + count + '" required name="task"  type="text" required></textarea></td>';
 
-                tableString += '<td><select class="form-control resp" id="mms_meeting_details_Participant' + count + '" required  name="Participant"><option value="">---SELECT---</option>' + selectedOptions + '</select></td>';
-                //original Commented not able get this value in controller method
-                //tableString += '<td><select class="form-control priority" id="Priority' + count + '" required name="Priority' + count + '"><option value="">--SELECT--</option>';
+                    var selectedOptions = GetSelectedOptions();
+                    if (count > 1 && selectedOptions != "undefined") // If add row clicked without Meeting template initially , later selected the same or Chair person selected case - Charles S / 17-Jun-2017
+                    {
+                        // selectedOptions = selectedOptions.replace("undefined", "");
+                        for (xyz = 1; xyz < count; xyz++) {
+                            $('.Participant').attr('name', 'Participant' + xyz).append(selectedOptions);
+                        }
+                    }
+                    //original Commented not able get this value in controller method
+                    //tableString += '<td><select class="form-control resp" id="mms_meeting_details_Participant' + count + '" required  name="Participant' + count + '"><option value="">---SELECT---</option>' + selectedOptions + '</select></td>';
 
-                tableString += '<td><select class="form-control priority" id="Priority" required name="Priority"><option value="">--SELECT--</option>';
+                    tableString += '<td><select class="form-control resp" id="mms_meeting_details_Participant' + count + '" required  name="Participant"><option value="">---SELECT---</option>' + selectedOptions + '</select></td>';
+                    //original Commented not able get this value in controller method
+                    //tableString += '<td><select class="form-control priority" id="Priority' + count + '" required name="Priority' + count + '"><option value="">--SELECT--</option>';
 
-                tableString += '<option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select>';
-                //original Commented not able get this value in controller method
-                //tableString += '<td><input class="dyn_datepicker form-control" required id="mms_meeting_details_Completion_Date' + count + '" min="' + output + '" name="Completion_Date' + count + '" type="datetime" autocomplete="off"></td>';
+                    tableString += '<td><select class="form-control priority" id="Priority" required name="Priority"><option value="">--SELECT--</option>';
 
-                tableString += '<td><input class="dyn_datepicker form-control" id="mms_meeting_details_Completion_Date' + count + '" name="Completion_Date" type="datetime" autocomplete="off" required></td>';
+                    tableString += '<option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select>';
+                    //original Commented not able get this value in controller method
+                    //tableString += '<td><input class="dyn_datepicker form-control" required id="mms_meeting_details_Completion_Date' + count + '" min="' + output + '" name="Completion_Date' + count + '" type="datetime" autocomplete="off"></td>';
 
-                //original Commented not able get this value in controller method
-                //tableString += '<td><textarea class=" form-control comments text-box single-line"  id="mms_meeting_details_Comments' + count + '" name="Comments' + count + '" type="text" /></td>';
+                    tableString += '<td><input class="dyn_datepicker form-control" id="mms_meeting_details_Completion_Date' + count + '" name="Completion_Date" type="datetime" autocomplete="off" required></td>';
 
-                tableString += '<td><textarea class=" form-control comments text-box single-line"  id="mms_meeting_details_Comments" name="Comments" type="text" /></td>';
+                    //original Commented not able get this value in controller method
+                    //tableString += '<td><textarea class=" form-control comments text-box single-line"  id="mms_meeting_details_Comments' + count + '" name="Comments' + count + '" type="text" /></td>';
 
-                var listItems = [];
-                listItems.push("<select  class='form-control' id='category" + count + "' required name='Category' ><option value=''>--SELECT--</option>");
+                    tableString += '<td><textarea class=" form-control comments text-box single-line"  id="mms_meeting_details_Comments" name="Comments" type="text" /></td>';
 
-                var category =  @Html.Raw(Json.Encode(ViewBag.Categories))
+                    var listItems = [];
+                    listItems.push("<select  class='form-control' id='category" + count + "' required name='Category' ><option value=''>--SELECT--</option>");
 
-                $.each(category, function (key, val) {
+                    var category =  @Html.Raw(Json.Encode(ViewBag.Categories))
 
-                    listItems.push('<option value="' + val.ID + '">' + val.CategoryName + '</option>');
+                        $.each(category, function (key, val) {
 
-                });
+                            listItems.push('<option value="' + val.ID + '">' + val.CategoryName + '</option>');
 
-                listItems.push("</select>");
+                        });
 
-                tableString += "<td>" + listItems + "</td>";
-                tableString += "<input type=hidden id='reviewdate" + count + "' required name='reviewdate'><input type=hidden id='reviewFreq" + count + "' required name='reviewFreq'>"
+                    listItems.push("</select>");
 
-                tableString += "</tr>";
-                $("#createTable").append(tableString);
+                    tableString += "<td>" + listItems + "</td>";
+                    tableString += "<input type=hidden id='reviewdate" + count + "' required name='reviewdate'><input type=hidden id='reviewFreq" + count + "' required name='reviewFreq'>"
 
-                InitializeDate();
+                    tableString += "</tr>";
+                    $("#createTable").append(tableString);
 
+                    InitializeDate();
+            }
 
+            //For Mobile Screens
+            else
+            {
+                tableString += '<tr id="newGen"><td>Sno</td><td id="newId">' + currentIndex + '</td>';
+                tableString += '<tr><td>Tasks/Projects Discussed</td><td><textarea class="form-control task text-box single-line" id="mms_meeting_details_Task' + count + '" required name="task"  type="text" required></textarea></td></tr>';
+
+                    var selectedOptions = GetSelectedOptions();
+                    if (count > 1 && selectedOptions != "undefined") // If add row clicked without Meeting template initially , later selected the same or Chair person selected case - Charles S / 17-Jun-2017
+                    {
+                        // selectedOptions = selectedOptions.replace("undefined", "");
+                        for (xyz = 1; xyz < count; xyz++) {
+                            $('.Participant').attr('name', 'Participant' + xyz).append(selectedOptions);
+                        }
+                    }
+                    //original Commented not able get this value in controller method
+                    //tableString += '<td><select class="form-control resp" id="mms_meeting_details_Participant' + count + '" required  name="Participant' + count + '"><option value="">---SELECT---</option>' + selectedOptions + '</select></td>';
+
+                    tableString += '<tr><td>Responsible Person</td><td><select class="form-control resp" id="mms_meeting_details_Participant' + count + '" required  name="Participant"><option value="">---SELECT---</option>' + selectedOptions + '</select></td></tr>';
+                    //original Commented not able get this value in controller method
+                    //tableString += '<td><select class="form-control priority" id="Priority' + count + '" required name="Priority' + count + '"><option value="">--SELECT--</option>';
+
+                    tableString += '<tr><td>Priority</td><td><select class="form-control priority" id="Priority" required name="Priority"><option value="">--SELECT--</option>';
+
+                    tableString += '<option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select></tr>';
+                    //original Commented not able get this value in controller method
+                    //tableString += '<td><input class="dyn_datepicker form-control" required id="mms_meeting_details_Completion_Date' + count + '" min="' + output + '" name="Completion_Date' + count + '" type="datetime" autocomplete="off"></td>';
+
+                    tableString += '<tr><td>Completion Date</td><td><input class="dyn_datepicker form-control" id="mms_meeting_details_Completion_Date' + count + '" name="Completion_Date" type="datetime" autocomplete="off" required></td></tr>';
+
+                    //original Commented not able get this value in controller method
+                    //tableString += '<td><textarea class=" form-control comments text-box single-line"  id="mms_meeting_details_Comments' + count + '" name="Comments' + count + '" type="text" /></td>';
+
+                    tableString += '<tr><td>Comments</td><td><textarea class=" form-control comments text-box single-line"  id="mms_meeting_details_Comments" name="Comments" type="text" /></td></tr>';
+
+                    var listItems = [];
+                    listItems.push("<select  class='form-control' id='category" + count + "' required name='Category' ><option value=''>--SELECT--</option>");
+
+                    var category =  @Html.Raw(Json.Encode(ViewBag.Categories))
+
+                        $.each(category, function (key, val) {
+
+                            listItems.push('<option value="' + val.ID + '">' + val.CategoryName + '</option>');
+
+                        });
+
+                    listItems.push("</select>");
+
+                    tableString += "<tr><td>Category</td><td>" + listItems + "</td></tr>";
+                    tableString += "<input type=hidden id='reviewdate" + count + "' required name='reviewdate'><input type=hidden id='reviewFreq" + count + "' required name='reviewFreq'>"
+
+                    tableString += "</tr>";
+                    $("#createTable").append(tableString);
+
+                    InitializeDate();
             }
 
             $("#save_meeting").attr("disabled", false);
@@ -507,9 +535,22 @@
 
 
         $("#delete_meeting").click(function () {
-
-            $("#createTable tr:last").not('.tbl_header').remove();
-            DisableButtons();
+            var tablerow = document.getElementById("createTable");  //dynamic table creation
+            var count = tablerow.rows.length;
+            if (count > 7) {
+                for (var i = 1; i <= 7; i++) {
+                    $("#createTable tr:last").not('.tbl_header').remove();
+                    if (Table.rows.length < 2) {
+                        $("#save_meeting").attr('disabled', true);
+                    }
+                }
+            }
+            else {
+                $("#createTable tr:last").not('.tbl_header').remove();
+                if (Table.rows.length < 2) {
+                    $("#save_meeting").attr('disabled', true);
+                }
+            }
         });
 
         //$("#save_meeting").click(function () {
@@ -532,10 +573,8 @@
           $("#save_meeting").parents("form").submit();
         });
 
-        
-
         var TemplateChangeEvent = function (selected) {
-            
+
             if (selected != "") {
                 var selectedMeeting = selected;
                 var Meetingobjective = @Html.Raw(Json.Encode(ViewBag.selectedMeetingobjective));
@@ -605,7 +644,6 @@
                 $("#Participants,#Added_Participants").text("");
 
                 $("#chairperson").find("option").not(":first").remove();
-
             }
         }
 
@@ -617,7 +655,6 @@
                 $(this).remove();
             });
 
-
             //Template
             $("#Template").on('change', function () {
                 window.sessionStorage.setItem("Template", this.value);
@@ -626,7 +663,6 @@
             $(document).ready(function () {
                 $("#Template").val(window.sessionStorage.getItem("Template"));
             });
-
 
             $.ajax({
                 url: '@Url.Action("GetSelectedParticipantId","Search")',
@@ -655,7 +691,6 @@
                             Employee_Id: val.EmployeeICode,
                             Employee_Name: val.participants
                         });
-
                     });
 
                     $("#meeting_type").attr("readonly", "true");
@@ -723,14 +758,14 @@
 
             if($(this).val() != ""){
                 TemplateChangeEvent($(this).val());
-            }                    
+            }
         });
-          
-        var selectedMeeting =  @Html.Raw(Json.Encode(ViewBag.selectedMeeting));        
+
+        var selectedMeeting =  @Html.Raw(Json.Encode(ViewBag.selectedMeeting));
         if (selectedMeeting != "") {
 
             TemplateChangeEvent(selectedMeeting);
-        }                       
+        }
     });
 
     tinymce.init({
@@ -744,8 +779,3 @@
         toolbar2: "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
     });
 </script>
-
-
-
-
-

@@ -254,8 +254,6 @@
     </div>
 </div>
 
-
-
 <div id="review-success" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
@@ -344,8 +342,8 @@
     }
 
    $(".listbox").multiselect({
-       includeSelectAllOption: true       
-    });   
+       includeSelectAllOption: true
+    });
 
     $(".CategoryTypeID").on('change', function () {
         window.sessionStorage.setItem("CategoryTypeID", this.value);
@@ -498,7 +496,7 @@
     var ending;
 
     function ViewTaskClicked() {
-        
+
         var PriorityType = $("#Priority option:selected").text();
 
         var Category_id = $(".CategoryTypeID option:selected").val();
@@ -511,8 +509,7 @@
         if (Participants == "") {
             Participants = 0;
         }
-                                    
-        
+
         var FrequencyId = $('select#ReviewFrequencyID').val();
 
         if (FrequencyId != null) {
@@ -525,7 +522,6 @@
         if (FrequencyId == "") {
             FrequencyId = 0;
         }
-       
 
         var Start_date;
         var end_date;
@@ -554,83 +550,159 @@
                 data: JSON.stringify({ "startDate": Start_date, "endDate": end_date, "Category_id": Category_id, "Participant": Participants, "PriorityType": PriorityType, "FrequencyId": FrequencyId }),
                 dataType: "json",
                 contentType: "Application/json;charset=utf-8",
-                success: function (resData) {
-                    if (resData == null || resData == "") {
-                        TableStr = "<table class='table assigned'><tr><td>No Task</td></tr></table>";
-                    }
-                    else {
-                        var TableStr = "<table class='assigned table table-bordered  col-md-12 col-sm-12 '><thead><tr>" +
-                            "<th style=''><label class='container1'><input type='checkbox' id='review-select-all' ><span class='checkmark'></span></label></th>" +
-                              "<th style=''><center>Task/Action</center> </th>" +
-                               "<th style=''><center>Last Added Comment</center></th>" +
-                             " <th><center>Assigned To</center></th>" +
-                              '<th><center>Last Reviewed Date</center></th>' +
-                        " <th><center>Assigned Date</center></th>" +
-                        " <th><center>Overdue days</center></th>" +
+                success: function (resData)
+                {
+                    let width = screen.width;
 
-                    '<th><center>Comment / Review</center></th></tr></thead>';
+                    //For Desktop Screen
+                    if (width > '600')
+                    {
+                        if (resData == null || resData == "")
+                        {
+                            TableStr = "<table class='table assigned'><tr><td>No Task</td></tr></table>";
+                        }
+                        else
+                        {
+                            var TableStr = "<table class='assigned table table-bordered  col-md-12 col-sm-12 '><thead><tr>" +
+                                "<th style=''><label class='container1'><input type='checkbox' id='review-select-all' ><span class='checkmark'></span></label></th>" +
+                                "<th style=''><center>Task/Action</center> </th>" +
+                                "<th style=''><center>Last Added Comment</center></th>" +
+                                " <th><center>Assigned To</center></th>" +
+                                '<th><center>Last Reviewed Date</center></th>' +
+                                " <th><center>Assigned Date</center></th>" +
+                                " <th><center>Overdue days</center></th>" +
 
-                        $.each(resData, function (resKey, resText) {
-                            var CompletedDate = resText.Completion_Date;
-                            var JsComplDate = new Date(CompletedDate);
-                            var JsComlGetDate = getCustomDay(JsComplDate.getDate());
-                            var JsComlMonth = month[JsComplDate.getMonth()];
-                            var JsComlYear = JsComplDate.getFullYear();
-                            var JsCompletedDate = JsComlGetDate + "-" + JsComlMonth + "-" + JsComlYear;
+                                '<th><center>Comment / Review</center></th></tr></thead>';
 
-                            var ReviewingDate = new Date(parseInt(resText.Review_Date.substr(6)));
-                            var JsRevDate = new Date(ReviewingDate);
-                            var JsRevGetDate = getCustomDay(JsRevDate.getDate());
-                            var JsRevMonth = month[JsRevDate.getMonth()];
-                            var JsRevYear = JsRevDate.getFullYear();
-                            var JsReviewDate = JsRevGetDate + "-" + JsRevMonth + "-" + JsRevYear;
+                            $.each(resData, function (resKey, resText) {
+                                var CompletedDate = resText.Completion_Date;
+                                var JsComplDate = new Date(CompletedDate);
+                                var JsComlGetDate = getCustomDay(JsComplDate.getDate());
+                                var JsComlMonth = month[JsComplDate.getMonth()];
+                                var JsComlYear = JsComplDate.getFullYear();
+                                var JsCompletedDate = JsComlGetDate + "-" + JsComlMonth + "-" + JsComlYear;
 
-                            var AssignedDate = new Date(parseInt(resText.Assigned_Date.substr(6)));
-                            var JsAssDate = new Date(AssignedDate);
-                            var JsAssGetDate = getCustomDay(JsAssDate.getDate());
-                            var JsAssMonth = month[JsAssDate.getMonth()];
-                            var JsAssYear = JsAssDate.getFullYear();
-                            var JsAssignedDate = JsAssGetDate + "-" + JsAssMonth + "-" + JsAssYear;
+                                var ReviewingDate = new Date(parseInt(resText.Review_Date.substr(6)));
+                                var JsRevDate = new Date(ReviewingDate);
+                                var JsRevGetDate = getCustomDay(JsRevDate.getDate());
+                                var JsRevMonth = month[JsRevDate.getMonth()];
+                                var JsRevYear = JsRevDate.getFullYear();
+                                var JsReviewDate = JsRevGetDate + "-" + JsRevMonth + "-" + JsRevYear;
 
-                            var reviewnumber = monthnumber(JsRevMonth);
-                            var mydatenumber = monthnumber(curr_month);
+                                var AssignedDate = new Date(parseInt(resText.Assigned_Date.substr(6)));
+                                var JsAssDate = new Date(AssignedDate);
+                                var JsAssGetDate = getCustomDay(JsAssDate.getDate());
+                                var JsAssMonth = month[JsAssDate.getMonth()];
+                                var JsAssYear = JsAssDate.getFullYear();
+                                var JsAssignedDate = JsAssGetDate + "-" + JsAssMonth + "-" + JsAssYear;
+
+                                var reviewnumber = monthnumber(JsRevMonth);
+                                var mydatenumber = monthnumber(curr_month);
 
 
-                            if (resText.Comments == "") {
-                                resText.Comments = "No Comment"
-                            }
+                                if (resText.Comments == "") {
+                                    resText.Comments = "No Comment"
+                                }
 
-                            if (resText.Category == null) {
-                                resText.Category = "";
-                            }
-                            if (resText != "") {
+                                if (resText.Category == null) {
+                                    resText.Category = "";
+                                }
+                                if (resText != "") {
 
-                                TableStr += "<tr>" +
-                                    "<td><label class='container1'><input type='checkbox' class='checkAll' id='review-select' meetingid=" + resText.Meeting_Id + " taskid=" + resText.Task_Id + "><span class='checkmark'></span></label></td>" +
-                                    '<td><a class="BindComments" onclick="CallGetComments(' + resText.Meeting_Id + ',' + resText.Task_Id + ')">' + resText.Task + '</a></td>' +
-                                    '<td><align-left>' + resText.Comments + '</align-left><a class="BindComments" onclick="CallGetComments(' + resText.Meeting_Id + ',' + resText.Task_Id + ')"> <p class="notifyCnt">' + GetCount(resText.Task_Id, resText.Meeting_Id) + '</p></a></td>' +
-                                    //"<td><align-left>" + resText.Comments + "</align-left> <p class='notifyCnt'>" + GetCount(resText.Task_Id, resText.Meeting_Id) + "</p></td>" +
+                                    TableStr += "<tr>" +
+                                        "<td><label class='container1'><input type='checkbox' class='checkAll' id='review-select' meetingid=" + resText.Meeting_Id + " taskid=" + resText.Task_Id + "><span class='checkmark'></span></label></td>" +
+                                        '<td><a class="BindComments" onclick="CallGetComments(' + resText.Meeting_Id + ',' + resText.Task_Id + ')">' + resText.Task + '</a></td>' +
+                                        '<td><align-left>' + resText.Comments + '</align-left><a class="BindComments" onclick="CallGetComments(' + resText.Meeting_Id + ',' + resText.Task_Id + ')"> <p class="notifyCnt">' + GetCount(resText.Task_Id, resText.Meeting_Id) + '</p></a></td>' +
+                                        //"<td><align-left>" + resText.Comments + "</align-left> <p class='notifyCnt'>" + GetCount(resText.Task_Id, resText.Meeting_Id) + "</p></td>" +
 
                                         "<td><align-left>" + resText.Chairperson + "</align-left></td>" +
                                         "<td><center>" + JsReviewDate + "</center></td>" +
 
-                                       "<td><center>" + JsAssignedDate + "</center></td>" +
+                                        "<td><center>" + JsAssignedDate + "</center></td>" +
 
                                         "<td><center>" + resText.Overdue_days + "</center></td>"
 
-  + "<td><center><a href='@Url.Action("ShowComments", "ReviewTasks")?meetingId=" + resText.Meeting_Id + "&taskId=" + resText.Task_Id + "'  class='modal-link btn btn-default btn-sm' data-placement='top'>Comment</a>       <a data-toggle='modal' data-target='#review-alert' class='ReviewClick btn btn-default btn-sm' meetingid=" + resText.Meeting_Id + " taskid=" + resText.Task_Id + "><b>Review</b></a></center></td>"
-                            }
-                        });
+                                        + "<td><center><a href='@Url.Action("ShowComments", "ReviewTasks")?meetingId=" + resText.Meeting_Id + "&taskId=" + resText.Task_Id + "'  class='modal-link btn btn-default btn-sm' data-placement='top'>Comment</a>       <a data-toggle='modal' data-target='#review-alert' class='ReviewClick btn btn-default btn-sm' meetingid=" + resText.Meeting_Id + " taskid=" + resText.Task_Id + "><b>Review</b></a></center></td>"
+                                }
+                            });
+                        }
                     }
 
-                    $(".result_grid").append(TableStr);
+                    //For Mobile Screen
+                    else
+                    {
+                        var TableStr = "";
 
-                    InitializePaging();
+                        if (resData == null || resData == "")
+                        {
+                            TableStr += "<table class='table assigned'><tr><td>No Task</td></tr></table>";
+                        }
+                        else
+                        {
+                            TableStr += "<table class='assigned table table-bordered  row-md-12 row-sm-12 '>" 
+
+                            $.each(resData, function (resKey, resText) {
+                                var CompletedDate = resText.Completion_Date;
+                                var JsComplDate = new Date(CompletedDate);
+                                var JsComlGetDate = getCustomDay(JsComplDate.getDate());
+                                var JsComlMonth = month[JsComplDate.getMonth()];
+                                var JsComlYear = JsComplDate.getFullYear();
+                                var JsCompletedDate = JsComlGetDate + "-" + JsComlMonth + "-" + JsComlYear;
+
+                                var ReviewingDate = new Date(parseInt(resText.Review_Date.substr(6)));
+                                var JsRevDate = new Date(ReviewingDate);
+                                var JsRevGetDate = getCustomDay(JsRevDate.getDate());
+                                var JsRevMonth = month[JsRevDate.getMonth()];
+                                var JsRevYear = JsRevDate.getFullYear();
+                                var JsReviewDate = JsRevGetDate + "-" + JsRevMonth + "-" + JsRevYear;
+
+                                var AssignedDate = new Date(parseInt(resText.Assigned_Date.substr(6)));
+                                var JsAssDate = new Date(AssignedDate);
+                                var JsAssGetDate = getCustomDay(JsAssDate.getDate());
+                                var JsAssMonth = month[JsAssDate.getMonth()];
+                                var JsAssYear = JsAssDate.getFullYear();
+                                var JsAssignedDate = JsAssGetDate + "-" + JsAssMonth + "-" + JsAssYear;
+
+                                var reviewnumber = monthnumber(JsRevMonth);
+                                var mydatenumber = monthnumber(curr_month);
+
+
+                                if (resText.Comments == "") {
+                                    resText.Comments = "No Comment"
+                                }
+
+                                if (resText.Category == null) {
+                                    resText.Category = "";
+                                }
+                                if (resText != "")
+                                {
+                                    TableStr += 
+                                        "<tr><th style=''><label class='container1'><input type='checkbox' id='review-select-all' ><span class='checkmark'></span></label></th><td><label class='container1'><input type='checkbox' class='checkAll' id='review-select' meetingid=" + resText.Meeting_Id + " taskid=" + resText.Task_Id + "><span class='checkmark'></span></label></td></tr>" +
+                                        "<tr><th style=''>Task/Action</th><td><a class='BindComments' onclick='CallGetComments(' + resText.Meeting_Id + ',' + resText.Task_Id + ')'>' + resText.Task + '</a></td></tr>" +
+                                        "<tr><th style=''>Last Added Comment</th><td><align-left>' + resText.Comments + '</align-left><a class='BindComments' onclick='CallGetComments(' + resText.Meeting_Id + ',' + resText.Task_Id + ')'> <p class='notifyCnt'>' + GetCount(resText.Task_Id, resText.Meeting_Id) + '</p></a></td></tr>" +
+                                        //"<td><align-left>" + resText.Comments + "</align-left> <p class='notifyCnt'>" + GetCount(resText.Task_Id, resText.Meeting_Id) + "</p></td>" +
+
+                                        "<tr><th>Assigned To</th><td><align-left>" + resText.Chairperson + "</align-left></td></tr>" +
+                                        "<tr><th>Last Reviewed Date</th><td>" + JsReviewDate + "</td></tr>" +
+
+                                        "<tr><th>Assigned Date</th><td>" + JsAssignedDate + "</td></tr>" +
+
+                                        "<tr><th>Overdue days</th><td>" + resText.Overdue_days + "</td></tr>"
+
+                                      + "<tr><th>Comment / Review</th><td><a href='@Url.Action("ShowComments", "ReviewTasks")?meetingId=" + resText.Meeting_Id + "&taskId=" + resText.Task_Id + "'  class='modal-link btn btn-default btn-sm' data-placement='top'>Comment</a>       <a data-toggle='modal' data-target='#review-alert' class='ReviewClick btn btn-default btn-sm' meetingid=" + resText.Meeting_Id + " taskid=" + resText.Task_Id + "><b>Review</b></a></td></tr>"
+                                }
+                            });
+                        }
+
+                    }
+
+                        $(".result_grid").append(TableStr);
+
+                        InitializePaging();
                 },
-                error: function (resData, txtStatus, jqhr) {
-                    console.log(resData.error);
-                }
-
+                    error: function (resData, txtStatus, jqhr) {
+                        console.log(resData.error);
+                    }
             });
         }
         $("#bindTaskComments").hide();
@@ -690,7 +762,6 @@
                     alert("Please try again");
                 }
             });
-
         }
         else
         {

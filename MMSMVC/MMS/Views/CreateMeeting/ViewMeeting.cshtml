@@ -90,7 +90,7 @@
 }
 
 <script type="text/javascript">
-    
+
     var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     var start = new Date();
@@ -216,7 +216,7 @@
 
 
         function getMeetingName() {
-            
+
             $('#tasks_meeting_name').children('option:not(:first)').remove();
 
             var _assign_start_dt = $("#assign_start_date").val();
@@ -238,59 +238,121 @@
                     contentType: 'Application/JSON;charset=utf-8',
                     success: function (data) {
 
+                        let width = screen.width;
 
-                        var grid = $("#grid-show-result");
+                        //for general users
+                        if (width > '600') {
+                            var grid = $("#grid-show-result");
 
-                        var TableStr = '<table id="Assigned" class="table table-bordered assigned col-md-12 col-sm-12 "><thead><tr>' +
-                                      '<th><center>Meeting Objective</center></th>' +
-                                     ' <th><center>Chairperson</center></th>' +
-                                     '<th><center>Date</center></th>' +
-                                      '<th><center>Time</center></th>' +
-                                      '<th><center>Duration</center></th>' +
-                                      '<th><center>Meeting Department</center></th>' +
-                                       '<th><center>Venue</center></th>' +
-                                       '<th><center>No Of Participants</center></th></tr></thead>';
+                            var TableStr = '<table id="Assigned" class="table table-bordered assigned col-md-12 col-sm-12 "><thead><tr>' +
+                                '<th><center>Meeting Objective</center></th>' +
+                                ' <th><center>Chairperson</center></th>' +
+                                '<th><center>Date</center></th>' +
+                                '<th><center>Time</center></th>' +
+                                '<th><center>Duration</center></th>' +
+                                '<th><center>Meeting Department</center></th>' +
+                                '<th><center>Venue</center></th>' +
+                                '<th><center>No Of Participants</center></th></tr></thead>';
 
-                        if (data == null || data == "") {
-                            TableStr += "<tr><td colspan='8'>No records found</td></tr>";
-                        }
-                        else {
-                            var _meeting_department = $("#meeting_department option:selected").text();
+                            if (data == null || data == "") {
+                                TableStr += "<tr><td colspan='8'>No records found</td></tr>";
+                            }
+                            else {
+                                var _meeting_department = $("#meeting_department option:selected").text();
 
-                            $.each(data, function (taskkey, taskval) {
+                                $.each(data, function (taskkey, taskval) {
 
-                                if (taskval.Meeting_Chairperson == null)
-                                    taskval.Meeting_Chairperson = "";
-                                if (taskval.Meeting_Department == null)
-                                    taskval.Meeting_Department = "";
-                                if (taskval.Meeting_Venue == null)
-                                    taskval.Meeting_Venue = "";
-                                if (taskval.Meeting_No_Of_Participants == null)
-                                    taskval.Meeting_No_Of_Participants = "";
+                                    if (taskval.Meeting_Chairperson == null)
+                                        taskval.Meeting_Chairperson = "";
+                                    if (taskval.Meeting_Department == null)
+                                        taskval.Meeting_Department = "";
+                                    if (taskval.Meeting_Venue == null)
+                                        taskval.Meeting_Venue = "";
+                                    if (taskval.Meeting_No_Of_Participants == null)
+                                        taskval.Meeting_No_Of_Participants = "";
 
-                                //Session["LoggedEmployeeName"].ToString()
+                                    //Session["LoggedEmployeeName"].ToString()
                                 @*@HttpContext.Current.Session["LoggedEmployeeName"].ToString();*@
 
-                                TableStr += "<tr class='alert-info'>" +
+                                    TableStr += "<tr class='alert-info'>" +
                                                   @*"<td>" +"<a href='@Url.Action("EditViewMeetingDetails","CreateMeeting")?meetingId=" + taskval.Meeting_Id + "' class='modal-link btn btn-sm' data-toggle='tooltip' title='Edit' data-placement='top' >" + taskval.Meeting_Objective + "</a></td>"+*@
 
-                                    "<td>" + "<a href='@Url.Action("EditViewMeetingDetails","CreateMeeting")?meetingId=" + taskval.Meeting_Id + "' class='modal-link btn btn-sm' data-toggle='tooltip' title='Edit' data-placement='top' >" + taskval.Meeting_Objective + "</a></td>"+
+                                        "<td>" + "<a href='@Url.Action("EditViewMeetingDetails","CreateMeeting")?meetingId=" + taskval.Meeting_Id + "' class='modal-link btn btn-sm' data-toggle='tooltip' title='Edit' data-placement='top' >" + taskval.Meeting_Objective + "</a></td>" +
 
-                                                     "<td>" + taskval.Meeting_Chairperson + "</td>" +
-                                                     "<td><center>" + getCustomDay(taskval.Meeting_Date) + "</center></td>" +
-                                                     "<td><center>" + taskval.Meeting_Time + "</center></td>" +
-                                                     "<td><center>" + taskval.Meeting_Duration + "</center></td>" +
-                                                      "<td>" + taskval.Meeting_Department + "</td>" +
-                                                        "<td>" + taskval.Meeting_Venue + "</td>" +
-                                                     "<td><center>" + taskval.Meeting_No_Of_Participants + "</center></td>"
-                                "</tr>";
-                                //}
-                            });
+                                        "<td>" + taskval.Meeting_Chairperson + "</td>" +
+                                        "<td><center>" + getCustomDay(taskval.Meeting_Date) + "</center></td>" +
+                                        "<td><center>" + taskval.Meeting_Time + "</center></td>" +
+                                        "<td><center>" + taskval.Meeting_Duration + "</center></td>" +
+                                        "<td>" + taskval.Meeting_Department + "</td>" +
+                                        "<td>" + taskval.Meeting_Venue + "</td>" +
+                                        "<td><center>" + taskval.Meeting_No_Of_Participants + "</center></td>"
+                                    "</tr>";
+                                    //}
+                                });
+                            }
+
+                            TableStr += "</table>";
+                            grid.html(TableStr);
+                            InitializePaging();
                         }
 
-                        TableStr += "</table>";
-                        grid.html(TableStr);
-                        InitializePaging();
+                        //For Mobile Users
+                        else
+                        {
+                            var grid = $("#grid-show-result");
+
+                            var TableStr = '<table id="Assigned" class="table table-bordered assigned col-md-12 col-sm-12 ">' +
+                                '<tr><th>Meeting Objective</th></tr>' +
+                                '<tr><th>Chairperson</th></tr>' +
+                                '<tr><th>Date</th></tr>' +
+                                '<tr><th>Time</th></tr>' +
+                                '<tr><th>Duration</th></tr>' +
+                                '<tr><th>Meeting Department</th></tr>' +
+                                '<tr><th>Venue</th><tr>' +
+                                '<tr><th>No Of Participants</th></tr>';
+
+                            if (data == null || data == "") {
+                                TableStr += "<td rowspan='8'>No records found</td>";
+                            }
+                            else {
+                                var _meeting_department = $("#meeting_department option:selected").text();
+
+                                $.each(data, function (taskkey, taskval) {
+
+                                    if (taskval.Meeting_Chairperson == null)
+                                        taskval.Meeting_Chairperson = "";
+                                    if (taskval.Meeting_Department == null)
+                                        taskval.Meeting_Department = "";
+                                    if (taskval.Meeting_Venue == null)
+                                        taskval.Meeting_Venue = "";
+                                    if (taskval.Meeting_No_Of_Participants == null)
+                                        taskval.Meeting_No_Of_Participants = "";
+
+                                    //Session["LoggedEmployeeName"].ToString()
+                                @*@HttpContext.Current.Session["LoggedEmployeeName"].ToString();*@
+
+                                    TableStr += 
+                                                  @*"<td>" +"<a href='@Url.Action("EditViewMeetingDetails","CreateMeeting")?meetingId=" + taskval.Meeting_Id + "' class='modal-link btn btn-sm' data-toggle='tooltip' title='Edit' data-placement='top' >" + taskval.Meeting_Objective + "</a></td>"+*@
+
+                                        "<td>" + "<a href='@Url.Action("EditViewMeetingDetails","CreateMeeting")?meetingId=" + taskval.Meeting_Id + "' class='modal-link btn btn-sm' data-toggle='tooltip' title='Edit' data-placement='top' >" + taskval.Meeting_Objective + "</a></td>" +
+
+                                        "<td>" + taskval.Meeting_Chairperson + "</td>" +
+                                        "<td>" + getCustomDay(taskval.Meeting_Date) + "</td>" +
+                                        "<td>" + taskval.Meeting_Time + "</td>" +
+                                        "<td>" + taskval.Meeting_Duration + "</td>" +
+                                        "<td>" + taskval.Meeting_Department + "</td>" +
+                                        "<td>" + taskval.Meeting_Venue + "</td>" +
+                                        "<td>" + taskval.Meeting_No_Of_Participants + "</td>"
+                                    
+                                    //}
+                                });
+                            }
+
+                            TableStr += "</table>";
+                            grid.html(TableStr);
+                            InitializePaging();
+
+                        }
                     }
                 });
             }

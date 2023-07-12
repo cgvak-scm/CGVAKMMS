@@ -53,16 +53,16 @@
 
                                 @*@Html.DropDownList("status", new List<SelectListItem> {
 
-                                    new SelectListItem { Text="TASK ASSIGNED",Value="1" },
+                                        new SelectListItem { Text="TASK ASSIGNED",Value="1" },
 
-                                    new SelectListItem { Text="IN-PROGRESS",Value="2" },
+                                        new SelectListItem { Text="IN-PROGRESS",Value="2" },
 
-                                    new SelectListItem { Text="COMPLETED",Value="3" },
+                                        new SelectListItem { Text="COMPLETED",Value="3" },
 
-                                    new SelectListItem { Text="CLOSED",Value="4" }
+                                        new SelectListItem { Text="CLOSED",Value="4" }
 
 
-                                }, "ALL", new { @class = "form-control input-sm" })*@
+                                    }, "ALL", new { @class = "form-control input-sm" })*@
 
 
 
@@ -70,41 +70,28 @@
 
                             </div>
                         </div>
-
                         <div class="clearfix"></div>
-
                     </div>
-
                     <div class="col-md-4 col-sm-4 pull-right">
                         <div class="input-group pull-right">
                             <button id="btn_view_tasks" type="button" class="btn btn-primary btn-sm">View Tasks</button>
-
                         </div>
                     </div>
                 </div>
-                </div>
-
-                <div class="space" style="margin:10px 0px;"></div>
-
-                <div class="row">
-
-                    <div class="space" style="margin:4% 0px;"></div>
-
-                    <div class="responsive-table">
-                        <div id="grid-show-result" class="col-md-12">
-
-                            <!--dynamic results fetched here-->
-                        </div>
-                    </div>
-
-                </div>
-
-                }
-
             </div>
-        </div>
+            <div class="space" style="margin:10px 0px;"></div>
+            <div class="row">
+                <div class="space" style="margin:4% 0px;"></div>
+                <div class="responsive-table">
+                    <div id="grid-show-result" class="col-md-12">
 
-
+                        <!--dynamic results fetched here-->
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
 <style type="text/css">
     #modal-content .navbar, #modal-content .mms-footer-bar {
@@ -119,7 +106,6 @@
 }
 
 <script>
-
 
     var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -146,9 +132,8 @@
         window.sessionStorage.clear();
 
         // $("#Priority").val(window.sessionStorage.getItem("Priority"));
-      
-    });
 
+    });
 
     //Status
     //status
@@ -161,16 +146,12 @@
         window.sessionStorage.clear();
 
       //  $("#status").val(window.sessionStorage.getItem("status"));
-    
+
     });
-
-
 
     $(document).ready(function () {
 
         //$(".toDate").datepicker({ autoclose: true });
-
-      
 
         $(".fromDate").datepicker({
             changeMonth: true,
@@ -214,20 +195,14 @@
                 //dt.setDate(dt.getDate() + 1);
                 //$(".toDate").datepicker("option", "minDate", dt);
 
-
                 var selectEndD = $('.toDate').val();
 
                 $.get('@Url.Action("Index", "AssignedTasks")', { selectEndD: selectEndD });
 
             }
-
-
-
         });
 
-
         getMeetingName();
-
 
         $("#btn_view_tasks").click(function () {
             getMeetingName();
@@ -244,7 +219,6 @@
             $(".assigned").simplePagination();
         }
 
-
         function getMeetingName() {
 
             $('#tasks_meeting_name').children('option:not(:first)').remove();
@@ -258,26 +232,27 @@
                 _status = 0;
             }
 
-
             if ((_assign_start_dt == "" || _assign_end_dt == "")) {
                 alert("Please fill the details");
-
-
-
-            }            
+            }
             else {
-                
-                $.ajax({                    
-                    url: '@Url.Action("MeetingTask", "AssignedTasks")',                    
+
+                $.ajax({
+                    url: '@Url.Action("MeetingTask", "AssignedTasks")',
                     type: 'GET',
                     data: "startDate=" + _assign_start_dt + "&endDate=" + _assign_end_dt + "&priority=" + _priority + "&status=" + _status,
                     dataType: 'JSON',
                     contentType: 'Application/JSON;charset=utf-8',
-                    success: function (data) {
-                        
-                        var grid = $("#grid-show-result");
+                    success: function (data)
+                    {
+                        let width = screen.width;
+                        var TableStr = "";
 
-                        var TableStr = '<table id="Assigned" class="table table-bordered assigned col-md-12 col-sm-12 "><thead><tr>' +
+                        //For Desktop Screen
+                        if (width > '600')
+                        {
+                            var grid = $("#grid-show-result");
+                            TableStr += '<table id="Assigned" class="table table-bordered assigned col-md-12 col-sm-12 "><thead><tr>' +
                                       '<th><center>Task</center> </th>' +
                                      ' <th><center>Responsible Person</center></th>' +
                                      '<th><center>Start Date</center></th>' +
@@ -289,10 +264,10 @@
                         if (data == null || data == "") {
                             TableStr += "<tr><td colspan='8'>No records found</td></tr>";
                         }
-                        else {
-                            $.each(data, function (taskkey, taskval) {
-                                
-                                
+                        else
+                        {
+                            $.each(data, function (taskkey, taskval)
+                            {
                                 var AllocatedDate = new Date(parseInt(taskval.meeting_date.substr(6)));
 
                                 var Jsdate = new Date(AllocatedDate);
@@ -308,7 +283,6 @@
 
                                 console.log(taskval);
 
-
                                 var JsComplDate = new Date(CompletedDate);
                                 var JsComlGetDate = getCustomDay(JsComplDate.getDate());
                                 //var JsComlMonth = JsComplDate.getMonth() ;
@@ -317,7 +291,7 @@
 
                                 var JsCompletedDate = (JsComlGetDate < 10 ? '' : '') + JsComlGetDate + '-' + (JsComlMonth < 10 ? '0' : '')
                                     + JsComlMonth + '-' +
-                            
+
                                   JsComlYear;
 
                                 var MeetingId = taskval.meeting_id;
@@ -351,7 +325,80 @@
 
                         TableStr += "</table>";
                         grid.html(TableStr);
-                        InitializePaging();
+                            InitializePaging();
+                        }
+
+
+                        //For Mobile screen
+                        else
+                        {
+                            var grid = $("#grid-show-result");
+
+                            TableStr =+ '<table id="Assigned" class="table table-bordered assigned row-md-12 row-sm-12 ">'
+
+                            if (data == null || data == "") {
+                                TableStr += "<tr><td rowspan='8'>No records found</td></tr>";
+                            }
+                            else {
+                                $.each(data, function (taskkey, taskval) {
+
+                                    var AllocatedDate = new Date(parseInt(taskval.meeting_date.substr(6)));
+
+                                    var Jsdate = new Date(AllocatedDate);
+                                    var Jsgetdate = getCustomDay(Jsdate.getDate());
+                                    //var Jsnmonth = Jsdate.getMonth() ;
+                                    var Jsnmonth = month[Jsdate.getMonth()];
+                                    var Jyear = Jsdate.getFullYear();
+
+                                    var JsAllocatedDate = (Jsgetdate < 10 ? '' : '') + Jsgetdate + '-' + (Jsnmonth < 10 ? '0' : '') + Jsnmonth + '-' +
+                                        Jyear;
+
+                                    var CompletedDate = new Date(parseInt(taskval.completion_date.substr(6)));
+
+                                    console.log(taskval);
+
+                                    var JsComplDate = new Date(CompletedDate);
+                                    var JsComlGetDate = getCustomDay(JsComplDate.getDate());
+                                    //var JsComlMonth = JsComplDate.getMonth() ;
+                                    var JsComlMonth = month[JsComplDate.getMonth()];
+                                    var JsComlYear = JsComplDate.getFullYear();;
+
+                                    var JsCompletedDate = (JsComlGetDate < 10 ? '' : '') + JsComlGetDate + '-' + (JsComlMonth < 10 ? '0' : '')
+                                        + JsComlMonth + '-' +
+
+                                        JsComlYear;
+
+                                    var MeetingId = taskval.meeting_id;
+                                    var EmpId = taskval.employee_id;
+                                    //var Task = (taskval.Task);
+                                    var taskId = taskval.Task_Id;
+                                    if (taskval.Overdue_Days <= 0) {
+                                        TableStr +=
+                                            "<tr class='alert-info'><th>Task</th><td><a style='color:blue;' href='@(Url.Action("EditTaskDetails", "AssignedTasks"))?meetingId=' + MeetingId + '&empId=' + EmpId + '&taskId=' + taskId' class='modal-link btn btn-sm' data-placement='top'>" + taskval.Task + "</a></td></tr>" +
+                                            "<tr class='alert-info'><th>Responsible Person</th><td style='color:black;'>" + taskval.Participant + "</td></tr>" +
+                                            "<tr class='alert-info'><th>Start Date</th><td style='color:black;'>" + JsAllocatedDate + "</td></tr>" +
+                                            "<tr class='alert-info'><th>Completion Date</th><td style='color:black;'>" + JsCompletedDate + "</td></tr>" +
+                                            "<tr class='alert-info'><th>Priority</th><td style='color:black;'>" + taskval.priority + "</td></tr>" +
+                                            "<tr class='alert-info'><th>Status</th><td style='color:black;'>" + taskval.status + "</td></tr>" +
+                                            "<tr class='alert-info'><th>Overdue Days</th><td>0</td></tr>";
+                                    }
+                                    else {
+                                        TableStr +=
+                                            "<tr class='alert-danger'><th>Task</th><td><a style='color:blue;' href='@(Url.Action("EditTaskDetails", "AssignedTasks"))?meetingId=' + MeetingId + '&empId=' + EmpId + '&taskId=' + taskId' class='modal-link btn btn-sm' data-placement='top'>" + taskval.Task + "</a></td></tr>" +
+                                            "<tr class='alert-danger'><th>Responsible Person</th><td style='color:black;'>" + taskval.Participant + "</td></tr>" +
+                                            "<tr class='alert-danger'><th>Start Date</th><td style='color:black;'>" + JsAllocatedDate + "</td></tr>" +
+                                            "<tr class='alert-danger'><th>Completion Date</th><td style='color:black;'>" + JsCompletedDate + "</td></tr>" +
+                                            "<tr class='alert-danger'><th>Priority</th><td style='color:black;'>" + taskval.priority + "</td></tr>" +
+                                            "<tr class='alert-danger'><th>Status</th><td style='color:black;'>" + taskval.status + "</td></tr>" +
+                                            "<tr class='alert-danger'><th>Overdue Days</th><td style='color:black;'>" + taskval.Overdue_Days + "</td></tr>";
+                                    }
+                                });
+                            }
+
+                            TableStr += "</table>";
+                            grid.html(TableStr);
+                            InitializePaging();
+                        }
                     }
                 });
             }
